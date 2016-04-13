@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add user</title>
+    <title>Dreams Job</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styleform.css">
 </head>
@@ -16,7 +16,7 @@
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>
 
-<form action="UserAdd.jsp" method="post">
+<form action="<%=request.getContextPath()%>/useradd" method="post">
     <div class="tableRow">
         <p> Id </p>
         <p><input type="text" name="id" value="" placeholder="1"></p>
@@ -31,7 +31,7 @@
     </div>
     <div class="tableRow">
         <p> Date </p>
-        <p><input type="date" name="date" value="date"></p>
+        <p><input type="date" name="birthDay" value="date"></p>
     </div>
     <div class="tableRow">
         <p> Children </p>
