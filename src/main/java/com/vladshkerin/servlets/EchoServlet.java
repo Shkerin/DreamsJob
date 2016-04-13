@@ -1,18 +1,17 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.models.UserAdvance;
+import com.vladshkerin.models.User;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -23,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class EchoServlet extends HttpServlet {
 
-    private final List<UserAdvance> syncUserList = new CopyOnWriteArrayList<>();
+    private final List<User> syncUserList = new CopyOnWriteArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,8 +30,8 @@ public class EchoServlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         sb.append("<h3>List users name: </h3>");
         synchronized (syncUserList) {
-            for (UserAdvance userAdvance : syncUserList)
-                sb.append(userAdvance).append("<br>");
+            for (User user : syncUserList)
+                sb.append(user).append("<br>");
         }
 
         resp.getWriter().write(sb.toString());
@@ -55,7 +54,7 @@ public class EchoServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        syncUserList.add(new UserAdvance(id, name, growth, birthDay, children));
+        syncUserList.add(new User(id, name, growth, birthDay, children));
     }
 
     @Override
@@ -66,7 +65,7 @@ public class EchoServlet extends HttpServlet {
         String name = req.getParameter("name");
         int index = findIdById(id);
         if (index > -1)
-            syncUserList.set(index, new UserAdvance(id, name));
+            syncUserList.set(index, new User(id, name));
     }
 
     @Override
@@ -78,7 +77,7 @@ public class EchoServlet extends HttpServlet {
     }
 
     /**
-     * Search by field "id" in the collection UserAdvance.
+     * Search by field "id" in the collection User.
      *
      * @param id the value of the unique field "id" in collection
      * @return -1 if element do not find,
@@ -87,9 +86,9 @@ public class EchoServlet extends HttpServlet {
     private int findIdById(String id) {
         int index = -1;
         synchronized (syncUserList) {
-            for (UserAdvance userAdvance : syncUserList) {
-                if (userAdvance.getId().equals(id)) {
-                    index = syncUserList.indexOf(userAdvance);
+            for (User user : syncUserList) {
+                if (user.getId().equals(id)) {
+                    index = syncUserList.indexOf(user);
                     break;
                 }
             }

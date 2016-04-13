@@ -1,5 +1,5 @@
-<%@ page import="com.vladshkerin.models.UserAdvance" %>
-<%@ page import="com.vladshkerin.services.UserAdvanceService" %><%--
+<%@ page import="com.vladshkerin.models.User" %>
+<%@ page import="com.vladshkerin.services.UserService" %><%--
   Created by IntelliJ IDEA.
   User: vlad
   Date: 06.04.16
@@ -29,7 +29,7 @@
         <th class="center">Birth day</th>
         <th class="center">Children</th>
     </tr>
-    <% for (UserAdvance user : UserAdvanceService.getInstance().getAll()) { %>
+    <% for (User user : UserService.getInstance().getAll()) { %>
     <tr>
         <td class="center"><%= user.getId() %>
         </td>

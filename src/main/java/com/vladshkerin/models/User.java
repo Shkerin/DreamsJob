@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Class to store the users id and name.
  */
-public class UserAdvance {
+public class User {
 
     private String id;
     private String name;
@@ -15,7 +15,7 @@ public class UserAdvance {
     private Calendar birthDay;
     private String[] children;
 
-    public UserAdvance(String id, String name, Float growth, Calendar birthDay, String[] children) {
+    public User(String id, String name, Float growth, Calendar birthDay, String[] children) {
         if (name == null)
             throw new NullPointerException("Argument \"name\" construction is null");
         if (id == null)
@@ -34,11 +34,11 @@ public class UserAdvance {
         this.children = children;
     }
 
-    public UserAdvance(String id, String name) {
+    public User(String id, String name) {
         this(id, name, null, null, null);
     }
 
-    public UserAdvance(String name) {
+    public User(String name) {
         this(null, name, null, null, null);
     }
 
@@ -68,7 +68,7 @@ public class UserAdvance {
         if (otherObject == null) return false;
         if (getClass() != otherObject.getClass()) return false;
 
-        UserAdvance other = (UserAdvance) otherObject;
+        User other = (User) otherObject;
         return Objects.equals(id, other.id) &&
                 Objects.equals(name, other.name);
     }
@@ -118,6 +118,7 @@ public class UserAdvance {
     public String[] getChildren() {
         return children;
     }
+
     public String getChildrenStr() {
         StringBuilder sbChildren = new StringBuilder();
         for (String child : children)
