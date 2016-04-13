@@ -1,5 +1,6 @@
 package com.vladshkerin.services;
 
+import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.User;
 
 import java.util.GregorianCalendar;
@@ -24,11 +25,9 @@ public class UserService {
         String[] children1 = new String[]{"Ivan", "Oleg"};
         String[] children2 = new String[]{"Maria", "Eva"};
 
-        users.add(new User("1", "Petr", 176.6f, cal1, children1));
-        users.add(new User("2", "Make", 150f, cal2, children2));
-        users.add(new User("3", "Olga"));
-        users.add(new User("4", "Vlad"));
-        users.add(new User("5", "Step"));
+        users.add(new User("00001", "Petr", 176.6f, cal1, children1));
+        users.add(new User("00002", "Make", 150f, cal2, children2));
+        users.add(new User("00003", "Olga"));
     }
 
     public static UserService getInstance() {
@@ -41,5 +40,14 @@ public class UserService {
 
     public void add(final User user) {
         this.users.add(user);
+    }
+
+    public User get(String id) throws NotFoundUser {
+        for (User user : users) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        throw new NotFoundUser("User not fount to \"id\"" + id);
     }
 }
