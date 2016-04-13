@@ -1,8 +1,11 @@
 package com.vladshkerin.models;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Class to store the users id and name.
@@ -16,14 +19,14 @@ public class User {
     private String[] children;
 
     public User(String id, String name, Float growth, Calendar birthDay, String[] children) {
+        if (id == null)
+            throw new NullPointerException("Argument \"id\" construction is null");
         if (name == null)
             throw new NullPointerException("Argument \"name\" construction is null");
-        if (id == null)
-            id = String.valueOf(name.hashCode());
         if (growth == null)
             growth = 0f;
         if (birthDay == null)
-            birthDay = Calendar.getInstance();
+            birthDay = new GregorianCalendar(0,0,0);
         if (children == null)
             children = new String[]{};
 
@@ -36,10 +39,6 @@ public class User {
 
     public User(String id, String name) {
         this(id, name, null, null, null);
-    }
-
-    public User(String name) {
-        this(null, name, null, null, null);
     }
 
     @Override
@@ -78,8 +77,13 @@ public class User {
         return Objects.hash(id, name);
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -87,7 +91,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -95,33 +99,61 @@ public class User {
     }
 
     public Float getGrowth() {
-        return growth;
+        return this.growth;
+    }
+
+    public String getGrowthStr() {
+        return String.valueOf(this.growth);
     }
 
     public void setGrowth(Float growth) {
         this.growth = growth;
     }
 
+    public void setGrowth(String growth) {
+        if (growth != null) {
+            Float growthBuf = this.growth;
+            try {
+                this.growth = Float.parseFloat(growth);
+            } catch (Exception e) {
+                this.growth = growthBuf;
+            }
+        }
+    }
+
     public Calendar getBirthDay() {
-        return birthDay;
+        return this.birthDay;
     }
 
     public String getBirthDayStr() {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        return format.format(birthDay.getTime());
+        return format.format(this.birthDay.getTime());
     }
 
     public void setBirthDay(Calendar birthDay) {
         this.birthDay = birthDay;
     }
 
+    public void setBirthDay(String birthDay) {
+        if (birthDay != null) {
+            Calendar birthDayBuf = this.birthDay;
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = format.parse(birthDay.trim());
+                this.birthDay.setTime(date);
+            } catch (ParseException e) {
+                this.birthDay = birthDayBuf;
+            }
+        }
+    }
+
     public String[] getChildren() {
-        return children;
+        return this.children;
     }
 
     public String getChildrenStr() {
         StringBuilder sbChildren = new StringBuilder();
-        for (String child : children)
+        for (String child : this.children)
             sbChildren.append(child).append(", ");
         if (sbChildren.length() > 0)
             sbChildren.deleteCharAt(sbChildren.length() - 2);
@@ -129,11 +161,29 @@ public class User {
     }
 
     public void setChildren(String[] children) {
-        this.children = children;
+        ArrayList<String> list = new ArrayList<>();
+        for (String child : children) {
+            try {
+                Collections.addAll(list, parseStr(child));
+            } catch (PatternSyntaxException e) {
+                //TODO empty
+            }
+        }
+        this.children = list.toArray(new String[list.size()]);
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public void setChildren(String children) {
+        if (children != null) {
+            String[] childrenBuf = this.children;
+            try {
+                this.children = parseStr(children);
+            } catch (PatternSyntaxException e) {
+                this.children = childrenBuf;
+            }
+        }
+    }
+
+    private String[] parseStr(String str) throws PatternSyntaxException {
+        return str.trim().split("\\s+|,");
     }
 }
