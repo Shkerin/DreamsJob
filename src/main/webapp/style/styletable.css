@@ -33,3 +33,12 @@ tr:nth-child(2n+1) {
 .right {
     text-align:         right;
 }
+
+div.tableRow#button {
+    display:            table-row;
+}
+
+div.tableRow#button form {
+    display:            table-cell;
+    padding-right:      5px;
+}
