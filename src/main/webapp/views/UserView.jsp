@@ -1,5 +1,6 @@
 <%@ page import="com.vladshkerin.models.User" %>
-<%@ page import="com.vladshkerin.services.UserService" %><%--
+<%@ page import="com.vladshkerin.services.UserService" %>
+<%--
   Created by IntelliJ IDEA.
   User: vlad
   Date: 06.04.16
@@ -9,13 +10,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User view</title>
+    <title>Dreams Job</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styletable.css">
 </head>
 <body>
+
+<p>
+<%
+    if (session.getAttribute("login") != null) {
+        %>Welcome back, <%=session.getAttribute("login")%>.
+        <a href="<%=request.getContextPath()%>/logout">logout</a><%
+    } else {
+        %>Unregistered user!<%
+    }
+%>
+</p>
+
 <h1>List users:</h1>
-<h2></h2>
 
 <div>
     <%=request.getContextPath()%>
@@ -31,27 +43,32 @@
     </tr>
     <% for (User user : UserService.getInstance().getAll()) { %>
     <tr>
-        <td class="center"><%= user.getId() %>
+        <td class="center">
+            <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>"><%= user.getId() %></a>
         </td>
-        <td class="right"><%= user.getName() %>
+        <td class="right">
+            <%= user.getName() %>
         </td>
-        <td class="right"><%= user.getGrowth() %>
+        <td class="right">
+            <%= user.getGrowth() %>
         </td>
-        <td class="center"><%= user.getBirthDayStr() %>
+        <td class="center">
+            <%= user.getBirthDayStr() %>
         </td>
-        <td class="center"><%= user.getChildrenStr() %>
+        <td class="center">
+            <%= user.getChildrenStr() %>
         </td>
     </tr>
     <% } %>
 </table>
 
 <p>
-    <div>
+    <div id="button" class="tableRow">
         <form action="<%=request.getContextPath()%>/useradd" method="post">
             <input type="submit" value="Add user">
         </form>
-        <form action="<%=request.getContextPath()%>/userdel" method="post">
-            <input type="submit" value="Delete user">
+        <form action="<%=request.getContextPath()%>/index.jsp">
+            <input type="submit" value="Back">
         </form>
     </div>
 </p>

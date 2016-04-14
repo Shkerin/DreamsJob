@@ -13,13 +13,25 @@
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styleform.css">
 </head>
 <body>
+
+<p>
+    <%
+        if (session.getAttribute("login") != null) {
+    %>Welcome back, <%=session.getAttribute("login")%>.
+    <a href="<%=request.getContextPath()%>/logout">logout</a><%
+    } else {
+    %>Unregistered user!<%
+        }
+%>
+</p>
+
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>
 
 <form action="<%=request.getContextPath()%>/useradd" method="post">
     <div class="tableRow">
         <p> Id </p>
-        <p><input type="text" name="id" value="" placeholder="1"></p>
+        <p><input type="text" name="id" value="" placeholder="00001"></p>
     </div>
     <div class="tableRow">
         <p> Name </p>
@@ -39,8 +51,13 @@
     </div>
     <div class="tableRow">
         <p></p>
-        <p><input type="submit" value="Add user"></p>
+        <p>
+            <input type="submit" value="Save change">
+            <input type="submit" value="Back"
+                   formaction="<%=request.getContextPath()%>/views/UserView.jsp">
+        </p>
     </div>
 </form>
+
 </body>
 </html>
