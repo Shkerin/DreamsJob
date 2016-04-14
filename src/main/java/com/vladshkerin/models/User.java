@@ -3,8 +3,6 @@ package com.vladshkerin.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -26,7 +24,7 @@ public class User {
         if (growth == null)
             growth = 0f;
         if (birthDay == null)
-            birthDay = new GregorianCalendar(0,0,0);
+            birthDay = new GregorianCalendar(0, 0, 0);
         if (children == null)
             children = new String[]{};
 
@@ -130,6 +128,16 @@ public class User {
         return format.format(this.birthDay.getTime());
     }
 
+    public String getBirthDayStr(String pattern) {
+        if (pattern == null || pattern.isEmpty())
+            pattern = "dd.MM.yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        if (this.birthDay.getTimeInMillis() > 0)
+            return format.format(this.birthDay.getTime());
+        else
+            return "";
+    }
+
     public void setBirthDay(Calendar birthDay) {
         this.birthDay = birthDay;
     }
@@ -156,7 +164,7 @@ public class User {
         for (String child : this.children)
             sbChildren.append(child).append(", ");
         if (sbChildren.length() > 0)
-            sbChildren.deleteCharAt(sbChildren.length() - 2);
+            sbChildren.delete(sbChildren.length() - 2, sbChildren.length());
         return sbChildren.toString();
     }
 
@@ -166,7 +174,8 @@ public class User {
             try {
                 Collections.addAll(list, parseStr(child));
             } catch (PatternSyntaxException e) {
-                //TODO empty
+                //TODO add output to log
+                System.out.println(e.getMessage());
             }
         }
         this.children = list.toArray(new String[list.size()]);
@@ -184,6 +193,6 @@ public class User {
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {
-        return str.trim().split("\\s+|,");
+        return str.trim().split("\\s+|,\\s*");
     }
 }
