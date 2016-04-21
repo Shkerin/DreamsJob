@@ -46,18 +46,30 @@
         <p><input type="date" name="birthDay" value="date"></p>
     </div>
     <div class="tableRow">
+        <p> Email </p>
+        <p><input type="email" name="email" value="" placeholder="user@mail.ru"></p>
+    </div>
+    <div class="tableRow">
         <p> Children </p>
         <p><textarea name="children"></textarea></p>
     </div>
     <div class="tableRow">
         <p></p>
         <p>
-            <input type="submit" value="Save change">
+            <input id="save" type="submit" value="Save change">
             <input type="submit" value="Back"
                    formaction="<%=request.getContextPath()%>/views/UserView.jsp">
         </p>
     </div>
+    <div>
+        <p></p>
+        <p>
+            <div id="message">test</div>
+        </p>
+    </div>
 </form>
+
+<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
 </body>
 </html>

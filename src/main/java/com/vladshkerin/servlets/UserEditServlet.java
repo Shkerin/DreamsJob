@@ -35,6 +35,7 @@ public class UserEditServlet extends HttpServlet {
             String name = req.getParameter("name");
             String growth = req.getParameter("growth");
             String birthDay = req.getParameter("birthDay");
+            String email = req.getParameter("email");
             String[] children = req.getParameterValues("children");
 
             for (User user : UserService.getInstance().getAll()) {
@@ -42,6 +43,7 @@ public class UserEditServlet extends HttpServlet {
                     user.setName(name);
                     user.setGrowth(growth);
                     user.setBirthDay(birthDay);
+                    user.setEmail(email);
                     user.setChildren(children);
                     break;
                 }
@@ -56,13 +58,14 @@ public class UserEditServlet extends HttpServlet {
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("id", id);
-                if (!user.getName().isEmpty())
-                    session.setAttribute("name", user.getName());
-                if (user.getGrowth() > 0f)
-                    session.setAttribute("growth", user.getGrowthStr());
-                if (!user.getBirthDayStr().isEmpty())
-                    session.setAttribute("birthDay", user.getBirthDayStr("yyyy-MM-dd"));
-
+                session.setAttribute("name",
+                        !user.getName().isEmpty() ? user.getName() : "");
+                session.setAttribute("growth",
+                        user.getGrowth() > 0f ? user.getGrowthStr() : "");
+                session.setAttribute("birthDay",
+                        !user.getBirthDayStr("yyyy-MM-dd").isEmpty() ? user.getBirthDayStr("yyyy-MM-dd") : "");
+                session.setAttribute("email",
+                        !user.getEmail().isEmpty() ? user.getEmail() : "");
                 session.setAttribute("children",
                         !user.getChildrenStr().isEmpty() ? user.getChildrenStr() : "");
             }

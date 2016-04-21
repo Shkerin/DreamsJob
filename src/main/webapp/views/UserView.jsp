@@ -39,6 +39,7 @@
         <th class="right">Name</th>
         <th class="right">Growth</th>
         <th class="center">Birth day</th>
+        <th class="center">Email</th>
         <th class="center">Children</th>
     </tr>
     <% for (User user : UserService.getInstance().getAll()) { %>
@@ -54,6 +55,9 @@
         </td>
         <td class="center">
             <%= user.getBirthDayStr() %>
+        </td>
+        <td class="center">
+            <%= user.getEmail() %>
         </td>
         <td class="center">
             <%= user.getChildrenStr() %>

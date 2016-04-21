@@ -14,29 +14,20 @@ public class User {
     private String name;
     private Float growth;
     private Calendar birthDay;
+    private String email;
     private String[] children;
 
-    public User(String id, String name, Float growth, Calendar birthDay, String[] children) {
-        if (id == null)
-            throw new NullPointerException("Argument \"id\" construction is null");
-        if (name == null)
-            throw new NullPointerException("Argument \"name\" construction is null");
-        if (growth == null)
-            growth = 0f;
-        if (birthDay == null)
-            birthDay = new GregorianCalendar(0, 0, 0);
-        if (children == null)
-            children = new String[]{};
-
+    public User(String id, String name, Float growth, Calendar birthDay, String email, String[] children) {
         this.id = id;
         this.name = name;
         this.growth = growth;
         this.birthDay = birthDay;
+        this.email = email;
         this.children = children;
     }
 
     public User(String id, String name) {
-        this(id, name, null, null, null);
+        this(id, name, 0f, new GregorianCalendar(0, 0, 0), "", new String[] {});
     }
 
     @Override
@@ -56,6 +47,7 @@ public class User {
                 + ",growth=" + growth
                 + ",birthDay=" + strBirthDay
                 + ",children=" + sbChildren
+                + ",email=" + email
                 + "]";
     }
 
@@ -166,6 +158,14 @@ public class User {
         if (sbChildren.length() > 0)
             sbChildren.delete(sbChildren.length() - 2, sbChildren.length());
         return sbChildren.toString();
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setChildren(String[] children) {

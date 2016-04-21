@@ -20,17 +20,17 @@ public class UserService {
     private final List<User> users = new CopyOnWriteArrayList<>();
 
     private UserService() {
-        GregorianCalendar calendar1 = new GregorianCalendar(1985, 1, 2);
-        GregorianCalendar calendar2 = new GregorianCalendar(1990, 3, 4);
-        GregorianCalendar calendar3 = new GregorianCalendar(1995, 5, 6);
+        GregorianCalendar calendar1 = new GregorianCalendar(1970, 3, 4);
+        GregorianCalendar calendar2 = new GregorianCalendar(1985, 5, 6);
+        GregorianCalendar calendar3 = new GregorianCalendar(1995, 7, 8);
         String[] children1 = new String[]{"Ivan"};
         String[] children2 = new String[]{"Sviatoslav", "Eva"};
         String[] children3 = new String[]{"Maria", "Sergio", "Irina"};
 
-        users.add(new User("00001", "Petr", 176.6f, calendar1, children1));
-        users.add(new User("00002", "Erik", null, calendar2, children2));
-        users.add(new User("00003", "Make", 160f, null, children3));
-        users.add(new User("00004", "Nikita", 145.12f, calendar3, null));
+        users.add(new User("00001", "Petr", 145f, calendar1, "petr@email.ru", children1));
+        users.add(new User("00002", "Erik", 150f, calendar2, "erik@email.ru", children2));
+        users.add(new User("00003", "Make", 160f, calendar3, "make@email.ru", children3));
+        users.add(new User("00004", "Nikita"));
         users.add(new User("00005", "Olga"));
     }
 
@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public void delete(String id) {
-        if (!id.isEmpty()) {
+        if (id != null || !id.isEmpty()) {
             try {
                 users.remove(this.get(id));
             } catch (NotFoundUser e) {

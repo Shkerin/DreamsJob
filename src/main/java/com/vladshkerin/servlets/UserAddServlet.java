@@ -24,11 +24,13 @@ public class UserAddServlet extends HttpServlet {
             String name = req.getParameter("name");
             String growth = req.getParameter("growth");
             String birthDay = req.getParameter("birthDay");
+            String email = req.getParameter("email");
             String[] children = req.getParameterValues("children");
 
             User user = new User(id.trim(), name.trim());
             user.setGrowth(growth.trim());
             user.setBirthDay(birthDay.trim());
+            user.setEmail(email);
             user.setChildren(children);
             UserService.getInstance().add(user);
         }

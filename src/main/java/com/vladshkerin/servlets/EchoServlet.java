@@ -47,6 +47,7 @@ public class EchoServlet extends HttpServlet {
         Float growth = Float.parseFloat(req.getParameter("growth"));
         String[] children = req.getParameterValues("children");
         Calendar birthDay = Calendar.getInstance();
+        String email = req.getParameter("email");
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date date = format.parse(req.getParameter("birthDay"));
@@ -54,7 +55,7 @@ public class EchoServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        syncUserList.add(new User(id, name, growth, birthDay, children));
+        syncUserList.add(new User(id, name, growth, birthDay, email, children));
     }
 
     @Override
