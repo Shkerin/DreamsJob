@@ -28,7 +28,8 @@
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>
 
-<form action="<%=request.getContextPath()%>/useradd" method="post">
+<form name="myForm" action="<%=request.getContextPath()%>/useradd"
+      onsubmit="validateForm()" method="post">
     <div class="tableRow">
         <p> Id </p>
         <p><input type="text" name="id" value="" placeholder="00001"></p>
@@ -56,20 +57,26 @@
     <div class="tableRow">
         <p></p>
         <p>
-            <input id="save" type="submit" value="Save change">
+            <input type="submit" name="fname" value="Save change">
             <input type="submit" value="Back"
                    formaction="<%=request.getContextPath()%>/views/UserView.jsp">
         </p>
     </div>
-    <div>
+    <div class="tableRow">
         <p></p>
-        <p>
-            <div id="message">test</div>
-        </p>
+        <div id="message">
+        </div>
     </div>
 </form>
 
-<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
+<script>
+    function validateForm() {
+        var divMessage = document.getElementById("message");
+        divMessage.innerHTML = "TEST!";
+    }
+</script>
+
+<%--<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>--%>
 
 </body>
 </html>

@@ -23,7 +23,11 @@ public class UserEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String identify = req.getParameter("id");
         if (!identify.isEmpty()) {
-            setSessionAttribute(identify, req);
+            HttpSession session = req.getSession();
+            setSessionAttribute(identify, session);
+            synchronized (session) {
+                session.setAttribute("message", "");
+            }
         }
         resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
     }
@@ -45,17 +49,22 @@ public class UserEditServlet extends HttpServlet {
                     user.setBirthDay(birthDay);
                     user.setEmail(email);
                     user.setChildren(children);
+
+                    HttpSession session = req.getSession();
+                    setSessionAttribute(id, session);
+                    synchronized (session) {
+                        session.setAttribute("message", "The changes are saved.");
+                    }
                     break;
                 }
             }
-            resp.sendRedirect(String.format("%s/views/UserView.jsp", req.getContextPath()));
+            resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
         }
     }
 
-    private void setSessionAttribute(String id, HttpServletRequest req) {
+    private void setSessionAttribute(String id, HttpSession session) {
         try {
             User user = UserService.getInstance().get(id);
-            HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("id", id);
                 session.setAttribute("name",

@@ -62,14 +62,25 @@
     <div class="tableRow">
         <p></p>
         <p>
-            <input type="submit" value="Save change">
-            <%--<input id="delete" type="button" value="Delete user"--%>
-                   <%--onclick="<%=request.getContextPath()%>/view/UserEdit.jps">--%>
+            <input id="buttonSave" type="submit" value="Save change">
+            <%--<input id="buttonDelete" type="button" value="Delete user">--%>
+            <input id="buttonDelete" type="submit" value="Delete user"
+                   formaction="<%=request.getContextPath()%>/views/UserView.jsp">
             <input type="submit" value="Back"
                    formaction="<%=request.getContextPath()%>/views/UserView.jsp">
         </p>
     </div>
+    <div class="tableRow">
+        <p></p>
+        <div id="message">
+            <%if (session.getAttribute("message") != null) {%>
+                <%=session.getAttribute("message")%>
+            <%}%>
+        </div>
+    </div>
 </form>
+
+<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
 </body>
 </html>
