@@ -38,4 +38,14 @@
         <servlet-name>UserEdit</servlet-name>
         <url-pattern>/useredit</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserDelete</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.UserDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserDelete</servlet-name>
+        <url-pattern>/userdelete</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -1,5 +1,6 @@
 <%@ page import="com.vladshkerin.models.User" %>
-<%@ page import="com.vladshkerin.services.UserService" %><%--
+<%@ page import="com.vladshkerin.services.UserService" %>
+<%--
   Created by IntelliJ IDEA.
   User: vlad
   Date: 13.04.16
@@ -12,6 +13,7 @@
     <title>Dreams Job</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styleform.css">
+    <script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 </head>
 <body>
 
@@ -65,7 +67,8 @@
             <input id="buttonSave" type="submit" value="Save change">
             <%--<input id="buttonDelete" type="button" value="Delete user">--%>
             <input id="buttonDelete" type="submit" value="Delete user"
-                   formaction="<%=request.getContextPath()%>/views/UserView.jsp">
+                   formaction="<%=request.getContextPath()%>/userdelete?id=<%=session.getAttribute("id")%>"
+                   formmethod="get">
             <input type="submit" value="Back"
                    formaction="<%=request.getContextPath()%>/views/UserView.jsp">
         </p>
@@ -79,8 +82,6 @@
         </div>
     </div>
 </form>
-
-<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
 </body>
 </html>
