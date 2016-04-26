@@ -41,6 +41,7 @@
         <th class="center">Birth day</th>
         <th class="center">Email</th>
         <th class="center">Children</th>
+        <th class="center">Del</th>
     </tr>
     <% for (User user : UserService.getInstance().getAll()) { %>
     <tr>
@@ -61,6 +62,11 @@
         </td>
         <td class="center">
             <%= user.getChildrenStr() %>
+        </td>
+        <td class="center">
+            <a id="imageLink" href="<%=request.getContextPath()%>/userdelete?id=<%= user.getId() %>">
+                <img src="../img/trash.png" width="20" height="20">
+            </a>
         </td>
     </tr>
     <% } %>
