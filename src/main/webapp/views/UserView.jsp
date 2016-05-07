@@ -17,14 +17,14 @@
 <body>
 
 <p>
-<%
+    <%
     if (session.getAttribute("login") != null) {
         %>Welcome back, <%=session.getAttribute("login")%>.
         <a href="<%=request.getContextPath()%>/logout">logout</a><%
     } else {
         %>Unregistered user!<%
     }
-%>
+    %>
 </p>
 
 <h1>List users:</h1>
@@ -35,7 +35,6 @@
 
 <table>
     <tr>
-        <th class="center">Id</th>
         <th class="right">Name</th>
         <th class="right">Growth</th>
         <th class="center">Birth day</th>
@@ -45,11 +44,9 @@
     </tr>
     <% for (User user : UserService.getInstance().getAll()) { %>
     <tr>
-        <td class="center">
-            <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>"><%= user.getId() %></a>
-        </td>
         <td class="right">
-            <%= user.getName() %>
+            <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>"><%= user.getName() %>
+            </a>
         </td>
         <td class="right">
             <%= user.getGrowth() %>
@@ -73,14 +70,14 @@
 </table>
 
 <p>
-    <div id="button" class="tableRow">
-        <form action="<%=request.getContextPath()%>/useradd" method="post">
-            <input type="submit" value="Add user">
-        </form>
-        <form action="<%=request.getContextPath()%>/index.jsp">
-            <input type="submit" value="Back">
-        </form>
-    </div>
+<div id="button" class="tableRow">
+    <form action="<%=request.getContextPath()%>/views/UserAdd.jsp" method="post">
+        <input type="submit" value="Add user">
+    </form>
+    <form action="<%=request.getContextPath()%>/index.jsp" method="post">
+        <input type="submit" value="Back">
+    </form>
+</div>
 </p>
 
 </body>
