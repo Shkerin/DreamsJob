@@ -5,6 +5,7 @@ import com.vladshkerin.models.User;
 
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -27,11 +28,11 @@ public class UserService {
         String[] children2 = new String[]{"Sviatoslav", "Eva"};
         String[] children3 = new String[]{"Maria", "Sergio", "Irina"};
 
-        users.add(new User("00001", "Petr", 145f, calendar1, "petr@email.ru", children1));
-        users.add(new User("00002", "Erik", 150f, calendar2, "erik@email.ru", children2));
-        users.add(new User("00003", "Make", 160f, calendar3, "make@email.ru", children3));
-        users.add(new User("00004", "Nikita"));
-        users.add(new User("00005", "Olga"));
+        users.add(new User("Petr", 145f, calendar1, "petr@email.ru", children1));
+        users.add(new User("Erik", 150f, calendar2, "erik@email.ru", children2));
+        users.add(new User("Make", 160f, calendar3, "make@email.ru", children3));
+        users.add(new User("Nikita"));
+        users.add(new User("Olga"));
     }
 
     public static UserService getInstance() {
@@ -64,5 +65,27 @@ public class UserService {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public String validateForm(Map<String, String> userPropertiesMap) {
+        StringBuilder errorValues = new StringBuilder();
+        for (Map.Entry<String, String> user : userPropertiesMap.entrySet()) {
+
+            String key = user.getKey();
+            key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
+
+            if (user.getValue().isEmpty()) {
+                errorValues.append(key).append(", ");
+            } else if (key.equals("growth")) {
+                if (Integer.parseInt(user.getValue()) < 1 ||
+                        Integer.parseInt(user.getValue()) > 200)
+                    errorValues.append(key).append(", ");
+            }
+
+        }
+        if (!errorValues.toString().isEmpty()) {
+            errorValues.replace(errorValues.length() - 2, errorValues.length(), "");
+        }
+        return errorValues.toString();
     }
 }
