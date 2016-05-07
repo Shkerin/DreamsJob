@@ -42,7 +42,6 @@ public class EchoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
 
-        String id = req.getParameter("id");
         String name = req.getParameter("name");
         Float growth = Float.parseFloat(req.getParameter("growth"));
         String[] children = req.getParameterValues("children");
@@ -55,7 +54,7 @@ public class EchoServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        syncUserList.add(new User(id, name, growth, birthDay, email, children));
+        syncUserList.add(new User(name, growth, birthDay, email, children));
     }
 
     @Override
@@ -66,7 +65,7 @@ public class EchoServlet extends HttpServlet {
         String name = req.getParameter("name");
         int index = findIdById(id);
         if (index > -1)
-            syncUserList.set(index, new User(id, name));
+            syncUserList.set(index, new User(name));
     }
 
     @Override
