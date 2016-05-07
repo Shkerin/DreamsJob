@@ -1,12 +1,13 @@
-@font-face {
-    font-family: 'ysans-regular';
-    src: url('//yastatic.net/morda-logo/i/fonts/ysans-regular.woff')
-}
+/*@font-face {*/
+    /*font-family: 'ysans-regular';*/
+    /*src: url('//yastatic.net/morda-logo/i/fonts/ysans-regular.woff')*/
+/*}*/
 
 body {
     background-color:   #efe5d0;
     margin:             20px;
-    font-family:        ysans-regular, "Times New Roman", Times, serif;
+    /*font-family:        ysans-regular, "Times New Roman", Times, serif;*/
+    font-family:        "Times New Roman", Times, serif;
     font-size:          small;
 }
 
