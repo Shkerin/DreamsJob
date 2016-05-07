@@ -1,5 +1,3 @@
-<%@ page import="com.vladshkerin.models.User" %>
-<%@ page import="com.vladshkerin.services.UserService" %>
 <%--
   Created by IntelliJ IDEA.
   User: vlad
@@ -13,47 +11,43 @@
     <title>Dreams Job</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styleform.css">
-    <script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 </head>
 <body>
 
 <p>
     <%
-        if (session.getAttribute("login") != null) {
-    %>Welcome back, <%=session.getAttribute("login")%>.
-    <a href="<%=request.getContextPath()%>/logout">logout</a><%
+    if (session.getAttribute("login") != null) {
+        %>Welcome back, <%=session.getAttribute("login")%>.
+        <a href="<%=request.getContextPath()%>/logout">logout</a><%
     } else {
-    %>Unregistered user!<%
-        }
+        %>Unregistered user!<%
+    }
     %>
 </p>
 
 <h1>Edit user:</h1>
 <h2>Modify the form below and click "save change" to save</h2>
 
-<form action="<%=request.getContextPath()%>/useredit" method="post">
+<form action="<%=request.getContextPath()%>/useredit"
+      onsubmit="return validateForm();" method="post">
+    <input type="hidden" name="id" value="<%=session.getAttribute("id")%>">
     <div class="tableRow">
-        <p> Id </p>
-        <p><input type="text" name="id"
-                  value="<%=session.getAttribute("id")%>" placeholder="00001"></p>
-    </div>
-    <div class="tableRow">
-        <p> Name </p>
+        <p> Name: </p>
         <p><input type="text" name="name"
                   value="<%=session.getAttribute("name")%>" placeholder="Ivan"></p>
     </div>
     <div class="tableRow">
-        <p> Growth </p>
+        <p> Growth: </p>
         <p><input type="number" name="growth" min="1.0" max="200.0"
                   value="<%=session.getAttribute("growth")%>" placeholder="176"></p>
     </div>
     <div class="tableRow">
-        <p> Date </p>
+        <p> Birth date: </p>
         <p><input type="date" name="birthDay"
                   value="<%=session.getAttribute("birthDay")%>"></p>
     </div>
     <div class="tableRow">
-        <p> Email </p>
+        <p> Email: </p>
         <p><input type="email" name="email"
                   value="<%=session.getAttribute("email")%>" placeholder="user@mail.ru"></p>
     </div>
@@ -65,12 +59,11 @@
         <p></p>
         <p>
             <input id="buttonSave" type="submit" value="Save change">
-            <%--<input id="buttonDelete" type="button" value="Delete user">--%>
-            <input id="buttonDelete" type="submit" value="Delete user"
-                   formaction="<%=request.getContextPath()%>/userdelete?id=<%=session.getAttribute("id")%>"
-                   formmethod="get">
-            <input type="submit" value="Back"
-                   formaction="<%=request.getContextPath()%>/views/UserView.jsp">
+            <%--<input type="submit" value="Back"--%>
+                   <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
+            <input type="button" value="Back"
+                   onclick="document.location.href=
+                           '<%=request.getContextPath()%>/views/UserView.jsp'">
         </p>
     </div>
     <div class="tableRow">
@@ -78,10 +71,13 @@
         <div id="message">
             <%if (session.getAttribute("message") != null) {%>
                 <%=session.getAttribute("message")%>
+                <%session.setAttribute("message", "");%>
             <%}%>
         </div>
     </div>
 </form>
+
+<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
 </body>
 </html>
