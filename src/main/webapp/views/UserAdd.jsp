@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.vladshkerin.models.User" %><%--
   Created by IntelliJ IDEA.
   User: vlad
   Date: 12.04.16
@@ -16,24 +16,21 @@
 
 <p>
     <%
-        if (session.getAttribute("login") != null) {
-    %>Welcome back, <%=session.getAttribute("login")%>.
-    <a href="<%=request.getContextPath()%>/logout">logout</a><%
+    if (session.getAttribute("login") != null) {
+        %>Welcome back, <%=session.getAttribute("login")%>.
+        <a href="<%=request.getContextPath()%>/logout">logout</a><%
     } else {
-    %>Unregistered user!<%
-        }
-%>
+        %>Unregistered user!<%
+    }
+    %>
 </p>
 
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>
 
 <form name="myForm" action="<%=request.getContextPath()%>/useradd"
-      onsubmit="validateForm()" method="post">
-    <div class="tableRow">
-        <p> Id </p>
-        <p><input type="text" name="id" value="" placeholder="00001"></p>
-    </div>
+      onsubmit="return validateForm()" method="post">
+    <input type="hidden" name="id" value="<%=User.getNextId()%>">
     <div class="tableRow">
         <p> Name </p>
         <p><input type="text" name="name" value="" placeholder="Ivan"></p>
@@ -57,26 +54,26 @@
     <div class="tableRow">
         <p></p>
         <p>
-            <input type="submit" name="fname" value="Save change">
-            <input type="submit" value="Back"
-                   formaction="<%=request.getContextPath()%>/views/UserView.jsp">
+            <input id="buttonSave" type="submit" value="Save change">
+            <%--<input type="submit" value="Back"--%>
+                   <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
+            <input type="button" value="Back"
+                   onclick="document.location.href=
+                           '<%=request.getContextPath()%>/views/UserView.jsp'">
         </p>
     </div>
     <div class="tableRow">
         <p></p>
         <div id="message">
+            <%if (session.getAttribute("message") != null) {%>
+                <%=session.getAttribute("message")%>
+                <%session.setAttribute("message", "");%>
+            <%}%>
         </div>
     </div>
 </form>
 
-<script>
-    function validateForm() {
-        var divMessage = document.getElementById("message");
-        divMessage.innerHTML = "TEST!";
-    }
-</script>
-
-<%--<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>--%>
+<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
 </body>
 </html>
