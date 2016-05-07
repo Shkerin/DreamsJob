@@ -10,6 +10,8 @@ import java.util.regex.PatternSyntaxException;
  */
 public class User {
 
+    private static Integer countObject = 0;
+
     private String id;
     private String name;
     private Float growth;
@@ -17,8 +19,8 @@ public class User {
     private String email;
     private String[] children;
 
-    public User(String id, String name, Float growth, Calendar birthDay, String email, String[] children) {
-        this.id = id;
+    public User(String name, Float growth, Calendar birthDay, String email, String[] children) {
+        this.id = generateId();
         this.name = name;
         this.growth = growth;
         this.birthDay = birthDay;
@@ -26,8 +28,8 @@ public class User {
         this.children = children;
     }
 
-    public User(String id, String name) {
-        this(id, name, 0f, new GregorianCalendar(0, 0, 0), "", new String[] {});
+    public User(String name) {
+        this(name, 0f, new GregorianCalendar(0, 0, 0), "", new String[] {});
     }
 
     @Override
@@ -72,12 +74,12 @@ public class User {
         return super.clone();
     }
 
-    public String getId() {
-        return this.id;
+    public static String getNextId() {
+        return String.format("%09d", countObject + 1);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return this.id;
     }
 
     public String getName() {
@@ -190,6 +192,10 @@ public class User {
                 this.children = childrenBuf;
             }
         }
+    }
+
+    private String generateId() {
+        return String.format("%09d", ++countObject);
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {
