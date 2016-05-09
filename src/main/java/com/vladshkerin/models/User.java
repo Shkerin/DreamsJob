@@ -43,30 +43,29 @@ public class User {
             sbChildren.append(child).append(",");
         sbChildren.deleteCharAt(sbChildren.length() - 1).append("]");
 
-        return getClass().getName()
-                + "[id=" + id
-                + ",name=" + name
-                + ",growth=" + growth
-                + ",birthDay=" + strBirthDay
-                + ",children=" + sbChildren
-                + ",email=" + email
-                + "]";
-    }
-
-    @Override
-    public boolean equals(Object otherObject) {
-        if (this == otherObject) return true;
-        if (otherObject == null) return false;
-        if (getClass() != otherObject.getClass()) return false;
-
-        User other = (User) otherObject;
-        return Objects.equals(id, other.id) &&
-                Objects.equals(name, other.name);
+        return getClass().getName() + '[' +
+                "id=" + id +
+                ", name=" + name +
+                ", growth=" + growth +
+                ", birthDay=" + strBirthDay +
+                ", children=" + sbChildren +
+                ", email=" + email + ']';
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        User other = (User) obj;
+        return Objects.equals(id, other.id) &&
+                Objects.equals(name, other.name);
     }
 
     @Override
