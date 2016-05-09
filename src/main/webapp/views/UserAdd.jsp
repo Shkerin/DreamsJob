@@ -1,9 +1,9 @@
-<%@ page import="com.vladshkerin.models.User" %><%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 12.04.16
-  Time: 16:43
-  To change this template use File | Settings | File Templates.
+<%@ page import="com.vladshkerin.models.User" %>
+<%--
+  Page for add user.
+
+  @author Vladimir Shkerin
+  @since 12.04.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>

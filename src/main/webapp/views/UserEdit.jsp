@@ -1,9 +1,8 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 13.04.16
-  Time: 19:54
-  To change this template use File | Settings | File Templates.
+  Page for editing user.
+
+  @author Vladimir Shkerin
+  @since 13.04.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
