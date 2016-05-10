@@ -48,4 +48,14 @@
         <servlet-name>UserDelete</servlet-name>
         <url-pattern>/userdelete</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ItemAdd</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemAdd</servlet-name>
+        <url-pattern>/itemadd</url-pattern>
+    </servlet-mapping>
 </web-app>
