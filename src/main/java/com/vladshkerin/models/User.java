@@ -10,7 +10,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class User {
 
-    private static Integer countObject = 0;
+    private static Integer userCount = 0;
 
     private String id;
     private String name;
@@ -74,7 +74,7 @@ public class User {
     }
 
     public static String getNextId() {
-        return String.format("%09d", countObject + 1);
+        return String.format("%09d", userCount + 1);
     }
 
     public String getId() {
@@ -194,7 +194,7 @@ public class User {
     }
 
     private String generateId() {
-        return String.format("%09d", ++countObject);
+        return String.format("%09d", ++userCount);
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {

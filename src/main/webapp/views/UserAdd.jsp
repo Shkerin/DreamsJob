@@ -28,8 +28,8 @@
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>
 
-<form name="myForm" action="<%=request.getContextPath()%>/useradd"
-      onsubmit="return validateForm()" method="post">
+<form action="<%=request.getContextPath()%>/useradd"
+      onsubmit="return validateFormUser()" method="post">
     <input type="hidden" name="id" value="<%=User.getNextId()%>">
     <div class="tableRow">
         <p> Name </p>

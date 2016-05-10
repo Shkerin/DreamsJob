@@ -1,9 +1,8 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 22.03.16
-  Time: 19:21
-  To change this template use File | Settings | File Templates.
+  The main project page DreamsJob.
+
+  @author Vladimir Shkerin
+  @since 22.03.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -26,8 +25,12 @@
         </p>
         <%
     } else if (login != null) {
-        %>Welcome back, <%=session.getAttribute("login")%>.
-            <a href="<%=request.getContextPath()%>/logout">logout</a><%
+        %>
+        <p>
+            Welcome back, <%=session.getAttribute("login")%>.
+            <a href="<%=request.getContextPath()%>/logout">logout</a>
+        </p>
+        <%
     } else {
         %>Unregistered user!<%
     }
@@ -35,6 +38,10 @@
 
 <div>
     <a href="<%=request.getContextPath()%>/views/UserView.jsp">List users</a>
+</div>
+<br>
+<div>
+    <a href="<%=request.getContextPath()%>/views/ItemView.jsp">List items</a>
 </div>
 
 </body>

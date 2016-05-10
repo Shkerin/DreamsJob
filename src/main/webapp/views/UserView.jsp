@@ -28,10 +28,6 @@
 
 <h1>List users:</h1>
 
-<div>
-    <%=request.getContextPath()%>
-</div>
-
 <table>
     <tr>
         <th class="right">Name</th>
@@ -44,7 +40,8 @@
     <% for (User user : UserService.getInstance().getAll()) { %>
     <tr>
         <td class="right">
-            <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>"><%= user.getName() %>
+            <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>">
+                <%= user.getName() %>
             </a>
         </td>
         <td class="right">
