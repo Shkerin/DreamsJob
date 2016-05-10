@@ -1,6 +1,7 @@
 package com.vladshkerin.servlets;
 
 import com.vladshkerin.models.Item;
+import com.vladshkerin.models.User;
 import com.vladshkerin.services.ItemService;
 
 import javax.servlet.ServletException;
@@ -30,8 +31,10 @@ public class ItemAddServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String errorValues = ItemService.getInstance().validateForm(itemPropertiesMap);
         if (errorValues.isEmpty()) {
+            //TODO set current user
+            Item item = new Item(new User("testUser"));
             String name = itemPropertiesMap.get("name");
-            Item item = new Item(name);
+            item.setName(name);
             item.setName(itemPropertiesMap.get("name"));
             item.setDesc(itemPropertiesMap.get("desc"));
             ItemService.getInstance().add(item);
