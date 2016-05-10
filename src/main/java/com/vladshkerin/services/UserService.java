@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * TODO: comment
+ * Class for control users.
  *
  * @author Vladimir Shkerin
  * @since 13.03.2016
@@ -40,11 +40,11 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        return this.users;
+        return users;
     }
 
     public void add(final User user) {
-        this.users.add(user);
+        users.add(user);
     }
 
     public User get(String id) throws NotFoundUser {
@@ -54,6 +54,15 @@ public class UserService {
             }
         }
         throw new NotFoundUser("User not fount to \"id\"" + id);
+    }
+
+    public User getToName(String name) throws NotFoundUser {
+        for (User user : users) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+        throw new NotFoundUser("User not fount to \"name\"" + name);
     }
 
     public void delete(String id) {
