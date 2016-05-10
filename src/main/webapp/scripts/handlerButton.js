@@ -1,9 +1,8 @@
 /**
- * TODO: comment
- * Created by vlad on 14.04.16.
+ * Form validation.
  */
 
-function validateForm() {
+function validateFormUser() {
     var fieldValues = [
         {name: "Id", value: document.getElementsByName("id")[0].value},
         {name: "Name", value: document.getElementsByName("name")[0].value},
@@ -24,14 +23,39 @@ function validateForm() {
     }
 
     if (errorValues.length > 0) {
-        var testMessage = "Incorrect input values: " + errorValues + " !";
-        var message = document.getElementById("message");
-        message.innerHTML = testMessage;
-        message.setAttribute("style", "color: red");
-        // alert(testMessage);
-
+        outputMessage(errorValues);
         return false;
     }
 
     return true;
+}
+
+function validateFormItem() {
+    var fieldValues = [
+        {name: "Id", value: document.getElementsByName("id")[0].value},
+        {name: "Name", value: document.getElementsByName("name")[0].value},
+        {name: "Desc", value: document.getElementsByName("desc")[0].value},
+    ];
+
+    var errorValues = [];
+    for (var i = 0; i < fieldValues.length; i++) {
+        if (fieldValues[i].value.trim() === "") {
+            errorValues[errorValues.length] = fieldValues[i].name;
+        }
+    }
+
+    if (errorValues.length > 0) {
+        outputMessage(errorValues);
+        return false;
+    }
+
+    return true;
+}
+
+function outputMessage(errorValues) {
+    var testMessage = "Incorrect input values: " + errorValues + " !";
+    var message = document.getElementById("message");
+    message.innerHTML = testMessage;
+    message.setAttribute("style", "color: red");
+    // alert(testMessage);
 }
