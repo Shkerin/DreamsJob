@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Class to store items user.
+ *
+ * @author Vladimir Shkerin
+ * @since 09.05.2016
  */
 public class Item {
 

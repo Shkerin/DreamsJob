@@ -1,5 +1,8 @@
 /**
  * Form validation.
+ *
+ * @author Vladimir Shkerin
+ * @since 26.04.2016
  */
 
 function validateFormUser() {
@@ -34,7 +37,7 @@ function validateFormItem() {
     var fieldValues = [
         {name: "Id", value: document.getElementsByName("id")[0].value},
         {name: "Name", value: document.getElementsByName("name")[0].value},
-        {name: "Desc", value: document.getElementsByName("desc")[0].value},
+        {name: "Desc", value: document.getElementsByName("desc")[0].value}
     ];
 
     var errorValues = [];

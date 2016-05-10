@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: comment
+ * The servlet class for edit user.
  *
  * @author Vladimir Shkerin
  * @since 13.04.2016

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * TODO: comment
+ * The servlet class to test the methods of a servlet.
  *
  * @author Vladimir Shkerin
  * @since 13.03.2016

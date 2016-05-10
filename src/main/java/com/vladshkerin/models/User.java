@@ -7,6 +7,9 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Class to store the users id and name.
+ *
+ * @author Vladimir Shkerin
+ * @since 13.04.2016
  */
 public class User {
 

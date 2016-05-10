@@ -1,7 +1,7 @@
 package com.vladshkerin.homework;
 
 /**
- * TODO: comment
+ * The class for safe increase of values in different threads.
  *
  * @author Vladimir Shkerin
  * @since 22.03.2016

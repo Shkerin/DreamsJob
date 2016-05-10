@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * TODO: comment
+ * The servlet class for delete user.
  *
  * @author Vladimir Shkerin
  * @since 26.04.2016

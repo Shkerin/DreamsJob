@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * TODO: comment
+ * The servlet class to logout user.
  *
  * @author Vladimir Shkerin
  * @since 13.04.2016

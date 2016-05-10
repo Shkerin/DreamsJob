@@ -12,7 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * TODO: comment
+ * The servlet class to count value.
  *
  * @author Vladimir Shkerin
  * @since 16.03.2016

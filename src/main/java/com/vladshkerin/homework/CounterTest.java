@@ -5,6 +5,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Class for testing multithreading increment counter.
+ *
+ * @author Vladimir Shkerin
+ * @since 22.03.2016
  */
 public class CounterTest {
 

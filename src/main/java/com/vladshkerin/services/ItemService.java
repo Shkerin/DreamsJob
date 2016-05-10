@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Class for control items.
  *
- * @author vlad
+ * @author Vladimir Shkerin
  * @since 09.05.2016
  */
 public class ItemService {

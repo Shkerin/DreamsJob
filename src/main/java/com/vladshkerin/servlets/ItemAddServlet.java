@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * The servlet class to add item.
  *
- * @author vlad
+ * @author Vladimir Shkerin
  * @since 09.05.2016
  */
 public class ItemAddServlet extends HttpServlet {

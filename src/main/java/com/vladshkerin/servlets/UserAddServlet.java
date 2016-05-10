@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: comment
+ * The servlet class for add user.
  *
  * @author Vladimir Shkerin
  * @since 12.04.2016

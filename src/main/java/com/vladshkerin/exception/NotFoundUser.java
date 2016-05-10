@@ -1,7 +1,7 @@
 package com.vladshkerin.exception;
 
 /**
- * TODO: comment
+ * Exception class for lack of user.
  *
  * @author Vladimir Shkerin
  * @since 13.03.2016

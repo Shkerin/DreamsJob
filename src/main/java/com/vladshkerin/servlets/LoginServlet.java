@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * TODO: comment
+ * The servlet class to login user.
  *
  * @author Vladimir Shkerin
  * @since 13.04.2016
