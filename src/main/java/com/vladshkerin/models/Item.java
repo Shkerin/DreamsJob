@@ -1,5 +1,8 @@
 package com.vladshkerin.models;
 
+import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.services.UserService;
+
 import java.util.Objects;
 
 /**
@@ -8,14 +11,75 @@ import java.util.Objects;
  * @author Vladimir Shkerin
  * @since 09.05.2016
  */
-public class Item {
+public class Item implements Cloneable {
 
-    private static Integer itemCount = 0;
+    private static int itemCount = 0;
 
     private String id;
     private User user;
     private String name;
     private String desc;
+
+    public static void main(String[] args) {
+        User user1 = null;
+        User user2 = null;
+        try {
+            user1 = UserService.getInstance().getToName("Petr");
+            user2 = UserService.getInstance().getToName("Olga");
+        } catch (NotFoundUser ex) {
+            ex.printStackTrace();
+        }
+
+        // Test constructors and clone()
+        Item item00 = null;
+        Item item11 = new Item(user1);
+        Item item21 = item11;
+        Item item31 = null;
+        try {
+            item31 = item11.clone();
+        } catch (CloneNotSupportedException ex) {
+            ex.printStackTrace();
+        }
+        Item item44 = new Item(user2, "two name", "two desc");
+        Item item54 = new Item(user2, "two name", "two desc");
+        Item item66 = new Item(new User("temp"), "", "");
+
+        // Test method toString()
+        System.out.println("Test method toString():");
+        System.out.println("item00: " + item00);
+        System.out.println("item11: " + item11);
+        System.out.println("item21: " + item21);
+        System.out.println("item31: " + item31);
+        System.out.println("item44: " + item44);
+        System.out.println("item54: " + item54);
+        System.out.println("item66: " + item66);
+
+        // Test method equals()
+        System.out.println("\nTest method equals():");
+        System.out.println("TRUE: item11.equals(item11) = " + item11.equals(item11));
+        System.out.println("TRUE: item11.equals(item21) = " + item11.equals(item21));
+        System.out.println("TRUE: item21.equals(item11) = " + item21.equals(item11));
+        System.out.println("TRUE: item21.equals(item31) = " + item21.equals(item31));
+        System.out.println("TRUE: item31.equals(item11) = " + item31.equals(item11));
+        System.out.println("FALSE: item11.equals(item00) = " + item11.equals(item00));
+        System.out.println("FALSE: item44.equals(item54) = " + item44.equals(item54));
+        System.out.println("FALSE: item11.equals(item44) = " + item11.equals(item44));
+
+        // Test method hashCode()
+        System.out.println("\nTest method hashCode():");
+        System.out.println("TRUE: item11.hashCode() == item11.hashCode() = "
+                + (item11.hashCode() == item11.hashCode()));
+        System.out.println("TRUE: item11.hashCode() == item21.hashCode() = "
+                + (item11.hashCode() == item21.hashCode()));
+        System.out.println("TRUE: item21.hashCode() == item11.hashCode() = "
+                + (item21.hashCode() == item11.hashCode()));
+        System.out.println("TRUE: item31.hashCode() == item11.hashCode() = "
+                + (item31.hashCode() == item11.hashCode()));
+        System.out.println("FALSE: item44.hashCode() == item54.hashCode() = "
+                + (item44.hashCode() == item54.hashCode()));
+        System.out.println("FALSE: item11.hashCode() == item44.hashCode() = "
+                + (item11.hashCode() == item44.hashCode()));
+    }
 
     public Item(User user, String name, String desc) {
         this.id = generatedId();
@@ -24,38 +88,39 @@ public class Item {
         this.desc = desc;
     }
 
-    public Item(String name) {
-        this(new User("temp"), name, "");
+    public Item(User user) {
+        this(user, "", "");
     }
 
     @Override
     public String toString() {
-        return getClass().getName() + '[' +
-                "user=" + user +
-                ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' + ']';
+        return getClass().getName() +
+                "{id=" + id +
+                ", user=" + user +
+                ", name=" + name +
+                ", desc=" + desc +
+                '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, name, desc);
+        return Objects.hash(id);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Item other = (Item) obj;
-        return Objects.equals(user, other.user) &&
-                Objects.equals(name, other.name) &&
-                Objects.equals(desc, other.desc);
+        return Objects.equals(id, other.id);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected Item clone() throws CloneNotSupportedException {
+        Item other = (Item) super.clone();
+        other.user = other.user.clone();
+        return other;
     }
 
     public static String getNextId() {
@@ -95,6 +160,6 @@ public class Item {
     }
 
     private String generatedId() {
-        return String.format("%d09", ++itemCount);
+        return String.format("%09d", ++itemCount);
     }
 }

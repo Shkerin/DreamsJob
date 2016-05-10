@@ -11,9 +11,9 @@ import java.util.regex.PatternSyntaxException;
  * @author Vladimir Shkerin
  * @since 13.04.2016
  */
-public class User {
+public class User implements Cloneable {
 
-    private static Integer userCount = 0;
+    private static int userCount = 0;
 
     private String id;
     private String name;
@@ -21,6 +21,61 @@ public class User {
     private Calendar birthDay;
     private String email;
     private String[] children;
+
+    public static void main(String[] args) {
+        Calendar cal = new GregorianCalendar(1980, 5, 10);
+        String[] child = new String[]{"Sviatoslav", "Eva"};
+
+        // Test constructors and clone()
+        User user00 = null;
+        User user11 = new User("User11");
+        User user21 = user11;
+        User user31 = null;
+        try {
+            user31 = user11.clone();
+        } catch (CloneNotSupportedException ex) {
+            ex.printStackTrace();
+        }
+        User user44 = new User("User44", 22.5f, cal, "user1@mail.ru", child);
+        User user54 = new User("User54", 22.5f, cal, "user1@mail.ru", child);
+        User user66 = new User("User66", 0f, new GregorianCalendar(), "", new String[]{});
+
+        // Test method toString()
+        System.out.println("Test method toString():");
+        System.out.println("user00: " + user00);
+        System.out.println("user11: " + user11);
+        System.out.println("user21: " + user21);
+        System.out.println("user31: " + user31);
+        System.out.println("user44: " + user44);
+        System.out.println("user54: " + user54);
+        System.out.println("user66: " + user66);
+
+        // Test method equals()
+        System.out.println("\nTest method equals():");
+        System.out.println("TRUE: user11.equals(user11) = " + user11.equals(user11));
+        System.out.println("TRUE: user11.equals(user21) = " + user11.equals(user21));
+        System.out.println("TRUE: user21.equals(user11) = " + user21.equals(user11));
+        System.out.println("TRUE: user21.equals(user31) = " + user21.equals(user31));
+        System.out.println("TRUE: user31.equals(user11) = " + user31.equals(user11));
+        System.out.println("FALSE: user11.equals(user00) = " + user11.equals(user00));
+        System.out.println("FALSE: user44.equals(user54) = " + user44.equals(user54));
+        System.out.println("FALSE: user11.equals(user44) = " + user11.equals(user44));
+
+        // Test method hashCode()
+        System.out.println("\nTest method hashCode():");
+        System.out.println("TRUE: user11.hashCode() == user11.hashCode() = "
+                + (user11.hashCode() == user11.hashCode()));
+        System.out.println("TRUE: user11.hashCode() == user21.hashCode() = "
+                + (user11.hashCode() == user21.hashCode()));
+        System.out.println("TRUE: user21.hashCode() == user11.hashCode() = "
+                + (user21.hashCode() == user11.hashCode()));
+        System.out.println("TRUE: user31.hashCode() == user11.hashCode() = "
+                + (user31.hashCode() == user11.hashCode()));
+        System.out.println("FALSE: user44.hashCode() == user54.hashCode() = "
+                + (user44.hashCode() == user54.hashCode()));
+        System.out.println("FALSE: user11.hashCode() == user44.hashCode() = "
+                + (user11.hashCode() == user44.hashCode()));
+    }
 
     public User(String name, Float growth, Calendar birthDay, String email, String[] children) {
         this.id = generateId();
@@ -32,48 +87,44 @@ public class User {
     }
 
     public User(String name) {
-        this(name, 0f, new GregorianCalendar(0, 0, 0), "", new String[] {});
+        this(name, 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
     }
 
     @Override
     public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String strBirthDay = format.format(birthDay.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String strBirthDay = dateFormat.format(birthDay.getTime());
 
-        StringBuilder sbChildren = new StringBuilder();
-        sbChildren.append("[");
-        for (String child : children)
-            sbChildren.append(child).append(",");
-        sbChildren.deleteCharAt(sbChildren.length() - 1).append("]");
-
-        return getClass().getName() + '[' +
-                "id=" + id +
+        return getClass().getName() +
+                "{id=" + id +
                 ", name=" + name +
                 ", growth=" + growth +
                 ", birthDay=" + strBirthDay +
-                ", children=" + sbChildren +
-                ", email=" + email + ']';
+                ", email=" + email +
+                ", children=" + Arrays.toString(children) +
+                '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         User other = (User) obj;
-        return Objects.equals(id, other.id) &&
-                Objects.equals(name, other.name);
+        return Objects.equals(id, other.id);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected User clone() throws CloneNotSupportedException {
+        User other = (User) super.clone();
+        other.birthDay = (Calendar) birthDay.clone();
+        other.children = children.clone();
+        return other;
     }
 
     public static String getNextId() {
