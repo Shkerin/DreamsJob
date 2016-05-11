@@ -1,7 +1,7 @@
 <%@ page import="com.vladshkerin.models.Item" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
 <%--
-  Page to display items.
+  The page to display items.
 
   @author Vladimir Shkerin
   @since 09.05.2016

@@ -1,7 +1,7 @@
 <%@ page import="com.vladshkerin.models.User" %>
 <%@ page import="com.vladshkerin.services.UserService" %>
 <%--
-  Page to display users.
+  Tne page to display users.
 
   @author Vladimir Shkerin
   @since 06.04.2016
