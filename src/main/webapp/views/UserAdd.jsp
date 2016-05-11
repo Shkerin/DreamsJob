@@ -14,16 +14,7 @@
 </head>
 <body>
 
-<p>
-    <%
-    if (session.getAttribute("login") != null) {
-        %>Welcome back, <%=session.getAttribute("login")%>.
-        <a href="<%=request.getContextPath()%>/logout">logout</a><%
-    } else {
-        %>Unregistered user!<%
-    }
-    %>
-</p>
+<jsp:include page="include/UserRegistrationInfo.jsp"></jsp:include>
 
 <h1>Add user:</h1>
 <h2>Fill out the form below and click "add user" to add</h2>

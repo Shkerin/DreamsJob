@@ -24,15 +24,10 @@
             </form>
         </p>
         <%
-    } else if (login != null) {
-        %>
-        <p>
-            Welcome back, <%=session.getAttribute("login")%>.
-            <a href="<%=request.getContextPath()%>/logout">logout</a>
-        </p>
-        <%
     } else {
-        %>Unregistered user!<%
+        %>
+        <%@ include file="views/include/UserRegistrationInfo.jsp"%>
+        <%
     }
 %>
 
