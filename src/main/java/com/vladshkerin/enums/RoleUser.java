@@ -1,12 +1,17 @@
 package com.vladshkerin.enums;
 
 /**
- * The enum for role user.
+ * The enum for roles users.
  *
  * @author Vladimir Shkerin
  * @since 10.05.2016
  */
 public enum RoleUser {
     USER,
-    ADMIN
+    ADMIN;
+
+    @Override
+    public String toString() {
+        return this.equals(ADMIN) ? "admin" : "user";
+    }
 }
