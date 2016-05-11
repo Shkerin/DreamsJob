@@ -1,12 +1,9 @@
 package com.vladshkerin.models;
 
-import com.vladshkerin.exception.NotFoundUser;
-import com.vladshkerin.services.UserService;
-
 import java.util.Objects;
 
 /**
- * Class to store items user.
+ * The class to store items user.
  *
  * @author Vladimir Shkerin
  * @since 09.05.2016
@@ -21,14 +18,8 @@ public class Item implements Cloneable {
     private String desc;
 
     public static void main(String[] args) {
-        User user1 = null;
-        User user2 = null;
-        try {
-            user1 = UserService.getInstance().getToName("Petr");
-            user2 = UserService.getInstance().getToName("Olga");
-        } catch (NotFoundUser ex) {
-            ex.printStackTrace();
-        }
+        User user1 = new User("user1");
+        User user2 = new User("user2");
 
         // Test constructors and clone()
         Item item00 = null;
