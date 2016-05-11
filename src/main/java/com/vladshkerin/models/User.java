@@ -113,12 +113,12 @@ public class User implements Cloneable {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
