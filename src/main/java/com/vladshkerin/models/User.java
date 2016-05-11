@@ -1,12 +1,14 @@
 package com.vladshkerin.models;
 
+import com.vladshkerin.enums.RoleUser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * Class to store the users id and name.
+ * The class to store the users id and name.
  *
  * @author Vladimir Shkerin
  * @since 13.04.2016
@@ -21,8 +23,11 @@ public class User implements Cloneable {
     private Calendar birthDay;
     private String email;
     private String[] children;
+    private Role role;
 
     public static void main(String[] args) {
+        Role roleAdmin = new Role(RoleUser.ADMIN);
+        Role roleUser = new Role(RoleUser.USER);
         Calendar cal = new GregorianCalendar(1980, 5, 10);
         String[] child = new String[]{"Sviatoslav", "Eva"};
 
@@ -36,9 +41,9 @@ public class User implements Cloneable {
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
-        User user44 = new User("User44", 22.5f, cal, "user1@mail.ru", child);
-        User user54 = new User("User54", 22.5f, cal, "user1@mail.ru", child);
-        User user66 = new User("User66", 0f, new GregorianCalendar(), "", new String[]{});
+        User user44 = new User("User44", roleUser, 22.5f, cal, "user1@mail.ru", child);
+        User user54 = new User("User54", roleUser, 22.5f, cal, "user1@mail.ru", child);
+        User user66 = new User("User66", roleAdmin, 0f, new GregorianCalendar(), "", new String[]{});
 
         // Test method toString()
         System.out.println("Test method toString():");
@@ -77,8 +82,9 @@ public class User implements Cloneable {
                 + (user11.hashCode() == user44.hashCode()));
     }
 
-    public User(String name, Float growth, Calendar birthDay, String email, String[] children) {
+    public User(String name, Role role, Float growth, Calendar birthDay, String email, String[] children) {
         this.id = generateId();
+        this.role = role;
         this.name = name;
         this.growth = growth;
         this.birthDay = birthDay;
@@ -87,7 +93,7 @@ public class User implements Cloneable {
     }
 
     public User(String name) {
-        this(name, 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
+        this(name, new Role(RoleUser.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
     }
 
     @Override
@@ -98,6 +104,7 @@ public class User implements Cloneable {
         return getClass().getName() +
                 "{id=" + id +
                 ", name=" + name +
+                ", role" + role.toString() +
                 ", growth=" + growth +
                 ", birthDay=" + strBirthDay +
                 ", email=" + email +
@@ -106,7 +113,7 @@ public class User implements Cloneable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(id);
     }
 
@@ -122,6 +129,7 @@ public class User implements Cloneable {
     @Override
     protected User clone() throws CloneNotSupportedException {
         User other = (User) super.clone();
+        other.role = role.clone();
         other.birthDay = (Calendar) birthDay.clone();
         other.children = children.clone();
         return other;
@@ -245,6 +253,14 @@ public class User implements Cloneable {
                 this.children = childrenBuf;
             }
         }
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    protected void setRole(Role role) {
+        this.role = role;
     }
 
     private String generateId() {
