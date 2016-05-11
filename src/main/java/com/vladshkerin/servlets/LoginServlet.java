@@ -1,5 +1,9 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.services.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +19,24 @@ import java.io.IOException;
  */
 public class LoginServlet extends HttpServlet {
 
-//    private static HttpSession session;
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+
+        String role;
+        try {
+            role = UserService.getInstance().getToName(login).getRole().getName();
+        } catch (NotFoundUser ex) {
+            role = RoleUser.USER.toString();
+        }
+
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(Integer.MAX_VALUE);
         synchronized (session) {
             session.setAttribute("login", login);
             session.setAttribute("password", password);
+            session.setAttribute("role", role);
         }
         resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }

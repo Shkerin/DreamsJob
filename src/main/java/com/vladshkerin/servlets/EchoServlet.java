@@ -1,5 +1,7 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
 import javax.servlet.ServletException;
@@ -47,6 +49,10 @@ public class EchoServlet extends HttpServlet {
         String[] children = req.getParameterValues("children");
         Calendar birthDay = Calendar.getInstance();
         String email = req.getParameter("email");
+
+        String roleStr = req.getParameter("role");
+        Role role = "admin".equals(roleStr) ? new Role(RoleUser.ADMIN) : new Role(RoleUser.USER);
+
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date date = format.parse(req.getParameter("birthDay"));
@@ -54,7 +60,7 @@ public class EchoServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        syncUserList.add(new User(name, growth, birthDay, email, children));
+        syncUserList.add(new User(name, role, growth, birthDay, email, children));
     }
 
     @Override

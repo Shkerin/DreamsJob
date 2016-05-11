@@ -1,6 +1,8 @@
 package com.vladshkerin.services;
 
+import com.vladshkerin.enums.RoleUser;
 import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
 import java.util.GregorianCalendar;
@@ -21,6 +23,8 @@ public class UserService {
     private final List<User> users = new CopyOnWriteArrayList<>();
 
     private UserService() {
+        Role roleAdmin = new Role(RoleUser.ADMIN);
+        Role roleUser = new Role(RoleUser.USER);
         GregorianCalendar calendar1 = new GregorianCalendar(1970, 3, 4);
         GregorianCalendar calendar2 = new GregorianCalendar(1985, 5, 6);
         GregorianCalendar calendar3 = new GregorianCalendar(1995, 7, 8);
@@ -28,9 +32,10 @@ public class UserService {
         String[] children2 = new String[]{"Sviatoslav", "Eva"};
         String[] children3 = new String[]{"Maria", "Sergio", "Irina"};
 
-        users.add(new User("Petr", 145f, calendar1, "petr@email.ru", children1));
-        users.add(new User("Erik", 150f, calendar2, "erik@email.ru", children2));
-        users.add(new User("Make", 160f, calendar3, "make@email.ru", children3));
+        users.add(new User("admin", roleAdmin, 145f, calendar1, "admin@admin.ru", children1));
+        users.add(new User("user", roleUser, 145f, calendar1, "vlad@admin.ru", children1));
+        users.add(new User("Elena", roleUser, 150f, calendar2, "elena@mail.ru", children2));
+        users.add(new User("Sviatoslav", roleUser, 160f, calendar3, "sviat@ya.ru", children3));
         users.add(new User("Nikita"));
         users.add(new User("Olga"));
     }
