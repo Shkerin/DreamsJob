@@ -68,6 +68,10 @@ public class Role implements Cloneable {
         this.roleUser = roleUser;
     }
 
+    public Role() {
+        this.roleUser = RoleUser.USER;
+    }
+
     @Override
     public String toString() {
         return getClass().getName() +
@@ -94,5 +98,9 @@ public class Role implements Cloneable {
         Role other = (Role) super.clone();
         other.roleUser = roleUser;
         return other;
+    }
+
+    public String getName() {
+        return roleUser.toString();
     }
 }
