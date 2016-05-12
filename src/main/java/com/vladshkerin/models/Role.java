@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author Vladimir Shkerin
  * @since 10.05.2016
  */
-public class Role implements Cloneable {
+public class Role {
 
     private RoleUser roleUser;
 
@@ -19,12 +19,7 @@ public class Role implements Cloneable {
         Role role0 = null;
         Role role1 = new Role(RoleUser.USER);
         Role role2 = role1;
-        Role role3 = null;
-        try {
-            role3 = role1.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        Role role3 = role2;
         Role role4 = new Role(RoleUser.ADMIN);
         Role role5 = new Role(RoleUser.ADMIN);
 
@@ -91,13 +86,6 @@ public class Role implements Cloneable {
     @Override
     public int hashCode() {
         return Objects.hash(roleUser);
-    }
-
-    @Override
-    protected Role clone() throws CloneNotSupportedException {
-        Role other = (Role) super.clone();
-        other.roleUser = roleUser;
-        return other;
     }
 
     public String getName() {

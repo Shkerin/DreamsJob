@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Vladimir Shkerin
  * @since 09.05.2016
  */
-public class Item implements Cloneable {
+public class Item {
 
     private static int itemCount = 0;
 
@@ -25,12 +25,7 @@ public class Item implements Cloneable {
         Item item00 = null;
         Item item11 = new Item(user1);
         Item item21 = item11;
-        Item item31 = null;
-        try {
-            item31 = item11.clone();
-        } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
-        }
+        Item item31 = item21;
         Item item44 = new Item(user2, "two name", "two desc");
         Item item54 = new Item(user2, "two name", "two desc");
         Item item66 = new Item(new User("temp"), "", "");
@@ -105,13 +100,6 @@ public class Item implements Cloneable {
 
         Item other = (Item) obj;
         return Objects.equals(id, other.id);
-    }
-
-    @Override
-    protected Item clone() throws CloneNotSupportedException {
-        Item other = (Item) super.clone();
-        other.user = other.user.clone();
-        return other;
     }
 
     public static String getNextId() {

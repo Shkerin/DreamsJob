@@ -13,7 +13,7 @@ import java.util.regex.PatternSyntaxException;
  * @author Vladimir Shkerin
  * @since 13.04.2016
  */
-public class User implements Cloneable {
+public class User {
 
     private static int userCount = 0;
 
@@ -35,12 +35,7 @@ public class User implements Cloneable {
         User user00 = null;
         User user11 = new User("User11");
         User user21 = user11;
-        User user31 = null;
-        try {
-            user31 = user11.clone();
-        } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
-        }
+        User user31 = user21;
         User user44 = new User("User44", roleUser, 22.5f, cal, "user1@mail.ru", child);
         User user54 = new User("User54", roleUser, 22.5f, cal, "user1@mail.ru", child);
         User user66 = new User("User66", roleAdmin, 0f, new GregorianCalendar(), "", new String[]{});
@@ -124,15 +119,6 @@ public class User implements Cloneable {
 
         User other = (User) obj;
         return Objects.equals(id, other.id);
-    }
-
-    @Override
-    protected User clone() throws CloneNotSupportedException {
-        User other = (User) super.clone();
-        other.role = role.clone();
-        other.birthDay = (Calendar) birthDay.clone();
-        other.children = children.clone();
-        return other;
     }
 
     public static String getNextId() {
