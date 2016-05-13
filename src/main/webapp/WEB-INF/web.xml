@@ -58,4 +58,18 @@
         <servlet-name>ItemAdd</servlet-name>
         <url-pattern>/itemadd</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LifeCycleServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.LifeCycleServlet</servlet-class>
+        <init-param>
+            <param-name>adminEmail</param-name>
+            <param-value>admin@gmail.com</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LifeCycleServlet</servlet-name>
+        <url-pattern>/lifecycle</url-pattern>
+    </servlet-mapping>
 </web-app>
