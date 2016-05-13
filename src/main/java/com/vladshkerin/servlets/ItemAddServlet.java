@@ -4,6 +4,7 @@ import com.vladshkerin.models.Item;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ItemService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +44,10 @@ public class ItemAddServlet extends HttpServlet {
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
             setSessionAttribute("message", message, session);
-            // alert ????
         }
-        resp.sendRedirect(String.format("%s/views/ItemAdd.jsp", req.getContextPath()));
-
+//        resp.sendRedirect(String.format("%s/views/ItemAdd.jsp", req.getContextPath()));
+        RequestDispatcher rd = req.getRequestDispatcher("/views/ItemAdd.jsp");
+        rd.forward(req, resp);
     }
 
     private void setSessionAttribute(String name, Object value, HttpSession session) {

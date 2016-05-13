@@ -4,6 +4,7 @@ import com.vladshkerin.enums.RoleUser;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.services.UserService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("password", password);
             session.setAttribute("role", role);
         }
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+//        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+        RequestDispatcher rd = req.getRequestDispatcher(String.format("%s/index.jsp", req.getContextPath()));
+        rd.forward(req, resp);
     }
 }

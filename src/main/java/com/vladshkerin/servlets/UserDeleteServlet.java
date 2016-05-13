@@ -2,6 +2,7 @@ package com.vladshkerin.servlets;
 
 import com.vladshkerin.services.UserService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,9 @@ public class UserDeleteServlet extends HttpServlet {
         if (!identify.isEmpty()) {
             UserService.getInstance().delete(identify);
         }
-        resp.sendRedirect(String.format("%s/views/UserView.jsp", req.getContextPath()));
+//        resp.sendRedirect(String.format("%s/views/UserView.jsp", req.getContextPath()));
+        RequestDispatcher rd = req.getRequestDispatcher("/views/UserView.jsp");
+        rd.forward(req, resp);
     }
 
     @Override
