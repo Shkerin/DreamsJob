@@ -1,6 +1,7 @@
 package com.vladshkerin.models;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The class to store items user.
@@ -10,7 +11,7 @@ import java.util.Objects;
  */
 public class Item {
 
-    private static int itemCount = 0;
+    private static final AtomicInteger itemAtomicCounter = new AtomicInteger(0);
 
     private String id;
     private User user;
@@ -103,7 +104,7 @@ public class Item {
     }
 
     public static String getNextId() {
-        return String.format("%09d", itemCount + 1);
+        return String.format("%09d", itemAtomicCounter.get() + 1);
     }
 
     public String getId() {
@@ -139,6 +140,6 @@ public class Item {
     }
 
     private String generatedId() {
-        return String.format("%09d", ++itemCount);
+        return String.format("%09d", itemAtomicCounter.incrementAndGet());
     }
 }

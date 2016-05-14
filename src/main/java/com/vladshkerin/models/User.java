@@ -5,6 +5,7 @@ import com.vladshkerin.enums.RoleUser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -15,7 +16,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class User {
 
-    private static int userCount = 0;
+    private static final AtomicInteger userAtomicCounter = new AtomicInteger(0);
 
     private String id;
     private String name;
@@ -122,7 +123,7 @@ public class User {
     }
 
     public static String getNextId() {
-        return String.format("%09d", userCount + 1);
+        return String.format("%09d", userAtomicCounter.get() + 1);
     }
 
     public String getId() {
@@ -250,7 +251,7 @@ public class User {
     }
 
     private String generateId() {
-        return String.format("%09d", ++userCount);
+        return String.format("%09d", userAtomicCounter.incrementAndGet());
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {
