@@ -52,9 +52,9 @@ public class UserService {
         users.add(user);
     }
 
-    public User get(String id) throws NotFoundUser {
+    public User get(long id) throws NotFoundUser {
         for (User user : users) {
-            if (user.getId().equals(id)) {
+            if (user.getId() == id) {
                 return user;
             }
         }
@@ -70,14 +70,12 @@ public class UserService {
         throw new NotFoundUser("User not fount to \"name\"" + name);
     }
 
-    public void delete(String id) {
-        if (id != null || !id.isEmpty()) {
-            try {
-                users.remove(this.get(id));
-            } catch (NotFoundUser e) {
-                //TODO add out to log
-                System.out.println(e.getMessage());
-            }
+    public void delete(long id) {
+        try {
+            users.remove(this.get(id));
+        } catch (NotFoundUser e) {
+            //TODO add out to log
+            System.out.println(e.getMessage());
         }
     }
 

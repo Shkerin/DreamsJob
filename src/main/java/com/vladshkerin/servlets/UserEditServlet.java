@@ -27,7 +27,7 @@ public class UserEditServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
-            setSessionAttributeUser(id, session);
+            setSessionAttributeUser(Long.valueOf(id), session);
         }
 //        resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
         RequestDispatcher rd = req.getRequestDispatcher("/views/UserEdit.jsp");
@@ -47,7 +47,7 @@ public class UserEditServlet extends HttpServlet {
         String errorValues = UserService.getInstance().validateForm(userPropertiesMap);
         if (errorValues.isEmpty()) {
             try {
-                User user = UserService.getInstance().get(userPropertiesMap.get("id"));
+                User user = UserService.getInstance().get(Long.valueOf(userPropertiesMap.get("id")));
                 user.setName(userPropertiesMap.get("name"));
                 user.setGrowth(userPropertiesMap.get("growth"));
                 user.setBirthDay(userPropertiesMap.get("birthDay"));
@@ -75,7 +75,7 @@ public class UserEditServlet extends HttpServlet {
         }
     }
 
-    private void setSessionAttributeUser(String id, HttpSession session) {
+    private void setSessionAttributeUser(long id, HttpSession session) {
         try {
             User user = UserService.getInstance().get(id);
             setSessionAttributeUser(user, session);

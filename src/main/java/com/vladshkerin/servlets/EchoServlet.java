@@ -67,7 +67,7 @@ public class EchoServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
 
-        String id = req.getParameter("id");
+        long id = Long.valueOf(req.getParameter("id"));
         String name = req.getParameter("name");
         int index = findIdById(id);
         if (index > -1)
@@ -76,7 +76,7 @@ public class EchoServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        long id = Long.valueOf(req.getParameter("id"));
         int index = findIdById(id);
         if (index > -1)
             syncUserList.remove(index);
@@ -89,11 +89,11 @@ public class EchoServlet extends HttpServlet {
      * @return -1 if element do not find,
      * index element in the collection
      */
-    private int findIdById(String id) {
+    private int findIdById(long id) {
         int index = -1;
         synchronized (syncUserList) {
             for (User user : syncUserList) {
-                if (user.getId().equals(id)) {
+                if (user.getId() == id) {
                     index = syncUserList.indexOf(user);
                     break;
                 }

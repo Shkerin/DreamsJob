@@ -19,9 +19,9 @@ public class UserDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String identify = req.getParameter("id");
-        if (!identify.isEmpty()) {
-            UserService.getInstance().delete(identify);
+        String id = req.getParameter("id");
+        if (!id.isEmpty()) {
+            UserService.getInstance().delete(Long.valueOf(id));
         }
 //        resp.sendRedirect(String.format("%s/views/UserView.jsp", req.getContextPath()));
         RequestDispatcher rd = req.getRequestDispatcher("/views/UserView.jsp");

@@ -16,9 +16,13 @@ import java.util.regex.PatternSyntaxException;
  */
 public class User {
 
-    private static final AtomicInteger userAtomicCounter = new AtomicInteger(0);
+    /* For generating item ID */
+    private static long itemNumber;
+    private static synchronized long nextItemID() {
+        return ++itemNumber;
+    }
 
-    private String id;
+    private long id;
     private String name;
     private Float growth;
     private Calendar birthDay;
@@ -78,8 +82,13 @@ public class User {
                 + (user11.hashCode() == user44.hashCode()));
     }
 
+    //TODO to delete
+    public static String getNextId() {
+        return String.format("%09d", itemNumber + 1);
+    }
+
     public User(String name, Role role, Float growth, Calendar birthDay, String email, String[] children) {
-        this.id = generateId();
+        this.id = nextItemID();
         this.role = role;
         this.name = name;
         this.growth = growth;
@@ -122,11 +131,7 @@ public class User {
         return Objects.equals(id, other.id);
     }
 
-    public static String getNextId() {
-        return String.format("%09d", userAtomicCounter.get() + 1);
-    }
-
-    public String getId() {
+    public long getId() {
         return this.id;
     }
 
@@ -248,10 +253,6 @@ public class User {
 
     protected void setRole(Role role) {
         this.role = role;
-    }
-
-    private String generateId() {
-        return String.format("%09d", userAtomicCounter.incrementAndGet());
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {

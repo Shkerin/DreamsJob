@@ -1,7 +1,6 @@
 package com.vladshkerin.models;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The class to store items user.
@@ -11,9 +10,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Item {
 
-    private static final AtomicInteger itemAtomicCounter = new AtomicInteger(0);
+    /* For generating item ID */
+    private static long itemNumber;
+    private static synchronized long nextItemID() {
+        return ++itemNumber;
+    }
 
-    private String id;
+    private long id;
     private User user;
     private String name;
     private String desc;
@@ -68,8 +71,13 @@ public class Item {
                 + (item11.hashCode() == item44.hashCode()));
     }
 
+    //TODO to delete
+    public static synchronized String getNextID() {
+        return String.format("%09d", itemNumber + 1);
+    }
+
     public Item(User user, String name, String desc) {
-        this.id = generatedId();
+        this.id = nextItemID();
         this.user = user;
         this.name = name;
         this.desc = desc;
@@ -103,15 +111,11 @@ public class Item {
         return Objects.equals(id, other.id);
     }
 
-    public static String getNextId() {
-        return String.format("%09d", itemAtomicCounter.get() + 1);
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -137,9 +141,5 @@ public class Item {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    private String generatedId() {
-        return String.format("%09d", itemAtomicCounter.incrementAndGet());
     }
 }
