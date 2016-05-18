@@ -1,6 +1,6 @@
 <%@ page import="com.vladshkerin.models.Item" %>
 <%--
-  Page for add item.
+  The page for adding a item.
   
   @author Vladimir Shkerin
   @since 09.05.2016
@@ -14,43 +14,54 @@
 </head>
 <body>
 
-<jsp:include page="include/UserRegistrationInfo.jsp"></jsp:include>
+<div id="all_content">
 
-<h1>Add item:</h1>
-<h2>Fill out the form below and click "add item" to add</h2>
+    <jsp:include page="include/PageHead.jsp"></jsp:include>
+    <jsp:include page="include/PageLinks.jsp"></jsp:include>
 
-<form action="<%=request.getContextPath()%>/itemadd"
-      onsubmit="return validateFormItem()" method="post">
-    <input type="hidden" name="id" value="<%=Item.getNextId()%>">
-    <div class="tableRow">
-        <p> Name </p>
-        <p><input type="text" name="name" value="" placeholder="Distribution of orange"></p>
-    </div>
-    <div class="tableRow">
-        <p> Description </p>
-        <p><textarea name="desc"></textarea></p>
-    </div>
-    <div class="tableRow">
-        <p></p>
-        <p>
-            <input id="buttonSave" type="submit" value="Save change">
-            <%--<input type="submit" value="Back"--%>
-                   <%--formaction="<%=request.getContextPath()%>/views/ItemView.jsp">--%>
-            <input type="button" value="Back"
-                   onclick="document.location.href=
-                           '<%=request.getContextPath()%>/views/ItemView.jsp'">
-        </p>
-    </div>
-    <div class="tableRow">
-        <p></p>
-        <div id="message">
-            <%if (session.getAttribute("message") != null) {%>
-                <%=session.getAttribute("message")%>
-                <%session.setAttribute("message", "");%>
-            <%}%>
-        </div>
-    </div>
-</form>
+    <div id="main">
+
+        <h1>Add item:</h1>
+        <h2>Fill out the form below and click "add item" to add</h2>
+
+        <form class="bodyform" action="<%=request.getContextPath()%>/itemadd"
+              onsubmit="return validateFormItem()" method="post">
+            <input type="hidden" name="id" value="<%=Item.getNextID()%>">
+            <div class="tableRow">
+                <p> Name </p>
+                <p><input type="text" name="name" value="" placeholder="Distribution of orange"></p>
+            </div>
+            <div class="tableRow">
+                <p> Description </p>
+                <p><textarea name="desc"></textarea></p>
+            </div>
+            <div class="tableRow">
+                <p></p>
+                <p>
+                    <input id="buttonSave" type="submit" value="Save change">
+                    <%--<input type="submit" value="Back"--%>
+                           <%--formaction="<%=request.getContextPath()%>/views/ItemView.jsp">--%>
+                    <input type="button" value="Back"
+                           onclick="document.location.href=
+                                   '<%=request.getContextPath()%>/views/ItemView.jsp'">
+                </p>
+            </div>
+            <div class="tableRow">
+                <p></p>
+                <div id="message">
+                    <%if (session.getAttribute("message") != null) {%>
+                        <%=session.getAttribute("message")%>
+                        <%session.setAttribute("message", "");%>
+                    <%}%>
+                </div>
+            </div>
+        </form>
+
+    </div> <%--main--%>
+
+    <jsp:include page="include/PageFooter.jsp"></jsp:include>
+
+</div>  <%--all_content--%>
 
 <script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 

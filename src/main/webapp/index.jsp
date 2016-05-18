@@ -12,31 +12,35 @@
 </head>
 <body>
 
-<%
-    Object login = session.getAttribute("login");
-    if (session.isNew() || login == null) {
-        %><h1>User registration</h1>
-        <p>
+<div id="all_content">
+
+    <%@ include file="views/include/PageHead.jsp"%>
+    <%@ include file="views/include/PageLinks.jsp"%>
+
+    <div id="main">
+        <div id="page_registration">
+            <%
+                Object login = session.getAttribute("login");
+                if (session.isNew() || login == null) {
+            %>
+            <h1>User registration</h1>
             <form action="<%=request.getContextPath()%>/login" method="post">
                 login : <input type="text" name="login"><br>
                 password : <input type="password" name="password"><br>
                 <input type="submit">
             </form>
-        </p>
-        <%
-    } else {
-        %>
-        <%@ include file="views/include/UserRegistrationInfo.jsp"%>
-        <%
-    }
-%>
+            <%
+            } else {
+            %>
+                <img src="img/love_job.jpg">
+            <%
+                }
+            %>
+        </div>
+    </div>
 
-<div>
-    <a href="<%=request.getContextPath()%>/views/UserView.jsp">List users</a>
-</div>
-<br>
-<div>
-    <a href="<%=request.getContextPath()%>/views/ItemView.jsp">List items</a>
+    <%@ include file="views/include/PageFooter.jsp"%>
+
 </div>
 
 </body>
