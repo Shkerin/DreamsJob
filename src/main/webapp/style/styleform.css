@@ -1,16 +1,15 @@
 body {
     background:         #efe5d0;
-    margin:             20px;
 }
 
-form {
+form.bodyform {
     display:            table;
     padding:            10px;
     border:             thin dotted #7e7e7e;
     background-color:   #e1ceb8;
 }
 
-form textarea {
+form.bodyform textarea {
     width:              400px;
     height:             100px;
 }

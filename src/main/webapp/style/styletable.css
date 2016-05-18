@@ -1,16 +1,8 @@
-body {
-    /*font-family:        Verdana, Geneva, Arial, sans-serif;*/
-    /*font-size:          small;*/
-    margin:             20px;
-}
-
 a#imageLink {
     border-bottom:      none;
 }
 
 table {
-    /*margin-left:        20px;*/
-    /*margin-right:       20px;*/
     border:             thin solid black;
     caption-side:       inherit;
     border-collapse:    collapse;
