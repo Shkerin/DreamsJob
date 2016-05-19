@@ -60,5 +60,4 @@ function outputMessage(errorValues) {
     var message = document.getElementById("message");
     message.innerHTML = testMessage;
     message.setAttribute("style", "color: red");
-    // alert(testMessage);
 }
