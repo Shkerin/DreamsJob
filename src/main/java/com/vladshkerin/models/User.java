@@ -1,6 +1,7 @@
 package com.vladshkerin.models;
 
 import com.vladshkerin.enums.UserRole;
+import com.vladshkerin.services.TestObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ public class User {
 
     /* For generating item ID */
     private static long itemNumber;
+
     private static synchronized long nextItemID() {
         return ++itemNumber;
     }
@@ -30,10 +32,22 @@ public class User {
     private Role role;
 
     public static void main(String[] args) {
+        test();
+    }
+
+    private static void test() {
+        TestObject testObj = new TestObject();
+        ArrayList<String> list = new ArrayList();
+        LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
+
         Role roleAdmin = new Role(UserRole.ADMIN);
         Role roleUser = new Role(UserRole.USER);
         Calendar cal = new GregorianCalendar(1980, 5, 10);
         String[] child = new String[]{"Sviatoslav", "Eva"};
+
+        System.out.println("***************************************");
+        System.out.println("*               User.java             *");
+        System.out.println("***************************************");
 
         // Test constructors and clone()
         User user00 = null;
@@ -46,39 +60,39 @@ public class User {
 
         // Test method toString()
         System.out.println("Test method toString():");
-        System.out.println("user00: " + user00);
-        System.out.println("user11: " + user11);
-        System.out.println("user21: " + user21);
-        System.out.println("user31: " + user31);
-        System.out.println("user44: " + user44);
-        System.out.println("user54: " + user54);
-        System.out.println("user66: " + user66);
+        list.add("user00: " + user00);
+        list.add("user11: " + user11);
+        list.add("user21: " + user21);
+        list.add("user31: " + user31);
+        list.add("user44: " + user44);
+        list.add("user54: " + user54);
+        list.add("user66: " + user66);
+        testObj.testToString(list);
 
         // Test method equals()
-        System.out.println("\nTest method equals():");
-        System.out.println("TRUE: user11.equals(user11) = " + user11.equals(user11));
-        System.out.println("TRUE: user11.equals(user21) = " + user11.equals(user21));
-        System.out.println("TRUE: user21.equals(user11) = " + user21.equals(user11));
-        System.out.println("TRUE: user21.equals(user31) = " + user21.equals(user31));
-        System.out.println("TRUE: user31.equals(user11) = " + user31.equals(user11));
-        System.out.println("FALSE: user11.equals(user00) = " + user11.equals(user00));
-        System.out.println("FALSE: user44.equals(user54) = " + user44.equals(user54));
-        System.out.println("FALSE: user11.equals(user44) = " + user11.equals(user44));
+        System.out.print("\nTest method equals(): ");
+        map.put("true: user11.equals(user11)", user11.equals(user11));
+        map.put("true: user11.equals(user21)", user11.equals(user21));
+        map.put("true: user21.equals(user11)", user21.equals(user11));
+        map.put("true: user21.equals(user31)", user21.equals(user31));
+        map.put("true: user31.equals(user11)", user31.equals(user11));
+        map.put("false: user11.equals(user00)", !user11.equals(user00));
+        map.put("false: user44.equals(user54)", !user44.equals(user54));
+        map.put("false: user11.equals(user44)", !user11.equals(user44));
+        testObj.testEquals(map);
 
         // Test method hashCode()
-        System.out.println("\nTest method hashCode():");
-        System.out.println("TRUE: user11.hashCode() == user11.hashCode() = "
-                + (user11.hashCode() == user11.hashCode()));
-        System.out.println("TRUE: user11.hashCode() == user21.hashCode() = "
-                + (user11.hashCode() == user21.hashCode()));
-        System.out.println("TRUE: user21.hashCode() == user11.hashCode() = "
-                + (user21.hashCode() == user11.hashCode()));
-        System.out.println("TRUE: user31.hashCode() == user11.hashCode() = "
-                + (user31.hashCode() == user11.hashCode()));
-        System.out.println("FALSE: user44.hashCode() == user54.hashCode() = "
-                + (user44.hashCode() == user54.hashCode()));
-        System.out.println("FALSE: user11.hashCode() == user44.hashCode() = "
-                + (user11.hashCode() == user44.hashCode()));
+        System.out.print("\nTest method hashCode(): ");
+        map.clear();
+        map.put("true: user11.hashCode() == user11.hashCode()", (user11.hashCode() == user11.hashCode()));
+        map.put("true: user11.hashCode() == user21.hashCode()", (user11.hashCode() == user21.hashCode()));
+        map.put("true: user21.hashCode() == user11.hashCode()", (user21.hashCode() == user11.hashCode()));
+        map.put("true: user31.hashCode() == user11.hashCode()", (user31.hashCode() == user11.hashCode()));
+        map.put("false: user44.hashCode() == user54.hashCode()", !(user44.hashCode() == user54.hashCode()));
+        map.put("false: user11.hashCode() == user44.hashCode()", !(user11.hashCode() == user44.hashCode()));
+        testObj.testHashCode(map);
+
+        testObj.printError();
     }
 
     //TODO to delete

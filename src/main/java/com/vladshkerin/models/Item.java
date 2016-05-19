@@ -1,5 +1,9 @@
 package com.vladshkerin.models;
 
+import com.vladshkerin.services.TestObject;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 /**
@@ -12,6 +16,7 @@ public class Item {
 
     /* For generating item ID */
     private static long itemNumber;
+
     private static synchronized long nextItemID() {
         return ++itemNumber;
     }
@@ -22,8 +27,20 @@ public class Item {
     private String desc;
 
     public static void main(String[] args) {
+        test();
+    }
+
+    private static void test() {
+        TestObject testObj = new TestObject();
+        ArrayList<String> list = new ArrayList();
+        LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
+
         User user1 = new User("user1");
         User user2 = new User("user2");
+
+        System.out.println("***************************************");
+        System.out.println("*               Item.java             *");
+        System.out.println("***************************************");
 
         // Test constructors and clone()
         Item item00 = null;
@@ -36,39 +53,39 @@ public class Item {
 
         // Test method toString()
         System.out.println("Test method toString():");
-        System.out.println("item00: " + item00);
-        System.out.println("item11: " + item11);
-        System.out.println("item21: " + item21);
-        System.out.println("item31: " + item31);
-        System.out.println("item44: " + item44);
-        System.out.println("item54: " + item54);
-        System.out.println("item66: " + item66);
+        list.add("item00: " + item00);
+        list.add("item11: " + item11);
+        list.add("item21: " + item21);
+        list.add("item31: " + item31);
+        list.add("item44: " + item44);
+        list.add("item54: " + item54);
+        list.add("item66: " + item66);
+        testObj.testToString(list);
 
         // Test method equals()
-        System.out.println("\nTest method equals():");
-        System.out.println("TRUE: item11.equals(item11) = " + item11.equals(item11));
-        System.out.println("TRUE: item11.equals(item21) = " + item11.equals(item21));
-        System.out.println("TRUE: item21.equals(item11) = " + item21.equals(item11));
-        System.out.println("TRUE: item21.equals(item31) = " + item21.equals(item31));
-        System.out.println("TRUE: item31.equals(item11) = " + item31.equals(item11));
-        System.out.println("FALSE: item11.equals(item00) = " + item11.equals(item00));
-        System.out.println("FALSE: item44.equals(item54) = " + item44.equals(item54));
-        System.out.println("FALSE: item11.equals(item44) = " + item11.equals(item44));
+        System.out.print("\nTest method equals(): ");
+        map.put("TRUE: item11.equals(item11)", item11.equals(item11));
+        map.put("TRUE: item11.equals(item21)", item11.equals(item21));
+        map.put("TRUE: item21.equals(item11)", item21.equals(item11));
+        map.put("TRUE: item21.equals(item31)", item21.equals(item31));
+        map.put("TRUE: item31.equals(item11)", item31.equals(item11));
+        map.put("FALSE: item11.equals(item00)", !item11.equals(item00));
+        map.put("FALSE: item44.equals(item54)", !item44.equals(item54));
+        map.put("FALSE: item11.equals(item44)", !item11.equals(item44));
+        testObj.testEquals(map);
 
         // Test method hashCode()
-        System.out.println("\nTest method hashCode():");
-        System.out.println("TRUE: item11.hashCode() == item11.hashCode() = "
-                + (item11.hashCode() == item11.hashCode()));
-        System.out.println("TRUE: item11.hashCode() == item21.hashCode() = "
-                + (item11.hashCode() == item21.hashCode()));
-        System.out.println("TRUE: item21.hashCode() == item11.hashCode() = "
-                + (item21.hashCode() == item11.hashCode()));
-        System.out.println("TRUE: item31.hashCode() == item11.hashCode() = "
-                + (item31.hashCode() == item11.hashCode()));
-        System.out.println("FALSE: item44.hashCode() == item54.hashCode() = "
-                + (item44.hashCode() == item54.hashCode()));
-        System.out.println("FALSE: item11.hashCode() == item44.hashCode() = "
-                + (item11.hashCode() == item44.hashCode()));
+        System.out.print("\nTest method hashCode(): ");
+        map.clear();
+        map.put("TRUE: item11.hashCode() == item11.hashCode()", item11.hashCode() == item11.hashCode());
+        map.put("TRUE: item11.hashCode() == item21.hashCode()", item11.hashCode() == item21.hashCode());
+        map.put("TRUE: item21.hashCode() == item11.hashCode()", item21.hashCode() == item11.hashCode());
+        map.put("TRUE: item31.hashCode() == item11.hashCode()", item31.hashCode() == item11.hashCode());
+        map.put("FALSE: item44.hashCode() == item54.hashCode()", !(item44.hashCode() == item54.hashCode()));
+        map.put("FALSE: item11.hashCode() == item44.hashCode()", !(item11.hashCode() == item44.hashCode()));
+        testObj.testHashCode(map);
+
+        testObj.printError();
     }
 
     //TODO to delete
