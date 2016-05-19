@@ -17,14 +17,22 @@
 <div id="all_content">
 
     <jsp:include page="include/PageHead.jsp"></jsp:include>
-    <jsp:include page="include/PageLinks.jsp"></jsp:include>
+    <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
+
+    <nav>
+        <ul>
+            <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
+            <li><a href="<%=request.getContextPath()%>/views/UserView.jsp">USERS</a></li>
+            <li class="selected"><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
+        </ul>
+    </nav>
 
     <div id="main">
 
         <h1>Add item:</h1>
         <h2>Fill out the form below and click "add item" to add</h2>
 
-        <form class="bodyform" action="<%=request.getContextPath()%>/itemadd"
+        <form class="body_form" action="<%=request.getContextPath()%>/itemadd"
               onsubmit="return validateFormItem()" method="post">
             <input type="hidden" name="id" value="<%=Item.getNextID()%>">
             <div class="tableRow">
