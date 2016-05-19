@@ -1,6 +1,6 @@
 package com.vladshkerin.models;
 
-import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.enums.UserRole;
 
 import java.util.Objects;
 
@@ -12,16 +12,16 @@ import java.util.Objects;
  */
 public class Role {
 
-    private RoleUser roleUser;
+    private UserRole userRole;
 
     public static void main(String[] args) {
         // Test constructors and clone()
         Role role0 = null;
-        Role role1 = new Role(RoleUser.USER);
+        Role role1 = new Role(UserRole.USER);
         Role role2 = role1;
         Role role3 = role2;
-        Role role4 = new Role(RoleUser.ADMIN);
-        Role role5 = new Role(RoleUser.ADMIN);
+        Role role4 = new Role(UserRole.ADMIN);
+        Role role5 = new Role(UserRole.ADMIN);
 
         // Test method toString()
         System.out.println("Test method toString():");
@@ -59,18 +59,18 @@ public class Role {
                 + (role1.hashCode() == role4.hashCode()));
     }
 
-    public Role(RoleUser roleUser) {
-        this.roleUser = roleUser;
+    public Role(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public Role() {
-        this.roleUser = RoleUser.USER;
+        this.userRole = UserRole.USER;
     }
 
     @Override
     public String toString() {
         return getClass().getName() +
-                "{roleUser=" + roleUser +
+                "{userRole=" + userRole +
                 '}';
     }
 
@@ -80,15 +80,15 @@ public class Role {
         if (obj == null || getClass() != obj.getClass()) return false;
 
         Role other = (Role) obj;
-        return Objects.equals(roleUser, other.roleUser);
+        return Objects.equals(userRole, other.userRole);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roleUser);
+        return Objects.hash(userRole);
     }
 
     public String getName() {
-        return roleUser.toString();
+        return userRole.toString();
     }
 }

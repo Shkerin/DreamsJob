@@ -1,6 +1,6 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.services.UserService;
 
@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
         try {
             role = UserService.getInstance().getToName(login).getRole().getName();
         } catch (NotFoundUser ex) {
-            role = RoleUser.USER.toString();
+            role = UserRole.USER.toString();
         }
 
         HttpSession session = req.getSession();

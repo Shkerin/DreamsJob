@@ -1,11 +1,10 @@
 package com.vladshkerin.models;
 
-import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.enums.UserRole;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -31,8 +30,8 @@ public class User {
     private Role role;
 
     public static void main(String[] args) {
-        Role roleAdmin = new Role(RoleUser.ADMIN);
-        Role roleUser = new Role(RoleUser.USER);
+        Role roleAdmin = new Role(UserRole.ADMIN);
+        Role roleUser = new Role(UserRole.USER);
         Calendar cal = new GregorianCalendar(1980, 5, 10);
         String[] child = new String[]{"Sviatoslav", "Eva"};
 
@@ -98,7 +97,7 @@ public class User {
     }
 
     public User(String name) {
-        this(name, new Role(RoleUser.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
+        this(name, new Role(UserRole.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
     }
 
     @Override

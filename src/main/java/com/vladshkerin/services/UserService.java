@@ -1,6 +1,6 @@
 package com.vladshkerin.services;
 
-import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
@@ -23,8 +23,8 @@ public class UserService {
     private final List<User> users = new CopyOnWriteArrayList<>();
 
     private UserService() {
-        Role roleAdmin = new Role(RoleUser.ADMIN);
-        Role roleUser = new Role(RoleUser.USER);
+        Role roleAdmin = new Role(UserRole.ADMIN);
+        Role roleUser = new Role(UserRole.USER);
         GregorianCalendar calendar1 = new GregorianCalendar(1970, 3, 4);
         GregorianCalendar calendar2 = new GregorianCalendar(1985, 5, 6);
         GregorianCalendar calendar3 = new GregorianCalendar(1995, 7, 8);

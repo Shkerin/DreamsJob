@@ -6,7 +6,7 @@ package com.vladshkerin.enums;
  * @author Vladimir Shkerin
  * @since 10.05.2016
  */
-public enum RoleUser {
+public enum UserRole {
     USER,
     ADMIN;
 

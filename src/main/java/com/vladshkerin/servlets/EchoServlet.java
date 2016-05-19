@@ -1,6 +1,6 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.enums.RoleUser;
+import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
@@ -51,7 +51,7 @@ public class EchoServlet extends HttpServlet {
         String email = req.getParameter("email");
 
         String roleStr = req.getParameter("role");
-        Role role = "admin".equals(roleStr) ? new Role(RoleUser.ADMIN) : new Role(RoleUser.USER);
+        Role role = "admin".equals(roleStr) ? new Role(UserRole.ADMIN) : new Role(UserRole.USER);
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
