@@ -1,15 +1,11 @@
-body {
-    background:         #efe5d0;
-}
-
-form.bodyform {
+form.body_form {
     display:            table;
     padding:            10px;
     border:             thin dotted #7e7e7e;
-    background-color:   #e1ceb8;
+    background-color:   rgb(215, 225, 255);
 }
 
-form.bodyform textarea {
+form.body_form textarea {
     width:              400px;
     height:             100px;
 }

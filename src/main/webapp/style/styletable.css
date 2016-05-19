@@ -1,5 +1,9 @@
-a#imageLink {
-    border-bottom:      none;
+.center {
+    text-align:         center;
+}
+
+.right {
+    text-align:         right;
 }
 
 table {
@@ -9,8 +13,9 @@ table {
 }
 
 th {
-    background-color:   #675c47;
-    color:              #ffffff;
+    /*background-color:   #675c47;*/
+    background-color:   rgb(25, 67, 97);;
+    color:              white;
 }
 
 td, th {
@@ -19,15 +24,12 @@ td, th {
 }
 
 tr:nth-child(2n+1) {
-    background-color:   #e1ceb8;
+    /*background-color:   #e1ceb8;*/
+    background-color:   rgb(215, 225, 255);
 }
 
-.center {
-    text-align:         center;
-}
-
-.right {
-    text-align:         right;
+a#imageLink {
+    border-bottom:      none;
 }
 
 div.tableRow#button {
