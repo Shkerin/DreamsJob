@@ -37,7 +37,12 @@
                 <th class="right">Name</th>
                 <th class="center">Description</th>
             </tr>
-            <% for (Item item : ItemService.getInstance().getAll()) { %>
+            <%
+                for (Item item : ItemService.getInstance().getAll()) {
+                    String login = (String) session.getAttribute("login");
+                    if ("admin".equals(login) ||
+                            "user".equals(item.getUser().getName())) {
+            %>
             <tr>
                 <td class="right">
                     <%--<a href="<%=request.getContextPath()%>/itemedit?id=<%=item.getId()%>">--%>
@@ -49,7 +54,10 @@
                     <%= item.getDesc() %>
                 </td>
             </tr>
-            <% } %>
+            <%
+                    }
+                }
+            %>
         </table>
 
         <p>

@@ -21,9 +21,11 @@ public class ItemService {
 
     private ItemService() {
         try {
-            items.add(new Item(UserService.getInstance().getToName("admin"), "1 test name", "test desc"));
-            items.add(new Item(UserService.getInstance().getToName("admin"), "2 test name", "test desc"));
-            items.add(new Item(UserService.getInstance().getToName("user"), "1 test name", "test desc"));
+            items.add(new Item(UserService.getInstance().getToName("admin"), "1 test item", "test desc"));
+            items.add(new Item(UserService.getInstance().getToName("admin"), "2 test item", "test desc"));
+            items.add(new Item(UserService.getInstance().getToName("admin"), "3 test item", "test desc"));
+            items.add(new Item(UserService.getInstance().getToName("user"), "1 test item user", "test desc"));
+            items.add(new Item(UserService.getInstance().getToName("user"), "2 test item user", "test desc"));
         } catch (NotFoundUser ex) {
             ex.printStackTrace();
         }
