@@ -1,5 +1,6 @@
 <%@ page import="com.vladshkerin.models.Item" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
+<%@ page import="com.vladshkerin.services.UserService" %>
 <%--
   The page to display items.
 
@@ -40,8 +41,8 @@
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
                     String login = (String) session.getAttribute("login");
-                    if ("admin".equals(login) ||
-                            "user".equals(item.getUser().getName())) {
+                    if (UserService.getInstance().isRoleAdmin(login) ||
+                                "user".equals(item.getUser().getName())) {
             %>
             <tr>
                 <td class="right">

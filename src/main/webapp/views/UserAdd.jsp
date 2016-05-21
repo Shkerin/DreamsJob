@@ -1,4 +1,5 @@
 <%@ page import="com.vladshkerin.models.User" %>
+<%@ page import="com.vladshkerin.services.UserService" %>
 <%--
   The page for adding a user.
 
@@ -58,7 +59,13 @@
             <div class="tableRow">
                 <p></p>
                 <p>
+                    <%
+                        if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+                    %>
                     <input id="buttonSave" type="submit" value="Save change">
+                    <%
+                        }
+                    %>
                     <%--<input type="submit" value="Back"--%>
                            <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
                     <input type="button" value="Back"

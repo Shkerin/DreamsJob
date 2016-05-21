@@ -8,16 +8,16 @@
 
 <div id="registration">
     <%
-    if (session.getAttribute("login") != null) {
+        if (session.getAttribute("login") != null) {
     %>
-        User: <%=session.getAttribute("login")%>, Role: <%=session.getAttribute("role")%>).
-        <a href="<%=request.getContextPath()%>/logout">logout</a>
+            User: <%=session.getAttribute("login")%>, Role: <%=session.getAttribute("role")%>).
+            <a href="<%=request.getContextPath()%>/logout">logout</a>
     <%
-    } else {
+        } else {
     %>
-        Unregistered user!
+            Unregistered user!
     <%
-    }
+        }
     %>
 
     <%--<%--%>

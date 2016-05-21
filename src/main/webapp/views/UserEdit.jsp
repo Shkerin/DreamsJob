@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.vladshkerin.services.UserService" %><%--
   The page for editing a user.
 
   @author Vladimir Shkerin
@@ -61,7 +61,13 @@
             <div class="tableRow">
                 <p></p>
                 <p>
-                    <input id="buttonSave" type="submit" value="Save change">
+                    <%
+                        if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+                    %>
+                        <input id="buttonSave" type="submit" value="Save change">
+                    <%
+                        }
+                    %>
                     <%--<input type="submit" value="Back"--%>
                            <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
                     <input type="button" value="Back"

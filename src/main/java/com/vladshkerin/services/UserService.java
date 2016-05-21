@@ -100,4 +100,18 @@ public class UserService {
         }
         return errorValues.toString();
     }
+
+    public boolean isRoleAdmin(Object login) {
+        if (login == null) {
+            return false;
+        }
+        return "admin".equals(login);
+    }
+
+    public boolean isRoleUser(Object login) {
+        if (login == null) {
+            return false;
+        }
+        return "user".equals(login);
+    }
 }
