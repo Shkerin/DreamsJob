@@ -20,6 +20,10 @@
     <jsp:include page="include/PageHead.jsp"></jsp:include>
     <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
 
+    <%
+        boolean roleAdmin = UserService.getInstance().isRoleAdmin(session.getAttribute("login"));
+    %>
+
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
@@ -40,9 +44,10 @@
                 <th class="center">Email</th>
                 <th class="center">Children</th>
                 <%
-                    if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+                    if (roleAdmin) {
                 %>
-                    <th class="center">Del</th>
+                    <th class="center">Delete</th>
+                    <th class="center">Edit</th>
                 <%
                     }
                 %>
@@ -50,9 +55,7 @@
             <% for (User user : UserService.getInstance().getAll()) { %>
             <tr>
                 <td class="right">
-                    <a href="<%=request.getContextPath()%>/useredit?id=<%= user.getId() %>">
-                        <%= user.getName() %>
-                    </a>
+                    <%= user.getName() %>
                 </td>
                 <td class="right">
                     <%= user.getGrowth() %>
@@ -67,11 +70,16 @@
                     <%= user.getChildrenStr() %>
                 </td>
                 <%
-                    if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+                    if (roleAdmin) {
                 %>
                 <td class="center">
-                    <a id="imageLink" href="<%=request.getContextPath()%>/userdelete?id=<%= user.getId() %>">
-                        <img src="../img/trash.png" width="20" height="20">
+                    <a id="imageLinkDelete" href="<%=request.getContextPath()%>/user_delete?id=<%= user.getId() %>">
+                        <img src="../img/trash_icon.png" width="20" height="20">
+                    </a>
+                </td>
+                <td class="center">
+                    <a id="imageLinkEdit" href="<%=request.getContextPath()%>/user_edit?id=<%= user.getId() %>">
+                        <img src="../img/edit_icon.png" width="20" height="20">
                     </a>
                 </td>
                 <%
@@ -84,7 +92,7 @@
         <p>
         <div id="button" class="tableRow">
         <%
-            if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+            if (roleAdmin) {
         %>
             <form action="<%=request.getContextPath()%>/views/UserAdd.jsp" method="post">
                 <input type="submit" value="Add user">

@@ -28,8 +28,8 @@ tr:nth-child(2n+1) {
     background-color:   rgb(215, 225, 255);
 }
 
-a#imageLink {
-    border-bottom:      none;
+a#imageLinkDelete, a#imageLinkEdit {
+    border-bottom: none;
 }
 
 div.tableRow#button {
