@@ -33,7 +33,7 @@
         <h1>Add user:</h1>
         <h2>Fill out the form below and click "add user" to add</h2>
 
-        <form class="body_form" action="<%=request.getContextPath()%>/useradd"
+        <form class="body_form" action="<%=request.getContextPath()%>/user_add"
               onsubmit="return validateFormUser()" method="post">
             <input type="hidden" name="id" value="<%=User.getNextId()%>">
             <div class="tableRow">

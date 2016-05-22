@@ -32,7 +32,7 @@
         <h1>Add item:</h1>
         <h2>Fill out the form below and click "add item" to add</h2>
 
-        <form class="body_form" action="<%=request.getContextPath()%>/itemadd"
+        <form class="body_form" action="<%=request.getContextPath()%>/item_add"
               onsubmit="return validateFormItem()" method="post">
             <input type="hidden" name="id" value="<%=Item.getNextID()%>">
             <div class="tableRow">

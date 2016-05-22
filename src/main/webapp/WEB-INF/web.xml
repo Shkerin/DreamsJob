@@ -26,7 +26,7 @@
 
     <servlet-mapping>
         <servlet-name>UserAdd</servlet-name>
-        <url-pattern>/useradd</url-pattern>
+        <url-pattern>/user_add</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -36,7 +36,7 @@
 
     <servlet-mapping>
         <servlet-name>UserEdit</servlet-name>
-        <url-pattern>/useredit</url-pattern>
+        <url-pattern>/user_edit</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -46,7 +46,7 @@
 
     <servlet-mapping>
         <servlet-name>UserDelete</servlet-name>
-        <url-pattern>/userdelete</url-pattern>
+        <url-pattern>/user_delete</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -56,7 +56,7 @@
 
     <servlet-mapping>
         <servlet-name>ItemAdd</servlet-name>
-        <url-pattern>/itemadd</url-pattern>
+        <url-pattern>/item_add</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -70,6 +70,6 @@
 
     <servlet-mapping>
         <servlet-name>LifeCycleServlet</servlet-name>
-        <url-pattern>/lifecycle</url-pattern>
+        <url-pattern>/life_cycle</url-pattern>
     </servlet-mapping>
 </web-app>

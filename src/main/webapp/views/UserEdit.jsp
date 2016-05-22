@@ -31,7 +31,7 @@
         <h1>Edit user:</h1>
         <h2>Modify the form below and click "save change" to save</h2>
 
-        <form class="body_form" action="<%=request.getContextPath()%>/useredit"
+        <form class="body_form" action="<%=request.getContextPath()%>/user_edit"
               onsubmit="return validateFormUser();" method="post">
             <input type="hidden" name="id" value="<%=session.getAttribute("id")%>">
             <div class="tableRow">
