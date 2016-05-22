@@ -88,11 +88,6 @@ public class Item {
         testObj.printError();
     }
 
-    //TODO to delete
-    public static synchronized String getNextID() {
-        return String.format("%09d", itemNumber + 1);
-    }
-
     public Item(User user, String name, String desc) {
         this.id = nextItemID();
         this.user = user;

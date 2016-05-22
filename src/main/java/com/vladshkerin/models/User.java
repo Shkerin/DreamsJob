@@ -95,11 +95,6 @@ public class User {
         testObj.printError();
     }
 
-    //TODO to delete
-    public static String getNextId() {
-        return String.format("%09d", itemNumber + 1);
-    }
-
     public User(String name, Role role, Float growth, Calendar birthDay, String email, String[] children) {
         this.id = nextItemID();
         this.role = role;
