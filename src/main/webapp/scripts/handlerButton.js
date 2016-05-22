@@ -7,7 +7,6 @@
 
 function validateFormUser() {
     var fieldValues = [
-        {name: "Id", value: document.getElementsByName("id")[0].value},
         {name: "Name", value: document.getElementsByName("name")[0].value},
         {name: "Growth", value: document.getElementsByName("growth")[0].value},
         {name: "Birth Day", value: document.getElementsByName("birthDay")[0].value},
@@ -35,7 +34,6 @@ function validateFormUser() {
 
 function validateFormItem() {
     var fieldValues = [
-        {name: "Id", value: document.getElementsByName("id")[0].value},
         {name: "Name", value: document.getElementsByName("name")[0].value},
         {name: "Desc", value: document.getElementsByName("desc")[0].value}
     ];
