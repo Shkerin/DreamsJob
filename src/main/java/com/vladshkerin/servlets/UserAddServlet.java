@@ -24,7 +24,6 @@ public class UserAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> userPropertiesMap = new HashMap<>();
-        userPropertiesMap.put("id", req.getParameter("id").trim());
         userPropertiesMap.put("name", req.getParameter("name").trim());
         userPropertiesMap.put("growth", req.getParameter("growth").trim());
         userPropertiesMap.put("birthDay", req.getParameter("birthDay").trim());

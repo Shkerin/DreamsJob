@@ -34,7 +34,6 @@
 
         <form class="body_form" action="<%=request.getContextPath()%>/item_add"
               onsubmit="return validateFormItem()" method="post">
-            <input type="hidden" name="id" value="<%=Item.getNextID()%>">
             <div class="tableRow">
                 <p> Name </p>
                 <p><input type="text" name="name" value="" placeholder="Distribution of orange"></p>

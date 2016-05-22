@@ -25,7 +25,6 @@ public class ItemAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> itemPropertiesMap = new HashMap<>();
-        itemPropertiesMap.put("id", req.getParameter("id").trim());
         itemPropertiesMap.put("name", req.getParameter("name").trim());
         itemPropertiesMap.put("desc", req.getParameter("desc").trim());
 
@@ -33,7 +32,7 @@ public class ItemAddServlet extends HttpServlet {
         String errorValues = ItemService.getInstance().validateForm(itemPropertiesMap);
         if (errorValues.isEmpty()) {
             //TODO set current user
-            Item item = new Item(new User("testUser"));
+            Item item = new Item(new User("anonymous"));
             String name = itemPropertiesMap.get("name");
             item.setName(name);
             item.setName(itemPropertiesMap.get("name"));

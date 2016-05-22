@@ -35,7 +35,6 @@
 
         <form class="body_form" action="<%=request.getContextPath()%>/user_add"
               onsubmit="return validateFormUser()" method="post">
-            <input type="hidden" name="id" value="<%=User.getNextId()%>">
             <div class="tableRow">
                 <p> Name </p>
                 <p><input type="text" name="name" value="" placeholder="Ivan"></p>
