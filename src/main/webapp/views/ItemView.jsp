@@ -12,6 +12,7 @@
 <head>
     <title>Dreams Job</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
+    <%--<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/style_tree.css">--%>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styletable.css">
 </head>
 <body>
@@ -29,26 +30,40 @@
         </ul>
     </nav>
 
+    <%
+        String login = (String) session.getAttribute("login");
+    %>
+
     <div id="main">
+
+        <h1>Tree items:</h1>
+
+        <ul class="treeCSS">
+            <li><input type="checkbox">Items</li>
+            <%=ItemService.getInstance().getTreeItems(login, 0L)%>
+        </ul>
+
+        <br>
 
         <h1>List items:</h1>
 
         <table>
             <tr>
+                <th class="right">Parent id</th>
                 <th class="right">Name</th>
                 <th class="center">Description</th>
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
-                    String login = (String) session.getAttribute("login");
+                    login = (String) session.getAttribute("login");
                     if (UserService.getInstance().isRoleAdmin(login) ||
                                 "user".equals(item.getUser().getName())) {
             %>
             <tr>
+                <td class="center">
+                    <%= item.getParentId()%>
+                </td>
                 <td class="right">
-                    <%--<a href="<%=request.getContextPath()%>/itemedit?id=<%=item.getId()%>">--%>
-                        <%--<%= item.getName() %>--%>
-                    <%--</a>--%>
                     <%= item.getName() %>
                 </td>
                 <td class="center">
