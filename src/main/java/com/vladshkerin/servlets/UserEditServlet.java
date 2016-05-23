@@ -36,23 +36,31 @@ public class UserEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> userPropertiesMap = new HashMap<>();
-        userPropertiesMap.put("id", req.getParameter("id").trim());
-        userPropertiesMap.put("name", req.getParameter("name").trim());
-        userPropertiesMap.put("growth", req.getParameter("growth").trim());
-        userPropertiesMap.put("birthDay", req.getParameter("birthDay").trim());
-        userPropertiesMap.put("email", req.getParameter("email").trim());
+        Map<String, String> userMap = new HashMap<>();
+
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
+        String growth = req.getParameter("growth");
+        String birthDay = req.getParameter("birthDay");
+        String email = req.getParameter("email");
+        String children = req.getParameter("children");
+
+        userMap.put("id", id != null ? id.trim() : "");
+        userMap.put("name", name != null ? name.trim() : "");
+        userMap.put("growth", growth != null ? growth.trim() : "");
+        userMap.put("birthDay", birthDay != null ? birthDay.trim() : "");
+        userMap.put("email", email != null ? email.trim() : "");
 
         HttpSession session = req.getSession();
-        String errorValues = UserService.getInstance().validateForm(userPropertiesMap);
+        String errorValues = UserService.getInstance().validateForm(userMap);
         if (errorValues.isEmpty()) {
             try {
-                User user = UserService.getInstance().get(Long.valueOf(userPropertiesMap.get("id")));
-                user.setName(userPropertiesMap.get("name"));
-                user.setGrowth(userPropertiesMap.get("growth"));
-                user.setBirthDay(userPropertiesMap.get("birthDay"));
-                user.setEmail(userPropertiesMap.get("email"));
-                user.setChildren(req.getParameter("children").trim());
+                User user = UserService.getInstance().get(Long.valueOf(userMap.get("id")));
+                user.setName(userMap.get("name"));
+                user.setGrowth(userMap.get("growth"));
+                user.setBirthDay(userMap.get("birthDay"));
+                user.setEmail(userMap.get("email"));
+                user.setChildren(children != null ? children.trim() : "");
 
                 setSessionAttributeUser(user, session);
                 setSessionAttribute("message", "The changes are saved.", session);

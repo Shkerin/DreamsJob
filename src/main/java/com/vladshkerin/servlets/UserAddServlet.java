@@ -23,21 +23,27 @@ public class UserAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> userPropertiesMap = new HashMap<>();
-        userPropertiesMap.put("name", req.getParameter("name").trim());
-        userPropertiesMap.put("growth", req.getParameter("growth").trim());
-        userPropertiesMap.put("birthDay", req.getParameter("birthDay").trim());
-        userPropertiesMap.put("email", req.getParameter("email").trim());
+        Map<String, String> userMap = new HashMap<>();
+
+        String name = req.getParameter("name");
+        String growth = req.getParameter("growth");
+        String birthDay = req.getParameter("birthDay");
+        String email = req.getParameter("email");
+        String children = req.getParameter("children");
+
+        userMap.put("name", name != null ? name.trim() : "");
+        userMap.put("growth", growth != null ? growth.trim() : "");
+        userMap.put("birthDay", birthDay != null ? birthDay.trim() : "");
+        userMap.put("email", email != null ? email.trim() : "");
 
         HttpSession session = req.getSession();
-        String errorValues = UserService.getInstance().validateForm(userPropertiesMap);
+        String errorValues = UserService.getInstance().validateForm(userMap);
         if (errorValues.isEmpty()) {
-            String name = userPropertiesMap.get("name");
-            User user = new User(name);
-            user.setGrowth(userPropertiesMap.get("growth"));
-            user.setBirthDay(userPropertiesMap.get("birthDay"));
-            user.setEmail(userPropertiesMap.get("email"));
-            user.setChildren(req.getParameter("children").trim());
+            User user = new User(userMap.get("name"));
+            user.setGrowth(userMap.get("growth"));
+            user.setBirthDay(userMap.get("birthDay"));
+            user.setEmail(userMap.get("email"));
+            user.setChildren(children != null ? children.trim() : "");
             UserService.getInstance().add(user);
 
             setSessionAttribute("message", "The user \"" + name + "\" is added.", session);

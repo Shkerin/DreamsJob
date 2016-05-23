@@ -24,19 +24,20 @@ public class ItemAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> itemPropertiesMap = new HashMap<>();
-        itemPropertiesMap.put("name", req.getParameter("name").trim());
-        itemPropertiesMap.put("desc", req.getParameter("desc").trim());
+        Map<String, String> itemMap = new HashMap<>();
+
+        String name = req.getParameter("name");
+        String desc = req.getParameter("desc");
+        itemMap.put("name", name != null ? name.trim() : "");
+        itemMap.put("desc", desc != null ? desc.trim() : "");
 
         HttpSession session = req.getSession();
-        String errorValues = ItemService.getInstance().validateForm(itemPropertiesMap);
+        String errorValues = ItemService.getInstance().validateForm(itemMap);
         if (errorValues.isEmpty()) {
-            //TODO set current user
+            //TODO set current user and parent id
             Item item = new Item(new User("anonymous"));
-            String name = itemPropertiesMap.get("name");
-            item.setName(name);
-            item.setName(itemPropertiesMap.get("name"));
-            item.setDesc(itemPropertiesMap.get("desc"));
+            item.setName(itemMap.get("name"));
+            item.setDesc(itemMap.get("desc"));
             ItemService.getInstance().add(item);
 
             setSessionAttribute("message", "The item \"" + name + "\" is added.", session);

@@ -88,16 +88,18 @@ public class UserService {
 
             if (user.getValue().isEmpty()) {
                 errorValues.append(key).append(", ");
-            } else if (key.equals("growth")) {
+            } else if ("growth".equals(key)) {
                 if (Integer.parseInt(user.getValue()) < 1 ||
                         Integer.parseInt(user.getValue()) > 200)
                     errorValues.append(key).append(", ");
             }
 
         }
+
         if (!errorValues.toString().isEmpty()) {
             errorValues.replace(errorValues.length() - 2, errorValues.length(), "");
         }
+
         return errorValues.toString();
     }
 
@@ -105,6 +107,7 @@ public class UserService {
         if (login == null) {
             return false;
         }
+
         return "admin".equals(login);
     }
 
@@ -112,6 +115,7 @@ public class UserService {
         if (login == null) {
             return false;
         }
+
         return "user".equals(login);
     }
 }
