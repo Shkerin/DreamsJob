@@ -22,9 +22,83 @@ public class Item {
     }
 
     private long id;
+    private long parentId;
     private User user;
     private String name;
     private String desc;
+
+    public Item(long parentId, User user, String name, String desc) {
+        this.id = nextItemID();
+        this.parentId = parentId;
+        this.user = user;
+        this.name = name;
+        this.desc = desc;
+    }
+
+    public Item(User user) {
+        this(0L, user, "", "");
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName() +
+                "{id=" + id +
+                ", parent_id=" + parentId +
+                ", user=" + user +
+                ", name=" + name +
+                ", desc=" + desc +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Item other = (Item) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public static void main(String[] args) {
         test();
@@ -47,9 +121,9 @@ public class Item {
         Item item11 = new Item(user1);
         Item item21 = item11;
         Item item31 = item21;
-        Item item44 = new Item(user2, "two name", "two desc");
-        Item item54 = new Item(user2, "two name", "two desc");
-        Item item66 = new Item(new User("temp"), "", "");
+        Item item44 = new Item(0, user2, "two name", "two desc");
+        Item item54 = new Item(1, user2, "two name", "two desc");
+        Item item66 = new Item(2, new User("temp"), "", "");
 
         // Test method toString()
         System.out.println("Test method toString():");
@@ -86,72 +160,5 @@ public class Item {
         testObj.testHashCode(map);
 
         testObj.printError();
-    }
-
-    public Item(User user, String name, String desc) {
-        this.id = nextItemID();
-        this.user = user;
-        this.name = name;
-        this.desc = desc;
-    }
-
-    public Item(User user) {
-        this(user, "", "");
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getName() +
-                "{id=" + id +
-                ", user=" + user +
-                ", name=" + name +
-                ", desc=" + desc +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Item other = (Item) obj;
-        return Objects.equals(id, other.id);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 }
