@@ -2,9 +2,9 @@ package com.vladshkerin.servlets;
 
 import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.models.Role;
 import com.vladshkerin.services.UserService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,24 +23,34 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
+        if (login == null) {
+            login = "";
+        }
         String password = req.getParameter("password");
+        if (password == null) {
+            password = "";
+        }
 
-        String role;
+        Role role;
         try {
-            role = UserService.getInstance().getToName(login).getRole().getName();
+            role = UserService.getInstance().getToName(login).getRole();
         } catch (NotFoundUser ex) {
-            role = UserRole.USER.toString();
+            login = "";
+            password = "";
+            role = new Role(UserRole.USER);
         }
 
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(Integer.MAX_VALUE);
         synchronized (session) {
+
             session.setAttribute("login", login);
             session.setAttribute("password", password);
             session.setAttribute("role", role);
         }
+
 //        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher(String.format("%s/index.jsp", req.getContextPath()));
-        rd.forward(req, resp);
+        String sURL = String.format("%s/index.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 }
