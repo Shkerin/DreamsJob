@@ -1,5 +1,5 @@
-<%@ page import="com.vladshkerin.models.User" %>
-<%@ page import="com.vladshkerin.services.UserService" %>
+<%@ page import="com.vladshkerin.models.Role" %>
+<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%--
   The page for adding a user.
 
@@ -19,7 +19,7 @@
 
     <jsp:include page="include/PageHead.jsp"></jsp:include>
     <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-
+    <%--TODO remove if cancel comment up--%>
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
@@ -27,6 +27,14 @@
             <li><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
         </ul>
     </nav>
+
+    <%
+        Role role;
+        synchronized (session) {
+            Object obj = session.getAttribute("role");
+            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+        }
+    %>
 
     <div id="main">
 
@@ -59,7 +67,7 @@
                 <p></p>
                 <p>
                     <%
-                        if (UserService.getInstance().isRoleAdmin(session.getAttribute("login"))) {
+                        if (role.isRoleAdmin()) {
                     %>
                     <input id="buttonSave" type="submit" value="Save change">
                     <%

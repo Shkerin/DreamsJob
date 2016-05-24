@@ -1,5 +1,7 @@
 <%@ page import="com.vladshkerin.models.User" %>
 <%@ page import="com.vladshkerin.services.UserService" %>
+<%@ page import="com.vladshkerin.models.Role" %>
+<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%--
   Tne page to display users.
 
@@ -19,11 +21,7 @@
 
     <jsp:include page="include/PageHead.jsp"></jsp:include>
     <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-
-    <%
-        boolean roleAdmin = UserService.getInstance().isRoleAdmin(session.getAttribute("login"));
-    %>
-
+    <%--TODO remove if cancel comment up--%>
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
@@ -31,6 +29,14 @@
             <li><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
         </ul>
     </nav>
+
+    <%
+        Role role;
+        synchronized (session) {
+            Object obj = session.getAttribute("role");
+            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+        }
+    %>
 
     <div id="main">
 
@@ -44,7 +50,7 @@
                 <th class="center">Email</th>
                 <th class="center">Children</th>
                 <%
-                    if (roleAdmin) {
+                    if (role.isRoleAdmin()) {
                 %>
                     <th class="center">Delete</th>
                     <th class="center">Edit</th>
@@ -70,7 +76,7 @@
                     <%= user.getChildrenStr() %>
                 </td>
                 <%
-                    if (roleAdmin) {
+                    if (role.isRoleAdmin()) {
                 %>
                 <td class="center">
                     <a id="imageLinkDelete" href="<%=request.getContextPath()%>/user_delete?id=<%= user.getId() %>">
@@ -90,9 +96,9 @@
         </table>
 
         <p>
-        <div id="button" class="tableRow">
+        <div class="button_action">
         <%
-            if (roleAdmin) {
+            if (role.isRoleAdmin()) {
         %>
             <form action="<%=request.getContextPath()%>/views/UserAdd.jsp" method="post">
                 <input type="submit" value="Add user">
