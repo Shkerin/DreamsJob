@@ -1,6 +1,8 @@
 <%@ page import="com.vladshkerin.models.Item" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
-<%@ page import="com.vladshkerin.services.UserService" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.vladshkerin.models.Role" %>
+<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%--
   The page to display items.
 
@@ -21,7 +23,7 @@
 
     <jsp:include page="include/PageHead.jsp"></jsp:include>
     <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-
+    <%--TODO remove if cancel comment up--%>
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
@@ -31,19 +33,48 @@
     </nav>
 
     <%
-        String login = (String) session.getAttribute("login");
+        Role role;
+        synchronized (session) {
+            Object obj = session.getAttribute("role");
+            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+        }
     %>
 
     <div id="main">
 
         <h1>Tree items:</h1>
 
-        <ul class="treeCSS">
-            <li><input type="checkbox">Items</li>
-            <%=ItemService.getInstance().getTreeItems(login, 0L)%>
+        <form method="post">
+            <ul class="treeCSS">
+                <li><input type="checkbox" name="tree" value="0">Root</li>
+                <%=ItemService.getInstance().getTreeItems(role, 0L)%>
+            </ul>
+
+            <p>
+            <div class="button_action">
+                <input type="submit" value="Cut"
+                       formaction="<%=request.getContextPath()%>/item_cut">
+                <input type="submit" value="Paste"
+                       formaction="<%=request.getContextPath()%>/item_paste">
+            </div>
+            </p>
+        </form>
+
+        <ul class="itemCut">
+            <%
+                Object obj = session.getAttribute("tree");
+                if (obj != null && obj instanceof List) {
+                    List<String> list = (List) obj;
+                    for (String str : list) {
+            %>
+                    <li><%= str%></li>
+            <%
+                    }
+                }
+            %>
         </ul>
 
-        <br>
+        <hr>
 
         <h1>List items:</h1>
 
@@ -55,9 +86,8 @@
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
-                    login = (String) session.getAttribute("login");
-                    if (UserService.getInstance().isRoleAdmin(login) ||
-                                "user".equals(item.getUser().getName())) {
+                    if (role.isRoleAdmin() ||
+                        item.getUser().getRole().isRoleUser()) {
             %>
             <tr>
                 <td class="center">
@@ -77,7 +107,7 @@
         </table>
 
         <p>
-        <div id="button" class="tableRow">
+        <div class="button_action">
             <form action="<%=request.getContextPath()%>/views/ItemAdd.jsp" method="post">
                 <input type="submit" value="Add item">
             </form>
