@@ -82,6 +82,18 @@ public class Role {
         this.userRole = UserRole.USER;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public boolean isRoleAdmin() {
+        return userRole == UserRole.ADMIN;
+    }
+
+    public boolean isRoleUser() {
+        return userRole == UserRole.USER;
+    }
+
     @Override
     public String toString() {
         return getClass().getName() +
