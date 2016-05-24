@@ -48,10 +48,6 @@ public class UserService {
         return users;
     }
 
-    public void add(final User user) {
-        users.add(user);
-    }
-
     public User get(long id) throws NotFoundUser {
         for (User user : users) {
             if (user.getId() == id) {
@@ -68,6 +64,10 @@ public class UserService {
             }
         }
         throw new NotFoundUser("User not fount to \"name\"" + name);
+    }
+
+    public void add(final User user) {
+        users.add(user);
     }
 
     public void delete(long id) {
@@ -101,21 +101,5 @@ public class UserService {
         }
 
         return errorValues.toString();
-    }
-
-    public boolean isRoleAdmin(Object login) {
-        if (login == null) {
-            return false;
-        }
-
-        return "admin".equals(login);
-    }
-
-    public boolean isRoleUser(Object login) {
-        if (login == null) {
-            return false;
-        }
-
-        return "user".equals(login);
     }
 }
