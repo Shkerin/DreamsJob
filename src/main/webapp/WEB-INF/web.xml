@@ -20,43 +20,63 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserAdd</servlet-name>
+        <servlet-name>UserAddServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.UserAddServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserAdd</servlet-name>
+        <servlet-name>UserAddServlet</servlet-name>
         <url-pattern>/user_add</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserEdit</servlet-name>
+        <servlet-name>UserEditServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.UserEditServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserEdit</servlet-name>
+        <servlet-name>UserEditServlet</servlet-name>
         <url-pattern>/user_edit</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserDelete</servlet-name>
+        <servlet-name>UserDeleteServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.UserDeleteServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserDelete</servlet-name>
+        <servlet-name>UserDeleteServlet</servlet-name>
         <url-pattern>/user_delete</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ItemAdd</servlet-name>
+        <servlet-name>ItemAddServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.ItemAddServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ItemAdd</servlet-name>
+        <servlet-name>ItemAddServlet</servlet-name>
         <url-pattern>/item_add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ItemCutServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemCutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemCutServlet</servlet-name>
+        <url-pattern>/item_cut</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ItemPasteServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemPasteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemPasteServlet</servlet-name>
+        <url-pattern>/item_paste</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -72,4 +92,5 @@
         <servlet-name>LifeCycleServlet</servlet-name>
         <url-pattern>/life_cycle</url-pattern>
     </servlet-mapping>
+
 </web-app>
