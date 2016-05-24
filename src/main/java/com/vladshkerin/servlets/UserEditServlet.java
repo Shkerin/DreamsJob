@@ -4,7 +4,6 @@ import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.UserService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +29,8 @@ public class UserEditServlet extends HttpServlet {
             setSessionAttributeUser(Long.valueOf(id), session);
         }
 //        resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher("/views/UserEdit.jsp");
-        rd.forward(req, resp);
+        String sURL = String.format("%s/views/UserEdit.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 
     @Override
@@ -72,9 +71,10 @@ public class UserEditServlet extends HttpServlet {
             String message = "Incorrect input values: " + errorValues + " !";
             setSessionAttribute("message", message, session);
         }
+
 //        resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher("/views/UserEdit.jsp");
-        rd.forward(req, resp);
+        String sURL = String.format("%s/views/UserEdit.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 
     private void setSessionAttribute(String name, Object value, HttpSession session) {

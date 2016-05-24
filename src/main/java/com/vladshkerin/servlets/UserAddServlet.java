@@ -3,7 +3,6 @@ package com.vladshkerin.servlets;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.UserService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +51,8 @@ public class UserAddServlet extends HttpServlet {
             setSessionAttribute("message", message, session);
         }
 //        resp.sendRedirect(String.format("%s/views/UserAdd.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher("/views/UserAdd.jsp");
-        rd.forward(req, resp);
+        String sURL = String.format("%s/views/UserAdd.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 
     private void setSessionAttribute(String name, Object value, HttpSession session) {

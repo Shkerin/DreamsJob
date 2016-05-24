@@ -16,7 +16,7 @@
 
     <%@ include file="views/include/PageHead.jsp"%>
     <%--<%@ include file="views/include/PageLinks.jsp"%>--%>
-
+    <%--TODO remove if cancel comment up--%>
     <nav>
         <ul>
             <li class="selected"><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>

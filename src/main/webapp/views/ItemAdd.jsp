@@ -1,4 +1,3 @@
-<%@ page import="com.vladshkerin.models.Item" %>
 <%--
   The page for adding a item.
   
@@ -18,7 +17,7 @@
 
     <jsp:include page="include/PageHead.jsp"></jsp:include>
     <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-
+    <%--TODO remove if cancel comment up--%>
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
@@ -36,7 +35,7 @@
               onsubmit="return validateFormItem()" method="post">
             <div class="tableRow">
                 <p> Name </p>
-                <p><input type="text" name="name" value="" placeholder="Distribution of orange"></p>
+                <p><input type="text" name="name" placeholder="Distribution of orange"></p>
             </div>
             <div class="tableRow">
                 <p> Description </p>

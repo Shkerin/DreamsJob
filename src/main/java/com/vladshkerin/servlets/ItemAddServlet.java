@@ -4,7 +4,6 @@ import com.vladshkerin.models.Item;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ItemService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +45,8 @@ public class ItemAddServlet extends HttpServlet {
             setSessionAttribute("message", message, session);
         }
 //        resp.sendRedirect(String.format("%s/views/ItemAdd.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher("/views/ItemAdd.jsp");
-        rd.forward(req, resp);
+        String sURL = String.format("%s/views/ItemAdd.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 
     private void setSessionAttribute(String name, Object value, HttpSession session) {

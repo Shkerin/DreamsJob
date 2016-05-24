@@ -32,11 +32,11 @@ a#imageLinkDelete, a#imageLinkEdit {
     border-bottom: none;
 }
 
-div.tableRow#button {
+.button_action {
     display:            table-row;
 }
 
-div.tableRow#button form {
+.button_action form {
     display:            table-cell;
     padding-right:      5px;
 }

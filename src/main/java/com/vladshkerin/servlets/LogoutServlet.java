@@ -1,6 +1,5 @@
 package com.vladshkerin.servlets;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();
 //        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
-        RequestDispatcher rd = req.getRequestDispatcher(String.format("%s/index.jsp", req.getContextPath()));
-        rd.forward(req, resp);
+        String sURL = String.format("%s/index.jsp", req.getContextPath());
+        req.getRequestDispatcher(sURL).forward(req, resp);
     }
 }
