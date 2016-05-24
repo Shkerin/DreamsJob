@@ -1,7 +1,10 @@
 package com.vladshkerin.services;
 
+import com.vladshkerin.enums.UserRole;
+import com.vladshkerin.exception.NotFoundItem;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.Item;
+import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
 import java.util.ArrayList;
@@ -47,6 +50,15 @@ public class ItemService {
         return items;
     }
 
+    public Item get(long id) throws NotFoundItem {
+        for (Item item : items) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        throw new NotFoundItem("Item not fount to \"id\"" + id);
+    }
+
     public void add(Item item) {
         items.add(item);
     }
@@ -68,20 +80,29 @@ public class ItemService {
         return errorValues.toString();
     }
 
-    public String getTreeItems(String login, long id) {
+    public String getTreeItems(Role role, long id) {
         StringBuilder sb = new StringBuilder();
+        boolean flag = false;
 
-        sb.append("<ul>");
         for (Item item : getSheetsItem(id)) {
-            if (UserService.getInstance().isRoleAdmin(login) ||
-                "user".equals(item.getUser().getName())) {
-                sb.append("<li>")
-                        .append("<input type=\"checkbox\">" + item.getName() + " (" + item.getDesc() + ")")
-                        .append("</li>");
-                sb.append(getTreeItems(login, item.getId()));
+            if (!flag) {
+                flag = true;
+                sb.append("<ul>");
+            }
+
+            if (role.getUserRole() == UserRole.ADMIN ||
+                    item.getUser().getRole().getUserRole() == UserRole.USER) {
+
+                sb.append("<li>");
+                sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
+                        item.getId(), item.getName(), item.getDesc()));
+                sb.append("</li>");
+                sb.append(getTreeItems(role, item.getId()));
             }
         }
-        sb.append("</ul>");
+
+        if (flag)
+            sb.append("</ul>");
 
         return sb.toString();
     }
