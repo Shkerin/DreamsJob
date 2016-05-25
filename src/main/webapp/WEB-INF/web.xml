@@ -70,6 +70,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ItemCancelCutServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemCancelCutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemCancelCutServlet</servlet-name>
+        <url-pattern>/item_cancel_cut</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ItemPasteServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.ItemPasteServlet</servlet-class>
     </servlet>
