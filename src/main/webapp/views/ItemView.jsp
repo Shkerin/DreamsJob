@@ -47,7 +47,7 @@
         <h1>Tree items:</h1>
 
         <form method="post">
-            <ul class="treeCSS">
+            <ul class="treeItem">
                 <li><input type="checkbox" name="tree" value="0">Root</li>
                 <%=ItemService.getInstance().getTreeItems(role, 0L)%>
             </ul>
@@ -60,22 +60,34 @@
                        formaction="<%=request.getContextPath()%>/item_paste">
             </div>
             </p>
+
         </form>
 
-        <ul class="itemCut">
-            <%
-                Object obj = session.getAttribute("tree");
-                if (obj != null && obj instanceof List) {
-                    List<String> list = (List) obj;
-                    for (String str : list) {
-            %>
-            <li><%= str%>
-            </li>
-            <%
+        <form method="post">
+            <h2>Choise item</h2>
+
+            <ul class="itemCut">
+                <%
+                    Object obj = session.getAttribute("tree");
+                    if (obj != null && obj instanceof List) {
+                        List<String> list = (List) obj;
+                        for (String str : list) {
+                %>
+                <li><%= str%>
+                </li>
+                <%
+                        }
                     }
-                }
-            %>
-        </ul>
+                %>
+            </ul>
+
+            <p>
+            <div class="button_action">
+                <input type="submit" value="Cancel"
+                       formaction="<%=request.getContextPath()%>/item_cancel_cut">
+            </div>
+            </p>
+        </form>
 
         <hr>
 
