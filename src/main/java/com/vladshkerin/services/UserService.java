@@ -11,14 +11,14 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Class for control users.
+ * The class for control users.
  *
  * @author Vladimir Shkerin
  * @since 13.03.2016
  */
 public class UserService {
 
-    private static final UserService instance = new UserService();
+    private static final UserService INSTANCE = new UserService();
 
     private final List<User> users = new CopyOnWriteArrayList<>();
 
@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public static UserService getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public List<User> getAll() {

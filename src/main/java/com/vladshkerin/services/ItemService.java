@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Class for control items.
+ * The class for control items.
  *
  * @author Vladimir Shkerin
  * @since 09.05.2016
  */
 public class ItemService {
 
-    private static final ItemService instance = new ItemService();
+    private static final ItemService INSTANCE = new ItemService();
 
     private final List<Item> items = new CopyOnWriteArrayList<>();
 
@@ -43,7 +43,7 @@ public class ItemService {
     }
 
     public static ItemService getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public List<Item> getAll() {
