@@ -24,7 +24,7 @@ public class ItemPasteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parentId = req.getParameter("tree");
-        if (!parentId.isEmpty()) {
+        if (parentId != null && !parentId.isEmpty()) {
 
             Object obj;
             HttpSession session = req.getSession();
@@ -42,8 +42,8 @@ public class ItemPasteServlet extends HttpServlet {
                 try {
                     Item item = ItemService.getInstance().get(Long.valueOf(str));
                     item.setParentId(Long.valueOf(parentId));
-                } catch (NotFoundItem notFoundItem) {
-                    notFoundItem.printStackTrace();
+                } catch (NotFoundItem ex) {
+                    ex.printStackTrace();
                 }
             }
         }
