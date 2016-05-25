@@ -10,12 +10,12 @@
     <%
         if (session.getAttribute("login") != null) {
     %>
-            User: <%=session.getAttribute("login")%>, Role: <%=session.getAttribute("role")%>).
-            <a href="<%=request.getContextPath()%>/logout">logout</a>
+    User: <%=session.getAttribute("login")%>, Role: <%=session.getAttribute("role")%>).
+    <a href="<%=request.getContextPath()%>/logout">logout</a>
     <%
-        } else {
+    } else {
     %>
-            Unregistered user!
+    Unregistered user!
     <%
         }
     %>
@@ -24,17 +24,17 @@
     <%--Object login = session.getAttribute("login");--%>
     <%--if (session.isNew() || login == null) {--%>
     <%--%>--%>
-        <%--<h1>User registration</h1>--%>
-        <%--<form action="<%=request.getContextPath()%>/login" method="post">--%>
-            <%--login : <input type="text" name="login"><br>--%>
-            <%--password : <input type="password" name="password"><br>--%>
-            <%--<input type="submit">--%>
-        <%--</form>--%>
+    <%--<h1>User registration</h1>--%>
+    <%--<form action="<%=request.getContextPath()%>/login" method="post">--%>
+    <%--login : <input type="text" name="login"><br>--%>
+    <%--password : <input type="password" name="password"><br>--%>
+    <%--<input type="submit">--%>
+    <%--</form>--%>
     <%--<%--%>
     <%--} else {--%>
     <%--%>--%>
-        <%--Welcome back, <%=session.getAttribute("login")%> (<%=session.getAttribute("role")%>).--%>
-        <%--<a href="<%=request.getContextPath()%>/logout">logout</a>--%>
+    <%--Welcome back, <%=session.getAttribute("login")%> (<%=session.getAttribute("role")%>).--%>
+    <%--<a href="<%=request.getContextPath()%>/logout">logout</a>--%>
     <%--<%--%>
     <%--}--%>
     <%--%>--%>

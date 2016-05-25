@@ -1,7 +1,7 @@
+<%@ page import="com.vladshkerin.enums.UserRole" %>
+<%@ page import="com.vladshkerin.models.Role" %>
 <%@ page import="com.vladshkerin.models.User" %>
 <%@ page import="com.vladshkerin.services.UserService" %>
-<%@ page import="com.vladshkerin.models.Role" %>
-<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%--
   Tne page to display users.
 
@@ -31,10 +31,12 @@
     </nav>
 
     <%
-        Role role;
+        Role role = new Role(UserRole.USER);
         synchronized (session) {
             Object obj = session.getAttribute("role");
-            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+            if (obj != null && obj instanceof Role) {
+                role = (Role) obj;
+            }
         }
     %>
 
@@ -52,13 +54,15 @@
                 <%
                     if (role.isRoleAdmin()) {
                 %>
-                    <th class="center">Delete</th>
-                    <th class="center">Edit</th>
+                <th class="center">Delete</th>
+                <th class="center">Edit</th>
                 <%
                     }
                 %>
             </tr>
-            <% for (User user : UserService.getInstance().getAll()) { %>
+            <%
+                for (User user : UserService.getInstance().getAll()) {
+            %>
             <tr>
                 <td class="right">
                     <%= user.getName() %>
@@ -92,31 +96,35 @@
                     }
                 %>
             </tr>
-            <% } %>
+            <%
+                }
+            %>
         </table>
 
         <p>
         <div class="button_action">
-        <%
-            if (role.isRoleAdmin()) {
-        %>
+            <%
+                if (role.isRoleAdmin()) {
+            %>
             <form action="<%=request.getContextPath()%>/views/UserAdd.jsp" method="post">
                 <input type="submit" value="Add user">
             </form>
-        <%
-            }
-        %>
+            <%
+                }
+            %>
             <form action="<%=request.getContextPath()%>/index.jsp" method="post">
                 <input type="submit" value="Back">
             </form>
         </div>
         </p>
 
-    </div> <%--main--%>
+    </div>
+    <%--main--%>
 
     <jsp:include page="include/PageFooter.jsp"></jsp:include>
 
-</div>  <%--all_content--%>
+</div>
+<%--all_content--%>
 
 </body>
 </html>

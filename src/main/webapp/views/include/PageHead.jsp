@@ -1,5 +1,4 @@
-<%@ page import="com.vladshkerin.models.Role" %>
-<%@ page import="com.vladshkerin.enums.UserRole" %><%--
+<%--
   The page displays logo.
   
   @author Vladimir Shkerin

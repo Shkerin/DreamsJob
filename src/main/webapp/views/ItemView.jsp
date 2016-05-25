@@ -1,8 +1,8 @@
+<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%@ page import="com.vladshkerin.models.Item" %>
+<%@ page import="com.vladshkerin.models.Role" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.vladshkerin.models.Role" %>
-<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%--
   The page to display items.
 
@@ -33,10 +33,12 @@
     </nav>
 
     <%
-        Role role;
+        Role role = new Role(UserRole.USER);
         synchronized (session) {
             Object obj = session.getAttribute("role");
-            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+            if (obj != null && obj instanceof Role) {
+                role = (Role) obj;
+            }
         }
     %>
 
@@ -67,7 +69,8 @@
                     List<String> list = (List) obj;
                     for (String str : list) {
             %>
-                    <li><%= str%></li>
+            <li><%= str%>
+            </li>
             <%
                     }
                 }
@@ -87,7 +90,7 @@
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
                     if (role.isRoleAdmin() ||
-                        item.getUser().getRole().isRoleUser()) {
+                            item.getUser().getRole().isRoleUser()) {
             %>
             <tr>
                 <td class="center">
@@ -117,11 +120,13 @@
         </div>
         </p>
 
-    </div> <%--main--%>
+    </div>
+    <%--main--%>
 
     <jsp:include page="include/PageFooter.jsp"></jsp:include>
 
-</div>  <%--all_content--%>
+</div>
+<%--all_content--%>
 
 </body>
 </html>

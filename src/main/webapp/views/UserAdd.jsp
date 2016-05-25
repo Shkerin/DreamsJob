@@ -1,5 +1,5 @@
-<%@ page import="com.vladshkerin.models.Role" %>
 <%@ page import="com.vladshkerin.enums.UserRole" %>
+<%@ page import="com.vladshkerin.models.Role" %>
 <%--
   The page for adding a user.
 
@@ -29,10 +29,12 @@
     </nav>
 
     <%
-        Role role;
+        Role role = new Role(UserRole.USER);
         synchronized (session) {
             Object obj = session.getAttribute("role");
-            role = obj != null ? (Role) obj : new Role(UserRole.USER);
+            if (obj != null && obj instanceof Role) {
+                role = (Role) obj;
+            }
         }
     %>
 
@@ -74,7 +76,7 @@
                         }
                     %>
                     <%--<input type="submit" value="Back"--%>
-                           <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
+                    <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
                     <input type="button" value="Back"
                            onclick="document.location.href=
                                    '<%=request.getContextPath()%>/views/UserView.jsp'">
@@ -83,19 +85,25 @@
             <div class="tableRow">
                 <p></p>
                 <div id="message">
-                    <%if (session.getAttribute("message") != null) {%>
-                        <%=session.getAttribute("message")%>
-                        <%session.setAttribute("message", "");%>
-                    <%}%>
+                    <%
+                        if (session.getAttribute("message") != null) {
+                    %>
+                    <%=session.getAttribute("message")%>
+                    <%
+                            session.setAttribute("message", "");
+                        }
+                    %>
                 </div>
             </div>
         </form>
 
-    </div> <%--main--%>
+    </div>
+    <%--main--%>
 
     <jsp:include page="include/PageFooter.jsp"></jsp:include>
 
-</div>  <%--all_content--%>
+</div>
+<%--all_content--%>
 
 <script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
 
