@@ -54,8 +54,6 @@ function validateFormItem() {
 }
 
 function outputMessage(errorValues) {
-    var testMessage = "Incorrect input values: " + errorValues + " !";
-    var message = document.getElementById("message");
-    message.innerHTML = testMessage;
-    message.setAttribute("style", "color: red");
+    var tag = document.getElementById("message");
+    tag.innerHTML = "Incorrect input values: " + errorValues + " !";
 }
