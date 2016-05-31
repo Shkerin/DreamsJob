@@ -1,0 +1,15 @@
+<%--
+  The page displays links.
+  
+  @author Vladimir Shkerin
+  @since 17.05.2016
+--%>
+<nav>
+
+    <ul>
+        <li class="<%= pageIndex %>"><a href="index.jsp">HOME</a></li>
+        <li class="<%= pageItemView %>"><a href="navigation?page=items">ITEMS</a></li>
+        <li class="<%= pageUserView %>"><a href="navigation?page=users">USERS</a></li>
+    </ul>
+
+</nav>
