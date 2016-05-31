@@ -5,7 +5,6 @@
 }
 
 header.top {
-    /*background-color:   #675c47;*/
     background-color:   rgb(25, 67, 97);
     margin:             0px 10px 0px 10px;
     height:             40px;
@@ -31,7 +30,6 @@ header.top #top_registration a {
 }
 
 body {
-    /*background-color:   #efe5d0;*/
     background-color:   rgb(63, 169, 245);
     font-family:        tahoma, arial, verdana, sans-serif, 'Lucida Sans';
     font-size:          13px;
@@ -49,13 +47,17 @@ body {
     border-top-left-radius: 5px;
 }
 
-#main img {
+#main #form_registration {
+    width:              250px;
+    margin:             0 auto;
+}
+
+#main #image_registration {
     margin-left:        20%;
     margin-right:       20%;
 }
 
 footer {
-    /*background-color:   #675c47;*/
     background-color:   rgb(25, 67, 97);
     color:              white;
     text-align:         center;
@@ -69,7 +71,6 @@ footer {
 
 h1 {
     font-size:          120%;
-    /*color:              #954b4b;*/
     color:              rgb(25, 67, 97)
 }
 
@@ -77,15 +78,17 @@ h2 {
     font-size:          110%;
 }
 
+#message {
+    color:              red;
+}
+
 a:link {
-    /*color:              #b76666;*/
     color:              rgb(66, 76, 204);
     text-decoration:    none;
     border-bottom:      thin dotted rgb(66, 76, 204);
 }
 
 a:visited {
-    /*color:              #675c47;*/
     color:              rgb(25, 67, 97);;
     text-decoration:    none;
     border-bottom:      thin dotted rgb(25, 67, 97);;
@@ -123,7 +126,5 @@ nav ul li a:link, nav ul li a:visited {
 }
 
 nav ul li.selected {
-    /*background-color:   #0f0080;*/
-    background-color: rgb(238, 181, 66);
-    /*background-color: rgb(71, 124, 233);*/
+    background-color:   rgb(238, 181, 66);
 }
