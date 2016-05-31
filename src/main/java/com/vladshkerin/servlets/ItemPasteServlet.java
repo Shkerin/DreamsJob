@@ -2,6 +2,7 @@ package com.vladshkerin.servlets;
 
 import com.vladshkerin.exception.NotFoundItem;
 import com.vladshkerin.models.Item;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.ItemService;
 
 import javax.servlet.ServletException;
@@ -26,12 +27,14 @@ public class ItemPasteServlet extends HttpServlet {
         String parentId = req.getParameter("tree");
         if (parentId != null && !parentId.isEmpty()) {
 
-            Object obj;
             HttpSession session = req.getSession();
-            synchronized (session) {
-                obj = session.getAttribute("tree");
-                session.removeAttribute("tree");
-            }
+//            Object obj;
+//            synchronized (session) {
+//                obj = session.getAttribute("tree");
+//                session.removeAttribute("tree");
+//            }
+            Object obj = ApplicationService.getInstance().getSessionAttribute("tree", session);
+            ApplicationService.getInstance().removeSessionAttribute("tree", session);
 
             List<String> listItem = new ArrayList<>();
             if (obj != null && obj instanceof List) {
@@ -48,7 +51,6 @@ public class ItemPasteServlet extends HttpServlet {
             }
         }
 
-        String sURL = String.format("%s/views/ItemView.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=items").forward(req, resp);
     }
 }

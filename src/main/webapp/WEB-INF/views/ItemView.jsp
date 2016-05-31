@@ -1,6 +1,4 @@
-<%@ page import="com.vladshkerin.enums.UserRole" %>
 <%@ page import="com.vladshkerin.models.Item" %>
-<%@ page import="com.vladshkerin.models.Role" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
 <%@ page import="java.util.List" %>
 <%--
@@ -10,37 +8,23 @@
   @since 09.05.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%! String pageIndex = ""; %>
+<%! String pageItemView = "selected"; %>
+<%! String pageUserView = ""; %>
+
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
-    <%--<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/style_tree.css">--%>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styletable.css">
+    <link type="text/css" rel="stylesheet" href="style/index.css">
+    <link type="text/css" rel="stylesheet" href="style/styletable.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <jsp:include page="include/PageHead.jsp"></jsp:include>
-    <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-    <%--TODO remove if cancel comment up--%>
-    <nav>
-        <ul>
-            <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
-            <li><a href="<%=request.getContextPath()%>/views/UserView.jsp">USERS</a></li>
-            <li class="selected"><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
-        </ul>
-    </nav>
-
-    <%
-        Role role = new Role(UserRole.USER);
-        synchronized (session) {
-            Object obj = session.getAttribute("role");
-            if (obj != null && obj instanceof Role) {
-                role = (Role) obj;
-            }
-        }
-    %>
+    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
+    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
@@ -49,31 +33,31 @@
         <form method="post">
             <ul class="treeItem">
                 <li><input type="checkbox" name="tree" value="0">Root</li>
-                <%=ItemService.getInstance().getTreeItems(role, 0L)%>
+                <%= ItemService.getInstance().getTreeItems(role, 0L) %>
             </ul>
 
             <p>
             <div class="button_action">
                 <input type="submit" value="Cut"
-                       formaction="<%=request.getContextPath()%>/item_cut">
+                       formaction="item_cut">
                 <input type="submit" value="Paste"
-                       formaction="<%=request.getContextPath()%>/item_paste">
+                       formaction="item_paste">
             </div>
             </p>
 
         </form>
 
         <form method="post">
-            <h2>Choise item</h2>
+            <h2>Choice item</h2>
 
             <ul class="itemCut">
                 <%
-                    Object obj = session.getAttribute("tree");
+                    obj = ApplicationService.getInstance().getSessionAttribute("tree", session);
                     if (obj != null && obj instanceof List) {
                         List<String> list = (List) obj;
                         for (String str : list) {
                 %>
-                <li><%= str%>
+                <li><%= str %>
                 </li>
                 <%
                         }
@@ -84,7 +68,7 @@
             <p>
             <div class="button_action">
                 <input type="submit" value="Cancel"
-                       formaction="<%=request.getContextPath()%>/item_cancel_cut">
+                       formaction="item_cancel_cut">
             </div>
             </p>
         </form>
@@ -98,6 +82,7 @@
                 <th class="right">Parent id</th>
                 <th class="right">Name</th>
                 <th class="center">Description</th>
+                <th class="center">User</th>
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
@@ -106,13 +91,16 @@
             %>
             <tr>
                 <td class="center">
-                    <%= item.getParentId()%>
+                    <%= item.getParentId() %>
                 </td>
                 <td class="right">
                     <%= item.getName() %>
                 </td>
                 <td class="center">
                     <%= item.getDesc() %>
+                </td>
+                <td class="center">
+                    <%= item.getUser().getName() %>
                 </td>
             </tr>
             <%
@@ -123,10 +111,10 @@
 
         <p>
         <div class="button_action">
-            <form action="<%=request.getContextPath()%>/views/ItemAdd.jsp" method="post">
+            <form action="navigation?page=item_add" method="post">
                 <input type="submit" value="Add item">
             </form>
-            <form action="<%=request.getContextPath()%>/index.jsp" method="post">
+            <form action="index.jsp" method="post">
                 <input type="submit" value="Back">
             </form>
         </div>
@@ -135,7 +123,7 @@
     </div>
     <%--main--%>
 
-    <jsp:include page="include/PageFooter.jsp"></jsp:include>
+    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
 
 </div>
 <%--all_content--%>

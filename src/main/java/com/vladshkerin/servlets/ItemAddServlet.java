@@ -2,6 +2,7 @@ package com.vladshkerin.servlets;
 
 import com.vladshkerin.models.Item;
 import com.vladshkerin.models.User;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.ItemService;
 
 import javax.servlet.ServletException;
@@ -33,25 +34,22 @@ public class ItemAddServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String errorValues = ItemService.getInstance().validateForm(itemMap);
         if (errorValues.isEmpty()) {
-            //TODO set current user and parent id
-            Item item = new Item(new User("anonymous"));
-            item.setName(itemMap.get("name"));
-            item.setDesc(itemMap.get("desc"));
-            ItemService.getInstance().add(item);
+            Object obj = ApplicationService.getInstance().getSessionAttribute("user", session);
+            if (obj != null && obj instanceof User) {
+                Item item = new Item((User) obj);
+                item.setName(itemMap.get("name"));
+                item.setDesc(itemMap.get("desc"));
+                ItemService.getInstance().add(item);
 
-            setSessionAttribute("message", "The item \"" + name + "\" is added.", session);
+                String str = "The item \"" + name + "\" is added.";
+                ApplicationService.getInstance().setSessionAttribute("message", str, session);
+            } else {
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
+            }
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
-            setSessionAttribute("message", message, session);
+            ApplicationService.getInstance().setSessionAttribute("message", message, session);
         }
-//        resp.sendRedirect(String.format("%s/views/ItemAdd.jsp", req.getContextPath()));
-        String sURL = String.format("%s/views/ItemAdd.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
-    }
-
-    private void setSessionAttribute(String name, Object value, HttpSession session) {
-        synchronized (session) {
-            session.setAttribute(name, value);
-        }
+        req.getRequestDispatcher("navigation?page=item_add").forward(req, resp);
     }
 }

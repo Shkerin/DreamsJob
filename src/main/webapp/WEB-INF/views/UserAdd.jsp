@@ -1,5 +1,3 @@
-<%@ page import="com.vladshkerin.enums.UserRole" %>
-<%@ page import="com.vladshkerin.models.Role" %>
 <%--
   The page for adding a user.
 
@@ -7,43 +5,30 @@
   @since 12.04.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%! String pageIndex = ""; %>
+<%! String pageItemView = ""; %>
+<%! String pageUserView = "selected"; %>
+
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/index.css">
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/style/styleform.css">
+    <link type="text/css" rel="stylesheet" href="style/index.css">
+    <link type="text/css" rel="stylesheet" href="style/styleform.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <jsp:include page="include/PageHead.jsp"></jsp:include>
-    <%--<jsp:include page="include/PageLinks.jsp"></jsp:include>--%>
-    <%--TODO remove if cancel comment up--%>
-    <nav>
-        <ul>
-            <li><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
-            <li class="selected"><a href="<%=request.getContextPath()%>/views/UserView.jsp">USERS</a></li>
-            <li><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
-        </ul>
-    </nav>
-
-    <%
-        Role role = new Role(UserRole.USER);
-        synchronized (session) {
-            Object obj = session.getAttribute("role");
-            if (obj != null && obj instanceof Role) {
-                role = (Role) obj;
-            }
-        }
-    %>
+    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
+    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
         <h1>Add user:</h1>
         <h2>Fill out the form below and click "add user" to add</h2>
 
-        <form class="body_form" action="<%=request.getContextPath()%>/user_add"
+        <form class="body_form" action="user_add"
               onsubmit="return validateFormUser()" method="post">
             <div class="tableRow">
                 <p> Name </p>
@@ -75,22 +60,19 @@
                     <%
                         }
                     %>
-                    <%--<input type="submit" value="Back"--%>
-                    <%--formaction="<%=request.getContextPath()%>/views/UserView.jsp">--%>
                     <input type="button" value="Back"
-                           onclick="document.location.href=
-                                   '<%=request.getContextPath()%>/views/UserView.jsp'">
+                           onclick="document.location.href='navigation?page=users'">
+
                 </p>
             </div>
             <div class="tableRow">
                 <p></p>
                 <div id="message">
                     <%
-                        if (session.getAttribute("message") != null) {
-                    %>
-                    <%=session.getAttribute("message")%>
-                    <%
-                            session.setAttribute("message", "");
+                        obj = ApplicationService.getInstance().getSessionAttribute("message", session);
+                        if (obj != null) {
+                            out.print((String) obj);
+                            ApplicationService.getInstance().setSessionAttribute("message", "", session);
                         }
                     %>
                 </div>
@@ -100,7 +82,7 @@
     </div>
     <%--main--%>
 
-    <jsp:include page="include/PageFooter.jsp"></jsp:include>
+    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
 
 </div>
 <%--all_content--%>

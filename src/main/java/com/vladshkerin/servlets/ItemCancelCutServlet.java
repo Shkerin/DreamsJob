@@ -1,5 +1,7 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.services.ApplicationService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +20,8 @@ public class ItemCancelCutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        synchronized (session) {
-            session.removeAttribute("tree");
-        }
+        ApplicationService.getInstance().removeSessionAttribute("tree", session);
 
-        String sURL = String.format("%s/views/ItemView.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=items").forward(req, resp);
     }
 }

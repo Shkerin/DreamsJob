@@ -26,8 +26,8 @@ public class ItemService {
 
     private ItemService() {
         try {
-            User user = UserService.getInstance().getToName("user");
-            User admin = UserService.getInstance().getToName("admin");
+            User user = UserService.getInstance().get("user");
+            User admin = UserService.getInstance().get("admin");
 
             items.add(new Item(0, user, "1 item", "user"));
             items.add(new Item(1, user, "2 item", "user"));
@@ -95,7 +95,7 @@ public class ItemService {
 
                 sb.append("<li>");
                 sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
-                        item.getId(), item.getName(), item.getDesc()));
+                        item.getId(), item.getName(), item.getUser().getName()));
                 sb.append("</li>");
                 sb.append(getTreeItems(role, item.getId()));
             }

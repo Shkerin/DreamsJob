@@ -22,9 +22,7 @@ public class UserDeleteServlet extends HttpServlet {
         if (id != null && !id.isEmpty()) {
             UserService.getInstance().delete(Long.valueOf(id));
         }
-//        resp.sendRedirect(String.format("%s/views/UserView.jsp", req.getContextPath()));
-        String sURL = String.format("%s/views/UserView.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=users").forward(req, resp);
     }
 
     @Override

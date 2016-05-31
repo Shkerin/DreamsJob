@@ -28,9 +28,7 @@ public class UserEditServlet extends HttpServlet {
         if (id != null && !id.isEmpty()) {
             setSessionAttributeUser(Long.valueOf(id), session);
         }
-//        resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
-        String sURL = String.format("%s/views/UserEdit.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
     }
 
     @Override
@@ -72,9 +70,7 @@ public class UserEditServlet extends HttpServlet {
             setSessionAttribute("message", message, session);
         }
 
-//        resp.sendRedirect(String.format("%s/views/UserEdit.jsp", req.getContextPath()));
-        String sURL = String.format("%s/views/UserEdit.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
     }
 
     private void setSessionAttribute(String name, Object value, HttpSession session) {
@@ -95,7 +91,7 @@ public class UserEditServlet extends HttpServlet {
 
     private void setSessionAttributeUser(User user, HttpSession session) {
         synchronized (session) {
-            session.setAttribute("id", user.getId());
+            session.setAttribute("id", String.valueOf(user.getId()));
             session.setAttribute("name",
                     !user.getName().isEmpty() ? user.getName() : "");
             session.setAttribute("growth",

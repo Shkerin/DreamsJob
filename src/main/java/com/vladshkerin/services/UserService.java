@@ -32,10 +32,10 @@ public class UserService {
         String[] children2 = new String[]{"Sviatoslav", "Eva"};
         String[] children3 = new String[]{"Maria", "Sergio", "Irina"};
 
-        users.add(new User("admin", roleAdmin, 145f, calendar1, "admin@admin.ru", children1));
-        users.add(new User("user", roleUser, 145f, calendar1, "vlad@admin.ru", children1));
-        users.add(new User("Elena", roleUser, 150f, calendar2, "elena@mail.ru", children2));
-        users.add(new User("Sviatoslav", roleUser, 160f, calendar3, "sviat@ya.ru", children3));
+        users.add(new User("admin", "admin", roleAdmin, 145f, calendar1, "admin@admin.ru", children1));
+        users.add(new User("user", "user", roleUser, 145f, calendar1, "vlad@admin.ru", children1));
+        users.add(new User("Elena", "", roleUser, 150f, calendar2, "elena@mail.ru", children2));
+        users.add(new User("Sviatoslav", "", roleUser, 160f, calendar3, "sviat@ya.ru", children3));
         users.add(new User("Nikita"));
         users.add(new User("Olga"));
     }
@@ -54,16 +54,27 @@ public class UserService {
                 return user;
             }
         }
-        throw new NotFoundUser("User not fount to \"id\"" + id);
+        throw new NotFoundUser("User not fount by id: " + id);
     }
 
-    public User getToName(String name) throws NotFoundUser {
+    public User get(String name) throws NotFoundUser {
         for (User user : users) {
             if (user.getName().equals(name)) {
                 return user;
             }
         }
-        throw new NotFoundUser("User not fount to \"name\"" + name);
+        throw new NotFoundUser("User not fount by name: " + name);
+    }
+
+    public User get(String name, String password) throws NotFoundUser {
+        for (User user : users) {
+            if (name.equals(user.getName())) {
+                if (password == null || password.equals(user.getPassword())) {
+                    return user;
+                }
+            }
+        }
+        throw new NotFoundUser("User not fount by name: " + name);
     }
 
     public void add(final User user) {
@@ -101,5 +112,13 @@ public class UserService {
         }
 
         return errorValues.toString();
+    }
+
+    public boolean isExist(String name, String password) {
+        for (User user : users) {
+            if (name.equals(user.getName()) && password.equals(user.getPassword()))
+                return true;
+        }
+        return false;
     }
 }

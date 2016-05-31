@@ -1,6 +1,7 @@
 package com.vladshkerin.servlets;
 
 import com.vladshkerin.models.User;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
@@ -45,19 +46,12 @@ public class UserAddServlet extends HttpServlet {
             user.setChildren(children != null ? children.trim() : "");
             UserService.getInstance().add(user);
 
-            setSessionAttribute("message", "The user \"" + name + "\" is added.", session);
+            String str = "The user \"" + name + "\" is added.";
+            ApplicationService.getInstance().setSessionAttribute("message", str, session);
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
-            setSessionAttribute("message", message, session);
+            ApplicationService.getInstance().setSessionAttribute("message", message, session);
         }
-//        resp.sendRedirect(String.format("%s/views/UserAdd.jsp", req.getContextPath()));
-        String sURL = String.format("%s/views/UserAdd.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
-    }
-
-    private void setSessionAttribute(String name, Object value, HttpSession session) {
-        synchronized (session) {
-            session.setAttribute(name, value);
-        }
+        req.getRequestDispatcher("navigation?page=user_add").forward(req, resp);
     }
 }

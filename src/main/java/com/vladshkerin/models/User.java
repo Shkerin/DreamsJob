@@ -25,16 +25,18 @@ public class User {
 
     private long id;
     private String name;
+    private String password;
     private Float growth;
     private Calendar birthDay;
     private String email;
     private String[] children;
     private Role role;
 
-    public User(String name, Role role, Float growth, Calendar birthDay, String email, String[] children) {
+    public User(String name, String password, Role role, Float growth, Calendar birthDay, String email, String[] children) {
         this.id = nextItemID();
-        this.role = role;
         this.name = name;
+        this.password = password;
+        this.role = role;
         this.growth = growth;
         this.birthDay = birthDay;
         this.email = email;
@@ -42,7 +44,7 @@ public class User {
     }
 
     public User(String name) {
-        this(name, new Role(UserRole.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
+        this(name, "", new Role(UserRole.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
     }
 
     @Override
@@ -85,6 +87,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Float getGrowth() {
@@ -226,9 +236,9 @@ public class User {
         User user11 = new User("User11");
         User user21 = user11;
         User user31 = user21;
-        User user44 = new User("User44", roleUser, 22.5f, cal, "user1@mail.ru", child);
-        User user54 = new User("User54", roleUser, 22.5f, cal, "user1@mail.ru", child);
-        User user66 = new User("User66", roleAdmin, 0f, new GregorianCalendar(), "", new String[]{});
+        User user44 = new User("User44", "", roleUser, 22.5f, cal, "user1@mail.ru", child);
+        User user54 = new User("User54", "", roleUser, 22.5f, cal, "user1@mail.ru", child);
+        User user66 = new User("User66", "", roleAdmin, 0f, new GregorianCalendar(), "", new String[]{});
 
         // Test method toString()
         System.out.println("Test method toString():");

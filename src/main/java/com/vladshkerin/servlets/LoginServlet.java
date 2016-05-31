@@ -1,8 +1,8 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.exception.NotFoundUser;
-import com.vladshkerin.models.Role;
+import com.vladshkerin.models.User;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
@@ -22,35 +22,35 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        if (login == null) {
-            login = "";
-        }
-        String password = req.getParameter("password");
-        if (password == null) {
-            password = "";
-        }
-
-        Role role;
-        try {
-            role = UserService.getInstance().getToName(login).getRole();
-        } catch (NotFoundUser ex) {
-            login = "";
-            password = "";
-            role = new Role(UserRole.USER);
-        }
-
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(Integer.MAX_VALUE);
-        synchronized (session) {
 
-            session.setAttribute("login", login);
-            session.setAttribute("password", password);
-            session.setAttribute("role", role);
+        String login = "";
+        String password = "";
+        String message = "";
+
+        Object object = req.getParameter("login");
+        if (object != null)
+            login = (String) object;
+
+        object = req.getParameter("password");
+        if (object != null)
+            password = (String) object;
+
+        if (!login.isEmpty()) {
+            try {
+                User user = UserService.getInstance().get(login, password);
+                ApplicationService.getInstance().setSessionAttribute("user", user, session);
+                req.getRequestDispatcher("navigation?page=items").forward(req, resp);
+            } catch (NotFoundUser ex) {
+                message = "User name or password entered is incorrect!";
+            }
+        } else {
+            message = "Enter the user name and password!";
         }
 
-//        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
-        String sURL = String.format("%s/index.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        ApplicationService.getInstance().setSessionAttribute("message", message, session);
+
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }

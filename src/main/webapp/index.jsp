@@ -1,53 +1,78 @@
 <%--
-  The main project page DreamsJob.
+  The main page DreamsJob.
 
   @author Vladimir Shkerin
   @since 22.03.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%! String pageIndex = "selected"; %>
+<%! String pageItemView = ""; %>
+<%! String pageUserView = ""; %>
 <html>
 <head>
     <title>Dreams Job</title>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/style/index.css">
+    <link rel="stylesheet" type="text/css" href="style/index.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <%@ include file="views/include/PageHead.jsp" %>
-    <%--<%@ include file="views/include/PageLinks.jsp"%>--%>
-    <%--TODO remove if cancel comment up--%>
-    <nav>
-        <ul>
-            <li class="selected"><a href="<%=request.getContextPath()%>/index.jsp">HOME</a></li>
-            <li><a href="<%=request.getContextPath()%>/views/UserView.jsp">USERS</a></li>
-            <li><a href="<%=request.getContextPath()%>/views/ItemView.jsp">ITEMS</a></li>
-        </ul>
-    </nav>
+    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
+
+    <%
+        obj = session.getAttribute("user");
+        if (!session.isNew() && obj != null) {
+    %>
+    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%
+        }
+    %>
 
     <div id="main">
-        <div id="page_registration">
-            <%
-                Object login = session.getAttribute("login");
-                if (session.isNew() || login == null) {
-            %>
+        <%
+            if (session.isNew() || obj == null) {
+        %>
+        <div id="form_registration">
             <h1>User registration</h1>
-            <form action="<%=request.getContextPath()%>/login" method="post">
-                login : <input type="text" name="login"><br>
-                password : <input type="password" name="password"><br>
-                <input type="submit">
-            </form>
             <%
-            } else {
+                Object message = session.getAttribute("message");
+                if (message != null) {
             %>
-            <img src="img/love_job.jpg">
+            <p id="message">
+                <%=(String) message%>
+            </p>
             <%
                 }
             %>
+            <form action="login" method="post">
+                <table>
+                    <tr>
+                        <td>login :</td>
+                        <td><input type="text" name="login"></td>
+                    </tr>
+                    <tr>
+                        <td>password :</td>
+                        <td><input type="password" name="password"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit"></td>
+                    </tr>
+                </table>
+            </form>
         </div>
+        <%
+        } else {
+        %>
+        <div id="image_registration">
+            <img src="img/love_job.jpg">
+        </div>
+        <%
+            }
+        %>
     </div>
 
-    <%@ include file="views/include/PageFooter.jsp" %>
+    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
 
 </div>
 

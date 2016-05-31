@@ -60,7 +60,7 @@ public class EchoServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        syncUserList.add(new User(name, role, growth, birthDay, email, children));
+        syncUserList.add(new User(name, "", role, growth, birthDay, email, children));
     }
 
     @Override

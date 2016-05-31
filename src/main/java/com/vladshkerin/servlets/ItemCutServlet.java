@@ -1,5 +1,7 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.services.ApplicationService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,12 +30,9 @@ public class ItemCutServlet extends HttpServlet {
 
         if (listItem.size() > 0) {
             HttpSession session = req.getSession();
-            synchronized (session) {
-                session.setAttribute("tree", listItem);
-            }
+            ApplicationService.getInstance().setSessionAttribute("tree", listItem, session);
         }
 
-        String sURL = String.format("%s/views/ItemView.jsp", req.getContextPath());
-        req.getRequestDispatcher(sURL).forward(req, resp);
+        req.getRequestDispatcher("navigation?page=items").forward(req, resp);
     }
 }
