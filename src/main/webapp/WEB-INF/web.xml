@@ -1,4 +1,20 @@
 <web-app>
+    <display-name>DreamsJob</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>NavigationServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.NavigationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>NavigationServlet</servlet-name>
+        <url-pattern>/navigation</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.LoginServlet</servlet-class>
@@ -102,5 +118,4 @@
         <servlet-name>LifeCycleServlet</servlet-name>
         <url-pattern>/life_cycle</url-pattern>
     </servlet-mapping>
-
 </web-app>
