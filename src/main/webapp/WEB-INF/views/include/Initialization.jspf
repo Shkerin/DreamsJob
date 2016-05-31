@@ -1,0 +1,15 @@
+<%@ page import="com.vladshkerin.models.Role" %>
+<%@ page import="com.vladshkerin.models.User" %>
+<%@ page import="com.vladshkerin.services.ApplicationService" %><%--
+  TODO: comment
+  
+  @author vlad
+  @since 31.05.2016
+--%>
+<%
+    obj = ApplicationService.getInstance().getSessionAttribute("user", session);
+    if (obj == null || !(obj instanceof User)) {
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+    Role role = ((User) obj).getRole();
+%>
