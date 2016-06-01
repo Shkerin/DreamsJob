@@ -5,8 +5,8 @@ import com.vladshkerin.exception.NotFoundItem;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.Item;
 import com.vladshkerin.models.Role;
-import com.vladshkerin.models.User;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,25 +25,82 @@ public class ItemService {
     private final List<Item> items = new CopyOnWriteArrayList<>();
 
     private ItemService() {
-        try {
-            User user = UserService.getInstance().get("user");
-            User admin = UserService.getInstance().get("admin");
-
-            items.add(new Item(0, user, "1 item", "user"));
-            items.add(new Item(1, user, "2 item", "user"));
-            items.add(new Item(2, user, "3 item", "user"));
-            items.add(new Item(2, admin, "4 item", "admin"));
-            items.add(new Item(1, user, "5 item", "user"));
-            items.add(new Item(1, user, "6 item", "user"));
-            items.add(new Item(0, admin, "7 item", "admin"));
-
-        } catch (NotFoundUser ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            User user = UserService.getInstance().get("user");
+//            User admin = UserService.getInstance().get("admin");
+//
+//            items.add(new Item(0, user, "1 item", "user"));
+//            items.add(new Item(1, user, "2 item", "user"));
+//            items.add(new Item(2, user, "3 item", "user"));
+//            items.add(new Item(2, admin, "4 item", "admin"));
+//            items.add(new Item(1, user, "5 item", "user"));
+//            items.add(new Item(1, user, "6 item", "user"));
+//            items.add(new Item(0, admin, "7 item", "admin"));
+//
+//        } catch (NotFoundUser ex) {
+//            ex.printStackTrace();
+//        }
     }
 
     public static ItemService getInstance() {
         return INSTANCE;
+    }
+
+    public void saveFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/tmp/items.txt", false));
+            for (Item item : getAll()) {
+                String id = String.valueOf(item.getId());
+                String parentId = String.valueOf(item.getParentId());
+                String userId = String.valueOf(item.getUser().getId());
+                String name = item.getName();
+                String desc = item.getDesc();
+
+                writer.write(id + "/");
+                writer.write(parentId.isEmpty() ? " /" : parentId + "/");
+                writer.write(userId.isEmpty() ? " /" : userId + "/");
+                writer.write(name.isEmpty() ? " /" : name + "/");
+                writer.write(desc.isEmpty() ? " \n" : desc + "\n");
+            }
+            writer.close();
+        } catch (IOException ex) {
+            //TODO out to log
+            ex.printStackTrace();
+        }
+    }
+
+    public void loadFile() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("/tmp/items.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                makeItem(line);
+            }
+        } catch (IOException ex) {
+            //TODO out to log
+            ex.printStackTrace();
+        }
+    }
+
+    private void makeItem(String lineToParse) {
+        try {
+            String[] result = lineToParse.split("/");
+
+            Item item;
+            try {
+                item = get(Long.valueOf(result[0]));
+            } catch (NotFoundItem ex) {
+                item = new Item();
+                items.add(item);
+            }
+            item.setParentId(Long.valueOf(result[1]));
+            item.setUser(UserService.getInstance().get(Long.valueOf(result[2])));
+            item.setName(result[3]);
+            item.setDesc(result[4]);
+        } catch (NotFoundUser ex) {
+            //TODO out to log
+            ex.printStackTrace();
+        }
     }
 
     public List<Item> getAll() {
