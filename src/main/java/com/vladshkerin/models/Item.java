@@ -2,9 +2,8 @@ package com.vladshkerin.models;
 
 import com.vladshkerin.services.TestObject;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -22,31 +21,37 @@ public class Item {
     private User user;
     private String name;
     private String desc;
+    private Calendar date;
 
-    public Item(long parentId, User user, String name, String desc) {
+    public Item(long parentId, User user, String name, String desc, Calendar date) {
         this.id = itemNumber.incrementAndGet();
         this.parentId = parentId;
         this.user = user;
         this.name = name;
         this.desc = desc;
+        this.date = date;
     }
 
     public Item(User user) {
-        this(0L, user, "", "");
+        this(0L, user, "", "", new GregorianCalendar());
     }
 
     public Item() {
-        this(0L, new User(), "", "");
+        this(0L, new User(), "", "", new GregorianCalendar());
     }
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String strDate = dateFormat.format(date.getTime());
+
         return getClass().getName() +
                 "{id=" + id +
                 ", parent_id=" + parentId +
                 ", user=" + user +
                 ", name=" + name +
                 ", desc=" + desc +
+                ", date=" + strDate +
                 '}';
     }
 
@@ -100,6 +105,14 @@ public class Item {
         this.desc = desc;
     }
 
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
     public static void main(String[] args) {
         test();
     }
@@ -121,9 +134,9 @@ public class Item {
         Item item11 = new Item(user1);
         Item item21 = item11;
         Item item31 = item21;
-        Item item44 = new Item(0, user2, "two name", "two desc");
-        Item item54 = new Item(1, user2, "two name", "two desc");
-        Item item66 = new Item(2, new User("temp"), "", "");
+        Item item44 = new Item(0, user2, "two name", "two desc", new GregorianCalendar(2015, 0, 1));
+        Item item54 = new Item(1, user2, "two name", "two desc", new GregorianCalendar(2016, 1, 2));
+        Item item66 = new Item(2, new User("temp"), "", "", new GregorianCalendar(2017, 2, 3));
 
         // Test method toString()
         System.out.println("Test method toString():");
