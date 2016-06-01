@@ -3,6 +3,7 @@ package com.vladshkerin.servlets;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;
+import com.vladshkerin.services.ItemService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
@@ -37,11 +38,13 @@ public class LoginServlet extends HttpServlet {
         if (object != null)
             password = (String) object;
 
+        String url = "index.jsp";
         if (!login.isEmpty()) {
+            loadData();
             try {
                 User user = UserService.getInstance().get(login, password);
                 ApplicationService.getInstance().setSessionAttribute("user", user, session);
-                req.getRequestDispatcher("navigation?page=items").forward(req, resp);
+                url = "navigation?page=items";
             } catch (NotFoundUser ex) {
                 message = "User name or password entered is incorrect!";
             }
@@ -51,6 +54,14 @@ public class LoginServlet extends HttpServlet {
 
         ApplicationService.getInstance().setSessionAttribute("message", message, session);
 
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher(url).forward(req, resp);
+    }
+
+    private void loadData() {
+//        Operation[] operations = new Operation[]{Operation.LOAD_USERS, Operation.LOAD_ITEMS};
+//        ApplicationService.getInstance().executeTask(operations);
+
+        UserService.getInstance().loadFile();
+        ItemService.getInstance().loadFile();
     }
 }
