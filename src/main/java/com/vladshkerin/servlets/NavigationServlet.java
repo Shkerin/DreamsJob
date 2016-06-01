@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * TODO: comment
+ * The servlet class to navigation user.
  *
- * @author vlad
+ * @author Vladimir Shkerin
  * @since 30.05.2016
  */
 public class NavigationServlet extends HttpServlet {

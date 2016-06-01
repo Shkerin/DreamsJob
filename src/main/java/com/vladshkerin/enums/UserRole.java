@@ -7,8 +7,8 @@ package com.vladshkerin.enums;
  * @since 10.05.2016
  */
 public enum UserRole {
-    USER,
-    ADMIN;
+    ADMIN,
+    USER;
 
     @Override
     public String toString() {
