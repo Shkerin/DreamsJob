@@ -5,6 +5,7 @@ import com.vladshkerin.services.TestObject;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * The class to store items user.
@@ -14,12 +15,7 @@ import java.util.Objects;
  */
 public class Item {
 
-    /* For generating item ID */
-    private static long itemNumber;
-
-    private static synchronized long nextItemID() {
-        return ++itemNumber;
-    }
+    private static AtomicLong itemNumber = new AtomicLong();
 
     private long id;
     private long parentId;
@@ -28,7 +24,7 @@ public class Item {
     private String desc;
 
     public Item(long parentId, User user, String name, String desc) {
-        this.id = nextItemID();
+        this.id = itemNumber.incrementAndGet();
         this.parentId = parentId;
         this.user = user;
         this.name = name;
@@ -37,6 +33,10 @@ public class Item {
 
     public Item(User user) {
         this(0L, user, "", "");
+    }
+
+    public Item() {
+        this(0L, new User(), "", "");
     }
 
     @Override

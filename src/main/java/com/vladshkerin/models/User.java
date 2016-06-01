@@ -6,6 +6,7 @@ import com.vladshkerin.services.TestObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -16,24 +17,19 @@ import java.util.regex.PatternSyntaxException;
  */
 public class User {
 
-    /* For generating item ID */
-    private static long itemNumber;
-
-    private static synchronized long nextItemID() {
-        return ++itemNumber;
-    }
+    private static AtomicLong itemNumber = new AtomicLong();
 
     private long id;
     private String name;
     private String password;
+    private Role role;
     private Float growth;
     private Calendar birthDay;
     private String email;
     private String[] children;
-    private Role role;
 
     public User(String name, String password, Role role, Float growth, Calendar birthDay, String email, String[] children) {
-        this.id = nextItemID();
+        this.id = itemNumber.incrementAndGet();
         this.name = name;
         this.password = password;
         this.role = role;
@@ -45,6 +41,10 @@ public class User {
 
     public User(String name) {
         this(name, "", new Role(UserRole.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
+    }
+
+    public User() {
+        this("", "", new Role(UserRole.USER), 0f, new GregorianCalendar(0, 0, 0), "", new String[]{});
     }
 
     @Override
@@ -97,6 +97,14 @@ public class User {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public Float getGrowth() {
         return this.growth;
     }
@@ -125,18 +133,21 @@ public class User {
     }
 
     public String getBirthDayStr() {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        return format.format(this.birthDay.getTime());
+//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+//        return format.format(this.birthDay.getTime());
+        return getBirthDayStr("dd.MM.yyyy");
     }
 
     public String getBirthDayStr(String pattern) {
-        if (pattern == null || pattern.isEmpty())
+        if (pattern == null || pattern.isEmpty()) {
             pattern = "dd.MM.yyyy";
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        if (this.birthDay.getTimeInMillis() > 0)
-            return format.format(this.birthDay.getTime());
-        else
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        if (this.birthDay.getTimeInMillis() > 0) {
+            return dateFormat.format(this.birthDay.getTime());
+        } else {
             return "";
+        }
     }
 
     public void setBirthDay(Calendar birthDay) {
@@ -144,29 +155,23 @@ public class User {
     }
 
     public void setBirthDay(String birthDay) {
+        setBirthDay(birthDay, "yyyy-MM-dd");
+    }
+
+    public void setBirthDay(String birthDay, String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            pattern = "yyyy-MM-dd";
+        }
         if (birthDay != null) {
             Calendar birthDayBuf = this.birthDay;
             try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat format = new SimpleDateFormat(pattern);
                 Date date = format.parse(birthDay.trim());
                 this.birthDay.setTime(date);
             } catch (ParseException e) {
                 this.birthDay = birthDayBuf;
             }
         }
-    }
-
-    public String[] getChildren() {
-        return this.children;
-    }
-
-    public String getChildrenStr() {
-        StringBuilder sbChildren = new StringBuilder();
-        for (String child : this.children)
-            sbChildren.append(child).append(", ");
-        if (sbChildren.length() > 0)
-            sbChildren.delete(sbChildren.length() - 2, sbChildren.length());
-        return sbChildren.toString();
     }
 
     public String getEmail() {
@@ -177,8 +182,21 @@ public class User {
         this.email = email;
     }
 
+    public String[] getChildren() {
+        return this.children;
+    }
+
+    public String getChildrenStr() {
+        StringBuilder sb = new StringBuilder();
+        for (String child : this.children)
+            sb.append(child).append(", ");
+        if (sb.length() > 0)
+            sb.delete(sb.length() - 2, sb.length());
+        return sb.toString();
+    }
+
     public void setChildren(String[] children) {
-        ArrayList<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (String child : children) {
             try {
                 Collections.addAll(list, parseStr(child));
@@ -191,7 +209,7 @@ public class User {
     }
 
     public void setChildren(String children) {
-        if (children != null) {
+        if (children != null && !children.isEmpty()) {
             String[] childrenBuf = this.children;
             try {
                 this.children = parseStr(children);
@@ -199,14 +217,6 @@ public class User {
                 this.children = childrenBuf;
             }
         }
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    protected void setRole(Role role) {
-        this.role = role;
     }
 
     private String[] parseStr(String str) throws PatternSyntaxException {
