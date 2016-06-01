@@ -133,8 +133,6 @@ public class User {
     }
 
     public String getBirthDayStr() {
-//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-//        return format.format(this.birthDay.getTime());
         return getBirthDayStr("dd.MM.yyyy");
     }
 
@@ -143,8 +141,8 @@ public class User {
             pattern = "dd.MM.yyyy";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-        if (this.birthDay.getTimeInMillis() > 0) {
-            return dateFormat.format(this.birthDay.getTime());
+        if (birthDay.getTimeInMillis() > 0) {
+            return dateFormat.format(birthDay.getTime());
         } else {
             return "";
         }

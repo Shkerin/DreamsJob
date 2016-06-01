@@ -56,7 +56,7 @@ public class UserService {
                 String password = user.getPassword();
                 String role = String.valueOf(user.getRole().getUserRole());
                 String growth = user.getGrowthStr();
-                String birthDay = user.getBirthDayStr("dd.MM.yyyy");
+                String birthDay = user.getBirthDayStr("yyyy-MM-dd");
                 String email = user.getEmail();
                 String children = user.getChildrenStr();
 
@@ -103,7 +103,7 @@ public class UserService {
         user.setPassword(result[2]);
         user.setRole(new Role("admin".equals(result[3]) ? UserRole.ADMIN : UserRole.USER));
         user.setGrowth(Float.valueOf(result[4]));
-        user.setBirthDay(result[5], "dd.MM.yyyy");
+        user.setBirthDay(result[5], "yyyy-MM-dd");
         user.setEmail(result[6]);
         user.setChildren(result[7]);
     }

@@ -1,4 +1,4 @@
-<%@ page import="com.vladshkerin.services.ApplicationService" %><%--
+<%--
   The main page DreamsJob.
 
   @author Vladimir Shkerin
