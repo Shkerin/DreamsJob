@@ -1,11 +1,13 @@
 package com.vladshkerin.services;
 
+import com.vladshkerin.enums.Operation;
+
 import javax.servlet.http.HttpSession;
 
 /**
  * The class for control application.
  *
- * @author vlad
+ * @author Vladimir Shkerin
  * @since 31.05.2016
  */
 public class ApplicationService {
@@ -14,6 +16,17 @@ public class ApplicationService {
 
     public static ApplicationService getInstance() {
         return INSTANCE;
+    }
+
+    public void executeTask(Operation[] operations) {
+        TaskPool taskPool = new TaskPool(operations);
+        Thread t = new Thread(taskPool);
+        t.start();
+    }
+
+    public void executeTask(Operation operation) {
+        Thread t = new Thread(new TaskWorker(operation));
+        t.start();
     }
 
     public Object getSessionAttribute(String name, HttpSession session) {
