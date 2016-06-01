@@ -1,5 +1,8 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.services.ItemService;
+import com.vladshkerin.services.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,5 +21,14 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();
         req.getRequestDispatcher("index.jsp").forward(req, resp);
+
+        saveData();
+    }
+
+    private void saveData() {
+//        ApplicationService.getInstance().executeTask(Operation.SAVE_ITEMS);
+
+        UserService.getInstance().saveFile();
+        ItemService.getInstance().saveFile();
     }
 }
