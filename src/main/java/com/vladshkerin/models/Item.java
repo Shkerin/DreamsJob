@@ -2,6 +2,7 @@ package com.vladshkerin.models;
 
 import com.vladshkerin.services.TestObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -107,6 +108,42 @@ public class Item {
 
     public Calendar getDate() {
         return date;
+    }
+
+    public String getDateStr() {
+        return getDateStr("dd.MM.yyyy HH:mm");
+    }
+
+    public String getDateStr(String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            pattern = "dd.MM.yyyy HH:mm";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        if (date.getTimeInMillis() > 0) {
+            return dateFormat.format(date.getTime());
+        } else {
+            return "";
+        }
+    }
+
+    public void setData(String birthDay) {
+        setData(birthDay, "yyyy-MM-dd-HH-mm");
+    }
+
+    public void setData(String birthDay, String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            pattern = "yyyy-MM-dd-HH-mm";
+        }
+        if (date != null) {
+            Calendar birthDayBuf = this.date;
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(pattern);
+                Date date = format.parse(birthDay.trim());
+                this.date.setTime(date);
+            } catch (ParseException e) {
+                this.date = birthDayBuf;
+            }
+        }
     }
 
     public void setDate(Calendar date) {
