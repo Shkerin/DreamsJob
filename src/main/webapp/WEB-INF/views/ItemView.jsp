@@ -83,6 +83,7 @@
                 <th class="right">Name</th>
                 <th class="center">Description</th>
                 <th class="center">User</th>
+                <th class="center">Date</th>
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
@@ -101,6 +102,9 @@
                 </td>
                 <td class="center">
                     <%= item.getUser().getName() %>
+                </td>
+                <td class="center">
+                    <%= item.getDateStr() %>
                 </td>
             </tr>
             <%
