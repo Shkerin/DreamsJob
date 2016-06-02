@@ -123,6 +123,15 @@ public class ItemService {
         items.add(item);
     }
 
+    public void delete(long id) {
+        try {
+            items.remove(get(id));
+        } catch (NotFoundItem e) {
+            //TODO add out to log
+            System.out.println(e.getMessage());
+        }
+    }
+
     public String validateForm(Map<String, String> itemPropertiesMap) {
         StringBuilder errorValues = new StringBuilder();
         for (Map.Entry<String, String> item : itemPropertiesMap.entrySet()) {
