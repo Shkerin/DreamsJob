@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             loadData();
             try {
                 User user = UserService.getInstance().get(login, password);
-                ApplicationService.getInstance().setSessionAttribute("user", user, session);
+                ApplicationService.getInstance().setSessionAttribute("CURRENT_USER", user, session);
                 url = "navigation?page=items";
             } catch (NotFoundUser ex) {
                 message = "User name or password entered is incorrect!";

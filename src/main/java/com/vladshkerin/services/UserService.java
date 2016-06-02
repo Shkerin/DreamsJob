@@ -147,7 +147,7 @@ public class UserService {
 
     public void delete(long id) {
         try {
-            users.remove(this.get(id));
+            users.remove(get(id));
         } catch (NotFoundUser e) {
             //TODO add out to log
             System.out.println(e.getMessage());
