@@ -1,5 +1,7 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.models.Filter;
+import com.vladshkerin.services.FilterService;
 import com.vladshkerin.services.ItemService;
 import com.vladshkerin.services.UserService;
 
@@ -28,6 +30,7 @@ public class LogoutServlet extends HttpServlet {
     private void saveData() {
 //        ApplicationService.getInstance().executeTask(Operation.SAVE_ITEMS);
 
+        FilterService.getInstance().clear();
         UserService.getInstance().saveFile();
         ItemService.getInstance().saveFile();
     }

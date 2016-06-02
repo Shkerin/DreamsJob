@@ -1,8 +1,10 @@
 package com.vladshkerin.servlets;
 
 import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.models.Filter;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;
+import com.vladshkerin.services.FilterService;
 import com.vladshkerin.services.ItemService;
 import com.vladshkerin.services.UserService;
 
@@ -24,7 +26,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setMaxInactiveInterval(Integer.MAX_VALUE);
+        ApplicationService.getInstance().initializationSession(session);
 
         String login = "";
         String password = "";
@@ -44,6 +46,7 @@ public class LoginServlet extends HttpServlet {
             try {
                 User user = UserService.getInstance().get(login, password);
                 ApplicationService.getInstance().setSessionAttribute("CURRENT_USER", user, session);
+                FilterService.getInstance().add(new Filter(user));
                 url = "navigation?page=items";
             } catch (NotFoundUser ex) {
                 message = "User name or password entered is incorrect!";

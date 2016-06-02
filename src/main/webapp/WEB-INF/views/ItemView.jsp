@@ -1,6 +1,7 @@
 <%@ page import="com.vladshkerin.models.Item" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.vladshkerin.services.FilterService" %>
 <%--
   The page to display items.
 
@@ -32,34 +33,33 @@
 
         <table>
             <tr>
+                <th class="center">User</th>
+                <th class="center">Date</th>
                 <th class="right">Parent id</th>
                 <th class="right">Name</th>
                 <th class="center">Description</th>
-                <th class="center">User</th>
-                <th class="center">Date</th>
                 <th class="center">Edit</th>
                 <th class="center">Delete</th>
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
-                    if (CURRENT_ROLE.isRoleAdmin() ||
-                            CURRENT_USER.equals(item.getUser())) {
+                    if (FilterService.getInstance().validationItem(item)) {
             %>
             <tr>
-                <td class="center">
-                    <%= item.getParentId() %>
-                </td>
-                <td class="right">
-                    <%= item.getName() %>
-                </td>
-                <td class="center">
-                    <%= item.getDesc() %>
-                </td>
                 <td class="center">
                     <%= item.getUser().getName() %>
                 </td>
                 <td class="center">
                     <%= item.getDateStr() %>
+                </td>
+                <td class="center">
+                <%= item.getParentId() %>
+                </td>
+                <td class="right">
+                <%= item.getName() %>
+                </td>
+                <td class="center">
+                <%= item.getDesc() %>
                 </td>
                 <td class="center">
                     <a id="imageLinkEdit" href="item_edit?id=<%= item.getId() %>">
