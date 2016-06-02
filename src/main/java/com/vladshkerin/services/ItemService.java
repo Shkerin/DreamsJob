@@ -45,23 +45,104 @@ public class ItemService {
         return INSTANCE;
     }
 
+    public List<Item> getAll() {
+        return items;
+    }
+
+    public Item get(long id) throws NotFoundItem {
+        for (Item item : items) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        throw new NotFoundItem("Item not fount to \"id\"" + id);
+    }
+
+    public void add(Item item) {
+        items.add(item);
+    }
+
+    public void delete(long id) {
+        try {
+            items.remove(get(id));
+        } catch (NotFoundItem e) {
+            //TODO add out to log
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void clear() {
+        items.clear();
+    }
+
+    public String validateForm(Map<String, String> itemPropertiesMap) {
+        StringBuilder errorValues = new StringBuilder();
+        for (Map.Entry<String, String> item : itemPropertiesMap.entrySet()) {
+
+            String key = item.getKey();
+            key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
+
+            if (item.getValue().isEmpty()) {
+                errorValues.append(key).append(", ");
+            }
+        }
+        if (!errorValues.toString().isEmpty()) {
+            errorValues.replace(errorValues.length() - 2, errorValues.length(), "");
+        }
+        return errorValues.toString();
+    }
+
+    public String getTreeItems(User user, long id) {
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+
+        for (Item item : getSheetsItem(id)) {
+            if (!flag) {
+                flag = true;
+                sb.append("<ul>");
+            }
+            if (FilterService.getInstance().validationItem(item)) {
+                sb.append("<li>");
+                sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
+                        item.getId(), item.getName(), item.getUser().getName()));
+                sb.append("</li>");
+                sb.append(getTreeItems(user, item.getId()));
+            }
+        }
+
+        if (flag)
+            sb.append("</ul>");
+
+        return sb.toString();
+    }
+
+    private List<Item> getSheetsItem(long id) {
+        ArrayList<Item> items = new ArrayList<>();
+        for (Item item : getAll()) {
+            if (item.getParentId() == id) {
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
     public void saveFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/tmp/items.txt", false));
             for (Item item : getAll()) {
                 String id = String.valueOf(item.getId());
-                String parentId = String.valueOf(item.getParentId());
                 String userId = String.valueOf(item.getUser().getId());
+                String data = item.getDateStr("yyyy-MM-dd-HH-mm");
+                String parentId = String.valueOf(item.getParentId());
                 String name = item.getName();
                 String desc = item.getDesc();
-                String data = item.getDateStr("yyyy-MM-dd-HH-mm");
 
                 writer.write(id + "/");
-                writer.write(parentId.isEmpty() ? " /" : parentId + "/");
                 writer.write(userId.isEmpty() ? " /" : userId + "/");
+                writer.write(data.isEmpty() ? " /" : data + "/");
+                writer.write(parentId.isEmpty() ? " /" : parentId + "/");
                 writer.write(name.isEmpty() ? " /" : name + "/");
-                writer.write(desc.isEmpty() ? " /" : desc + "/");
-                writer.write(data.isEmpty() ? " \n" : data + "\n");
+                writer.write(desc.isEmpty() ? " \n" : desc + "\n");
             }
             writer.close();
         } catch (IOException ex) {
@@ -94,94 +175,14 @@ public class ItemService {
                 item = new Item();
                 items.add(item);
             }
-            item.setParentId(Long.valueOf(result[1]));
-            item.setUser(UserService.getInstance().get(Long.valueOf(result[2])));
-            item.setName(result[3]);
-            item.setDesc(result[4]);
-            item.setData(result[5], "yyyy-MM-dd-HH-mm");
+            item.setUser(UserService.getInstance().get(Long.valueOf(result[1])));
+            item.setData(result[2], "yyyy-MM-dd-HH-mm");
+            item.setParentId(Long.valueOf(result[3]));
+            item.setName(result[4]);
+            item.setDesc(result[5]);
         } catch (NotFoundUser ex) {
             //TODO out to log
             ex.printStackTrace();
         }
-    }
-
-    public List<Item> getAll() {
-        return items;
-    }
-
-    public Item get(long id) throws NotFoundItem {
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        throw new NotFoundItem("Item not fount to \"id\"" + id);
-    }
-
-    public void add(Item item) {
-        items.add(item);
-    }
-
-    public void delete(long id) {
-        try {
-            items.remove(get(id));
-        } catch (NotFoundItem e) {
-            //TODO add out to log
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public String validateForm(Map<String, String> itemPropertiesMap) {
-        StringBuilder errorValues = new StringBuilder();
-        for (Map.Entry<String, String> item : itemPropertiesMap.entrySet()) {
-
-            String key = item.getKey();
-            key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
-
-            if (item.getValue().isEmpty()) {
-                errorValues.append(key).append(", ");
-            }
-        }
-        if (!errorValues.toString().isEmpty()) {
-            errorValues.replace(errorValues.length() - 2, errorValues.length(), "");
-        }
-        return errorValues.toString();
-    }
-
-    public String getTreeItems(User user, long id) {
-        StringBuilder sb = new StringBuilder();
-        boolean flag = false;
-
-        for (Item item : getSheetsItem(id)) {
-            if (!flag) {
-                flag = true;
-                sb.append("<ul>");
-            }
-
-            if (user.getRole().isRoleAdmin() ||
-                    user.equals(item.getUser())) {
-
-                sb.append("<li>");
-                sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
-                        item.getId(), item.getName(), item.getUser().getName()));
-                sb.append("</li>");
-                sb.append(getTreeItems(user, item.getId()));
-            }
-        }
-
-        if (flag)
-            sb.append("</ul>");
-
-        return sb.toString();
-    }
-
-    private List<Item> getSheetsItem(long id) {
-        ArrayList<Item> items = new ArrayList<>();
-        for (Item item : getAll()) {
-            if (item.getParentId() == id) {
-                items.add(item);
-            }
-        }
-        return items;
     }
 }
