@@ -8,6 +8,7 @@
 <%! String pageIndex = "selected"; %>
 <%! String pageItemView = ""; %>
 <%! String pageUserView = ""; %>
+
 <html>
 <head>
     <title>Dreams Job</title>
@@ -20,7 +21,7 @@
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
 
     <%
-        obj = session.getAttribute("user");
+        obj = session.getAttribute("CURRENT_USER");
         if (!session.isNew() && obj != null) {
     %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
@@ -39,7 +40,7 @@
                 if (message != null) {
             %>
             <p id="message">
-                <%=(String) message%>
+                <%= (String) message %>
             </p>
             <%
                 }

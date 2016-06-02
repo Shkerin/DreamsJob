@@ -29,17 +29,17 @@
         <h2>Modify the form below and click "save change" to save</h2>
 
         <%
-            obj = ApplicationService.getInstance().getSessionAttribute("id", session);
+            obj = session.getAttribute("id");
             String id = obj != null ? (String) obj : "";
-            obj = ApplicationService.getInstance().getSessionAttribute("name", session);
+            obj = session.getAttribute("name");
             String name = obj != null ? (String) obj : "";
-            obj = ApplicationService.getInstance().getSessionAttribute("growth", session);
+            obj = session.getAttribute("growth");
             String growth = obj != null ? (String) obj : "";
-            obj = ApplicationService.getInstance().getSessionAttribute("birthDay", session);
+            obj = session.getAttribute("birthDay");;
             String birthDay = obj != null ? (String) obj : "";
-            obj = ApplicationService.getInstance().getSessionAttribute("email", session);
+            obj = session.getAttribute("email");;
             String email = obj != null ? (String) obj : "";
-            obj = ApplicationService.getInstance().getSessionAttribute("children", session);
+            obj = session.getAttribute("children");;
             String children = obj != null ? (String) obj : "";
         %>
 
@@ -87,13 +87,7 @@
             <div class="tableRow">
                 <p></p>
                 <div id="message">
-                    <%
-                        obj = ApplicationService.getInstance().getSessionAttribute("message", session);
-                        if (obj != null) {
-                            out.print((String) obj);
-                            ApplicationService.getInstance().setSessionAttribute("message", "", session);
-                        }
-                    %>
+                    <%@ include file="/WEB-INF/views/include/DisplayMessage.jspf" %>
                 </div>
             </div>
         </form>

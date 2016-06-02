@@ -9,6 +9,7 @@
 <%! String pageIndex = ""; %>
 <%! String pageItemView = ""; %>
 <%! String pageUserView = "selected"; %>
+
 <html>
 <head>
     <title>Dreams Job</title>

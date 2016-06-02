@@ -16,11 +16,11 @@
 
     <div id="top_registration">
         <%
-            obj = session.getAttribute("user");
+            obj = session.getAttribute("CURRENT_USER");
             if (obj != null) {
                 User user = (User) obj;
         %>
-        Welcome back! (user: "<%=user.getName()%>"; role: "<%=user.getRole().getName()%>")
+        Welcome back! (user: "<%= user.getName() %>"; role: "<%= user.getRole().getName() %>")
         <a href="logout">logout</a>
         <%
         } else {

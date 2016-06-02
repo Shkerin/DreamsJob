@@ -68,13 +68,7 @@
             <div class="tableRow">
                 <p></p>
                 <div id="message">
-                    <%
-                        obj = ApplicationService.getInstance().getSessionAttribute("message", session);
-                        if (obj != null) {
-                            out.print((String) obj);
-                            ApplicationService.getInstance().setSessionAttribute("message", "", session);
-                        }
-                    %>
+                    <%@ include file="/WEB-INF/views/include/DisplayMessage.jspf" %>
                 </div>
             </div>
         </form>
