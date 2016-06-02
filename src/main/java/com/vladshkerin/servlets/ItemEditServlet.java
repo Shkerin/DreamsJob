@@ -37,7 +37,7 @@ public class ItemEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> map = new HashMap<>();
+        HttpSession session = req.getSession();
 
         String id = req.getParameter("id");
         String parentId = req.getParameter("parentId");
@@ -46,6 +46,7 @@ public class ItemEditServlet extends HttpServlet {
         String desc = req.getParameter("desc");
         String date = req.getParameter("date");
 
+        Map<String, String> map = new HashMap<>();
         map.put("id", id != null ? id.trim() : "");
         map.put("parentId", parentId != null ? parentId.trim() : "");
         map.put("user",  user != null ? user.trim() : "");
@@ -53,7 +54,6 @@ public class ItemEditServlet extends HttpServlet {
         map.put("desc", desc != null ? desc.trim() : "");
         map.put("date", date != null ? date.trim() : "");
 
-        HttpSession session = req.getSession();
         String errorValues = ItemService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
             try {

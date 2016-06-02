@@ -34,7 +34,7 @@ public class UserEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> map = new HashMap<>();
+        HttpSession session = req.getSession();
 
         String id = req.getParameter("id");
         String name = req.getParameter("name");
@@ -43,13 +43,13 @@ public class UserEditServlet extends HttpServlet {
         String email = req.getParameter("email");
         String children = req.getParameter("children");
 
+        Map<String, String> map = new HashMap<>();
         map.put("id", id != null ? id.trim() : "");
         map.put("name", name != null ? name.trim() : "");
         map.put("growth", growth != null ? growth.trim() : "");
         map.put("birthDay", birthDay != null ? birthDay.trim() : "");
         map.put("email", email != null ? email.trim() : "");
 
-        HttpSession session = req.getSession();
         String errorValues = UserService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
             try {

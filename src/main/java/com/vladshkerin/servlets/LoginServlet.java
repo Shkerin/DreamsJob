@@ -30,13 +30,13 @@ public class LoginServlet extends HttpServlet {
         String password = "";
         String message = "";
 
-        Object object = req.getParameter("login");
-        if (object != null)
-            login = (String) object;
+        Object obj = req.getParameter("login");
+        if (obj != null)
+            login = (String) obj;
 
-        object = req.getParameter("password");
-        if (object != null)
-            password = (String) object;
+        obj = req.getParameter("password");
+        if (obj != null)
+            password = (String) obj;
 
         String url = "index.jsp";
         if (!login.isEmpty()) {

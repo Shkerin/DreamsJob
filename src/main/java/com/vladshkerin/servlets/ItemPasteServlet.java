@@ -28,11 +28,6 @@ public class ItemPasteServlet extends HttpServlet {
         if (parentId != null && !parentId.isEmpty()) {
 
             HttpSession session = req.getSession();
-//            Object obj;
-//            synchronized (session) {
-//                obj = session.getAttribute("tree");
-//                session.removeAttribute("tree");
-//            }
             Object obj = ApplicationService.getInstance().getSessionAttribute("tree", session);
             ApplicationService.getInstance().removeSessionAttribute("tree", session);
 

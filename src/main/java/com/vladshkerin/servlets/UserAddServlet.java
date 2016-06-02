@@ -23,7 +23,7 @@ public class UserAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> userMap = new HashMap<>();
+        HttpSession session = req.getSession();
 
         String name = req.getParameter("name");
         String growth = req.getParameter("growth");
@@ -31,27 +31,30 @@ public class UserAddServlet extends HttpServlet {
         String email = req.getParameter("email");
         String children = req.getParameter("children");
 
-        userMap.put("name", name != null ? name.trim() : "");
-        userMap.put("growth", growth != null ? growth.trim() : "");
-        userMap.put("birthDay", birthDay != null ? birthDay.trim() : "");
-        userMap.put("email", email != null ? email.trim() : "");
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name != null ? name.trim() : "");
+        map.put("growth", growth != null ? growth.trim() : "");
+        map.put("birthDay", birthDay != null ? birthDay.trim() : "");
+        map.put("email", email != null ? email.trim() : "");
 
-        HttpSession session = req.getSession();
-        String errorValues = UserService.getInstance().validateForm(userMap);
+        String errorValues = UserService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
-            User user = new User(userMap.get("name"));
-            user.setGrowth(userMap.get("growth"));
-            user.setBirthDay(userMap.get("birthDay"));
-            user.setEmail(userMap.get("email"));
+
+            User user = new User(map.get("name"));
+            user.setGrowth(map.get("growth"));
+            user.setBirthDay(map.get("birthDay"));
+            user.setEmail(map.get("email"));
             user.setChildren(children != null ? children.trim() : "");
             UserService.getInstance().add(user);
 
             String str = "The user \"" + name + "\" is added.";
             ApplicationService.getInstance().setSessionAttribute("message", str, session);
+
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
             ApplicationService.getInstance().setSessionAttribute("message", message, session);
         }
+
         req.getRequestDispatcher("navigation?page=user_add").forward(req, resp);
     }
 }
