@@ -99,13 +99,13 @@ public class UserService {
             user = new User();
             users.add(user);
         }
-        user.setName(result[1]);
-        user.setPassword(result[2]);
+        user.setName(result[1].trim());
+        user.setPassword(!result[2].trim().isEmpty() ? result[2] : "");
         user.setRole(new Role("admin".equals(result[3]) ? UserRole.ADMIN : UserRole.USER));
-        user.setGrowth(Float.valueOf(result[4]));
-        user.setBirthDay(result[5], "yyyy-MM-dd");
-        user.setEmail(result[6]);
-        user.setChildren(result[7]);
+        user.setGrowth(Float.valueOf(result[4].trim()));
+        user.setBirthDay(result[5].trim(), "yyyy-MM-dd");
+        user.setEmail(result[6].trim());
+        user.setChildren(result[7].trim());
     }
 
     public List<User> getAll() {

@@ -1,14 +1,11 @@
-<%@ page import="com.vladshkerin.models.User" %><%--
-  The page displays logo.
+<%@ page import="com.vladshkerin.models.User" %>
+<%--
+  The page displays header.
   
   @author Vladimir Shkerin
   @since 17.05.2016
 --%>
 <header class="top">
-
-    <%
-        Object obj;
-    %>
 
     <div id="top_logo">
         <a href="index.jsp"><img src="img/DreamsJob_logo.png" alt="Dreams Job logo image"></a>
@@ -23,7 +20,7 @@
         Welcome back! (user: "<%= user.getName() %>"; role: "<%= user.getRole().getName() %>")
         <a href="logout">logout</a>
         <%
-        } else {
+            } else {
         %>
         Unregistered user!
         <%

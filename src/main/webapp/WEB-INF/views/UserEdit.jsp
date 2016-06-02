@@ -19,14 +19,14 @@
 
 <div id="all_content">
 
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
         <h1>Edit user:</h1>
-        <h2>Modify the form below and click "save change" to save</h2>
+        <h2>Modify the form below and click "Save change" to save</h2>
 
         <%
             obj = session.getAttribute("id");
@@ -67,14 +67,14 @@
                           value="<%= email %>" placeholder="user@mail.ru"></p>
             </div>
             <div class="tableRow">
-                <p> Children </p>
+                <p> Children: </p>
                 <p><textarea name="children"><%= children %></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>
                 <p>
                     <%
-                        if (role.isRoleAdmin()) {
+                        if (CURRENT_ROLE.isRoleAdmin()) {
                     %>
                     <input id="buttonSave" type="submit" value="Save change">
                     <%

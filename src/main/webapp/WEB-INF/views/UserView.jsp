@@ -20,9 +20,9 @@
 
 <div id="all_content">
 
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
@@ -36,7 +36,7 @@
                 <th class="center">Email</th>
                 <th class="center">Children</th>
                 <%
-                    if (role.isRoleAdmin()) {
+                    if (CURRENT_ROLE.isRoleAdmin()) {
                 %>
                 <th class="center">Edit</th>
                 <th class="center">Delete</th>
@@ -64,7 +64,7 @@
                     <%= user.getChildrenStr() %>
                 </td>
                 <%
-                    if (role.isRoleAdmin()) {
+                    if (CURRENT_ROLE.isRoleAdmin()) {
                 %>
                 <td class="center">
                     <a id="imageLinkEdit" href="user_edit?id=<%= user.getId() %>">
@@ -88,7 +88,7 @@
         <p>
         <div class="button_action">
             <%
-                if (role.isRoleAdmin()) {
+                if (CURRENT_ROLE.isRoleAdmin()) {
             %>
             <form action="navigation?page=user_add" method="post">
                 <input type="submit" value="Add user">

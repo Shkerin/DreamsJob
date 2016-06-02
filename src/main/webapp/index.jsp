@@ -18,6 +18,10 @@
 
 <div id="all_content">
 
+    <%
+        Object obj;
+    %>
+
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
 
     <%
