@@ -1,4 +1,5 @@
 <web-app>
+
     <display-name>DreamsJob</display-name>
 
     <welcome-file-list>
@@ -76,6 +77,26 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ItemEditServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemEditServlet</servlet-name>
+        <url-pattern>/item_edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ItemDeleteServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ItemDeleteServlet</servlet-name>
+        <url-pattern>/item_delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ItemCutServlet</servlet-name>
         <servlet-class>com.vladshkerin.servlets.ItemCutServlet</servlet-class>
     </servlet>
@@ -83,16 +104,6 @@
     <servlet-mapping>
         <servlet-name>ItemCutServlet</servlet-name>
         <url-pattern>/item_cut</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ItemCancelCutServlet</servlet-name>
-        <servlet-class>com.vladshkerin.servlets.ItemCancelCutServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ItemCancelCutServlet</servlet-name>
-        <url-pattern>/item_cancel_cut</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -106,16 +117,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>LifeCycleServlet</servlet-name>
-        <servlet-class>com.vladshkerin.servlets.LifeCycleServlet</servlet-class>
-        <init-param>
-            <param-name>adminEmail</param-name>
-            <param-value>admin@gmail.com</param-value>
-        </init-param>
+        <servlet-name>ItemCancelCutServlet</servlet-name>
+        <servlet-class>com.vladshkerin.servlets.ItemCancelCutServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>LifeCycleServlet</servlet-name>
-        <url-pattern>/life_cycle</url-pattern>
+        <servlet-name>ItemCancelCutServlet</servlet-name>
+        <url-pattern>/item_cancel_cut</url-pattern>
     </servlet-mapping>
+
 </web-app>
