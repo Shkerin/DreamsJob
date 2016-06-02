@@ -1,7 +1,5 @@
 package com.vladshkerin.models;
 
-import com.vladshkerin.services.TestObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,9 +18,9 @@ public class Item {
     private long id;
     private long parentId;
     private User user;
+    private Calendar date;
     private String name;
     private String desc;
-    private Calendar date;
 
     public Item(long parentId, User user, String name, String desc, Calendar date) {
         this.id = itemNumber.incrementAndGet();
@@ -90,22 +88,6 @@ public class Item {
         this.user = user;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public Calendar getDate() {
         return date;
     }
@@ -150,65 +132,19 @@ public class Item {
         this.date = date;
     }
 
-    public static void main(String[] args) {
-        test();
+    public String getName() {
+        return name;
     }
 
-    private static void test() {
-        TestObject testObj = new TestObject();
-        ArrayList<String> list = new ArrayList();
-        LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        User user1 = new User("user1");
-        User user2 = new User("user2");
+    public String getDesc() {
+        return desc;
+    }
 
-        System.out.println("***************************************");
-        System.out.println("*               Item.java             *");
-        System.out.println("***************************************");
-
-        // Test constructors and clone()
-        Item item00 = null;
-        Item item11 = new Item(user1);
-        Item item21 = item11;
-        Item item31 = item21;
-        Item item44 = new Item(0, user2, "two name", "two desc", new GregorianCalendar(2015, 0, 1));
-        Item item54 = new Item(1, user2, "two name", "two desc", new GregorianCalendar(2016, 1, 2));
-        Item item66 = new Item(2, new User("temp"), "", "", new GregorianCalendar(2017, 2, 3));
-
-        // Test method toString()
-        System.out.println("Test method toString():");
-        list.add("item00: " + item00);
-        list.add("item11: " + item11);
-        list.add("item21: " + item21);
-        list.add("item31: " + item31);
-        list.add("item44: " + item44);
-        list.add("item54: " + item54);
-        list.add("item66: " + item66);
-        testObj.testToString(list);
-
-        // Test method equals()
-        System.out.print("\nTest method equals(): ");
-        map.put("TRUE: item11.equals(item11)", item11.equals(item11));
-        map.put("TRUE: item11.equals(item21)", item11.equals(item21));
-        map.put("TRUE: item21.equals(item11)", item21.equals(item11));
-        map.put("TRUE: item21.equals(item31)", item21.equals(item31));
-        map.put("TRUE: item31.equals(item11)", item31.equals(item11));
-        map.put("FALSE: item11.equals(item00)", !item11.equals(item00));
-        map.put("FALSE: item44.equals(item54)", !item44.equals(item54));
-        map.put("FALSE: item11.equals(item44)", !item11.equals(item44));
-        testObj.testEquals(map);
-
-        // Test method hashCode()
-        System.out.print("\nTest method hashCode(): ");
-        map.clear();
-        map.put("TRUE: item11.hashCode() == item11.hashCode()", item11.hashCode() == item11.hashCode());
-        map.put("TRUE: item11.hashCode() == item21.hashCode()", item11.hashCode() == item21.hashCode());
-        map.put("TRUE: item21.hashCode() == item11.hashCode()", item21.hashCode() == item11.hashCode());
-        map.put("TRUE: item31.hashCode() == item11.hashCode()", item31.hashCode() == item11.hashCode());
-        map.put("FALSE: item44.hashCode() == item54.hashCode()", !(item44.hashCode() == item54.hashCode()));
-        map.put("FALSE: item11.hashCode() == item44.hashCode()", !(item11.hashCode() == item44.hashCode()));
-        testObj.testHashCode(map);
-
-        testObj.printError();
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }
