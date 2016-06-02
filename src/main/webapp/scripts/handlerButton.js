@@ -34,8 +34,8 @@ function validateFormUser() {
 
 function validateFormItem() {
     var fieldValues = [
-        {name: "Name", value: document.getElementsByName("name")[0].value},
-        {name: "Desc", value: document.getElementsByName("desc")[0].value}
+        {name: "Parent id", value: document.getElementsByName("parentId")[0].value},
+        {name: "Name", value: document.getElementsByName("name")[0].value}
     ];
 
     var errorValues = [];
