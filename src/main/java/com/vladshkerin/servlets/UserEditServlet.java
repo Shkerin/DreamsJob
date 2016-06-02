@@ -2,6 +2,7 @@ package com.vladshkerin.servlets;
 
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.User;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
@@ -33,7 +34,7 @@ public class UserEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> userMap = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         String id = req.getParameter("id");
         String name = req.getParameter("name");
@@ -42,41 +43,36 @@ public class UserEditServlet extends HttpServlet {
         String email = req.getParameter("email");
         String children = req.getParameter("children");
 
-        userMap.put("id", id != null ? id.trim() : "");
-        userMap.put("name", name != null ? name.trim() : "");
-        userMap.put("growth", growth != null ? growth.trim() : "");
-        userMap.put("birthDay", birthDay != null ? birthDay.trim() : "");
-        userMap.put("email", email != null ? email.trim() : "");
+        map.put("id", id != null ? id.trim() : "");
+        map.put("name", name != null ? name.trim() : "");
+        map.put("growth", growth != null ? growth.trim() : "");
+        map.put("birthDay", birthDay != null ? birthDay.trim() : "");
+        map.put("email", email != null ? email.trim() : "");
 
         HttpSession session = req.getSession();
-        String errorValues = UserService.getInstance().validateForm(userMap);
+        String errorValues = UserService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
             try {
-                User user = UserService.getInstance().get(Long.valueOf(userMap.get("id")));
-                user.setName(userMap.get("name"));
-                user.setGrowth(userMap.get("growth"));
-                user.setBirthDay(userMap.get("birthDay"));
-                user.setEmail(userMap.get("email"));
+                User user = UserService.getInstance().get(Long.valueOf(map.get("id")));
+                user.setName(map.get("name"));
+                user.setGrowth(map.get("growth"));
+                user.setBirthDay(map.get("birthDay"));
+                user.setEmail(map.get("email"));
                 user.setChildren(children != null ? children.trim() : "");
 
-                setSessionAttributeUser(user, session);
-                setSessionAttribute("message", "The changes are saved.", session);
+                ApplicationService.getInstance().setSessionAttribute(map, session);
+                ApplicationService.getInstance().setSessionAttribute("children", children, session);
+                ApplicationService.getInstance().setSessionAttribute("message", "The changes are saved.", session);
             } catch (NotFoundUser ex) {
                 //TODO add out to log
                 System.out.println(ex.getMessage());
             }
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
-            setSessionAttribute("message", message, session);
+            ApplicationService.getInstance().setSessionAttribute("message", message, session);
         }
 
         req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
-    }
-
-    private void setSessionAttribute(String name, Object value, HttpSession session) {
-        synchronized (session) {
-            session.setAttribute(name, value);
-        }
     }
 
     private void setSessionAttributeUser(long id, HttpSession session) {
@@ -92,16 +88,11 @@ public class UserEditServlet extends HttpServlet {
     private void setSessionAttributeUser(User user, HttpSession session) {
         synchronized (session) {
             session.setAttribute("id", String.valueOf(user.getId()));
-            session.setAttribute("name",
-                    !user.getName().isEmpty() ? user.getName() : "");
-            session.setAttribute("growth",
-                    user.getGrowth() > 0f ? user.getGrowthStr() : "");
-            session.setAttribute("birthDay",
-                    !user.getBirthDayStr("yyyy-MM-dd").isEmpty() ? user.getBirthDayStr("yyyy-MM-dd") : "");
-            session.setAttribute("email",
-                    !user.getEmail().isEmpty() ? user.getEmail() : "");
-            session.setAttribute("children",
-                    !user.getChildrenStr().isEmpty() ? user.getChildrenStr() : "");
+            session.setAttribute("name", user.getName());
+            session.setAttribute("growth", user.getGrowthStr());
+            session.setAttribute("birthDay", user.getBirthDayStr("yyyy-MM-dd"));
+            session.setAttribute("email", user.getEmail());
+            session.setAttribute("children", user.getChildrenStr());
         }
     }
 }
