@@ -1,6 +1,8 @@
 package com.vladshkerin.services;
 
 import com.vladshkerin.enums.Operation;
+import com.vladshkerin.models.TaskPool;
+import com.vladshkerin.models.TaskWorker;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -19,15 +21,8 @@ public class ApplicationService {
         return INSTANCE;
     }
 
-    public void executeTask(Operation[] operations) {
-        TaskPool taskPool = new TaskPool(operations);
-        Thread t = new Thread(taskPool);
-        t.start();
-    }
-
-    public void executeTask(Operation operation) {
-        Thread t = new Thread(new TaskWorker(operation));
-        t.start();
+    public void initializationSession(HttpSession session) {
+        session.setMaxInactiveInterval(Integer.MAX_VALUE);
     }
 
     public Object getSessionAttribute(String name, HttpSession session) {
@@ -54,5 +49,16 @@ public class ApplicationService {
         synchronized (session) {
             session.removeAttribute(name);
         }
+    }
+
+    public void executeTask(Operation[] operations) {
+        TaskPool taskPool = new TaskPool(operations);
+        Thread t = new Thread(taskPool);
+        t.start();
+    }
+
+    public void executeTask(Operation operation) {
+        Thread t = new Thread(new TaskWorker(operation));
+        t.start();
     }
 }
