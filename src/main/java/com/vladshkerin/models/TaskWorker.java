@@ -1,6 +1,8 @@
-package com.vladshkerin.services;
+package com.vladshkerin.models;
 
 import com.vladshkerin.enums.Operation;
+import com.vladshkerin.services.ItemService;
+import com.vladshkerin.services.UserService;
 
 /**
  * The class to run a single operation.

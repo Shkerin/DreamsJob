@@ -1,4 +1,4 @@
-package com.vladshkerin.services;
+package com.vladshkerin.models;
 
 import com.vladshkerin.enums.Operation;
 
