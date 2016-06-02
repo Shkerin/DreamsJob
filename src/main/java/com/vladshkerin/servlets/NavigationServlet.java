@@ -1,5 +1,7 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.services.ApplicationService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +25,8 @@ public class NavigationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Object object;
-        synchronized (session) {
-            object = session.getAttribute("user");
-        }
 
+        Object object = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
         if (object != null) {
 
             object = req.getParameter("page");
@@ -39,11 +38,14 @@ public class NavigationServlet extends HttpServlet {
                     case "items":
                         link = "/WEB-INF/views/ItemView.jsp";
                         break;
-                    case "users":
-                        link = "/WEB-INF/views/UserView.jsp";
-                        break;
                     case "item_add":
                         link = "/WEB-INF/views/ItemAdd.jsp";
+                        break;
+                    case "item_edit":
+                        link = "/WEB-INF/views/ItemEdit.jsp";
+                        break;
+                    case "users":
+                        link = "/WEB-INF/views/UserView.jsp";
                         break;
                     case "user_add":
                         link = "/WEB-INF/views/UserAdd.jsp";
@@ -56,6 +58,7 @@ public class NavigationServlet extends HttpServlet {
                 }
                 req.getRequestDispatcher(link).forward(req, resp);
             }
+
         } else {
             resp.sendRedirect("index.jsp");
         }
