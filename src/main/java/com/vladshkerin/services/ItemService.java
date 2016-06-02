@@ -1,10 +1,9 @@
 package com.vladshkerin.services;
 
-import com.vladshkerin.enums.UserRole;
 import com.vladshkerin.exception.NotFoundItem;
 import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.models.Item;
-import com.vladshkerin.models.Role;
+import com.vladshkerin.models.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -149,7 +148,7 @@ public class ItemService {
         return errorValues.toString();
     }
 
-    public String getTreeItems(Role role, long id) {
+    public String getTreeItems(User user, long id) {
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
 
@@ -159,14 +158,14 @@ public class ItemService {
                 sb.append("<ul>");
             }
 
-            if (role.getUserRole() == UserRole.ADMIN ||
-                    item.getUser().getRole().getUserRole() == UserRole.USER) {
+            if (user.getRole().isRoleAdmin() ||
+                    user.equals(item.getUser())) {
 
                 sb.append("<li>");
                 sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
                         item.getId(), item.getName(), item.getUser().getName()));
                 sb.append("</li>");
-                sb.append(getTreeItems(role, item.getId()));
+                sb.append(getTreeItems(user, item.getId()));
             }
         }
 

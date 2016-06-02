@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.vladshkerin.exception.NotFoundItem" %>
+<%@ page import="com.vladshkerin.models.Item" %>
+<%@ page import="com.vladshkerin.services.ItemService" %><%--
   The page for editing a item.
 
   @author Vladimir Shkerin
@@ -19,14 +21,14 @@
 
 <div id="all_content">
 
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
         <h1>Edit item:</h1>
-        <h2>Modify the form below and click "save change" to save</h2>
+        <h2>Modify the form below and click "Save change" to save</h2>
 
         <%
             obj = session.getAttribute("id");
@@ -47,14 +49,19 @@
               onsubmit="return validateFormItem();" method="post">
             <input type="hidden" name="id" value="<%= id %>">
             <div class="tableRow">
+                <p> User: </p>
+                <p><input type="text" name="user" <% if (CURRENT_ROLE.isRoleUser()) out.print("readonly"); %>
+                          value="<%= user %>"></p>
+            </div>
+            <div class="tableRow">
+                <p> Date: </p>
+                <p><input type="datetime" name="date" <% if (CURRENT_ROLE.isRoleUser()) out.print("readonly"); %>
+                          value="<%= date %>"></p>
+            </div>
+            <div class="tableRow">
                 <p> Parent id: </p>
                 <p><input type="number" name="parentId" min="0" max="1000000"
                           value="<%= parentId %>" placeholder="5"></p>
-            </div>
-            <div class="tableRow">
-                <p> User: </p>
-                <p><input type="text" name="user"
-                          value="<%= user %>"></p>
             </div>
             <div class="tableRow">
                 <p> Name: </p>
@@ -62,23 +69,24 @@
                           value="<%= name %>" placeholder="name item"></p>
             </div>
             <div class="tableRow">
-                <p> Desc: </p>
-                <p><input type="text" name="desc"
-                          value="<%= desc %>" placeholder="desc item"></p>
-            </div>
-            <div class="tableRow">
-                <p> Date: </p>
-                <p><input type="datetime" name="date"
-                          value="<%= date %>"></p>
+                <p> Description: </p>
+                <p><textarea name="desc"><%= desc %></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>
                 <p>
                     <%
-                        if (role.isRoleAdmin()) {
+                        try {
+                            Item item = ItemService.getInstance().get(Long.valueOf(id));
+                            if (CURRENT_ROLE.isRoleAdmin() ||
+                                    CURRENT_USER.equals(item.getUser())) {
                     %>
                     <input id="buttonSave" type="submit" value="Save change">
                     <%
+                            }
+                        } catch (NotFoundItem ex) {
+                            //TODO out to log
+                            ex.printStackTrace();
                         }
                     %>
                     <input type="button" value="Back"

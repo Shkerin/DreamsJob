@@ -19,13 +19,14 @@
 
 <div id="all_content">
 
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
 
     <div id="main">
 
         <h1>Add item:</h1>
-        <h2>Fill out the form below and click "add item" to add</h2>
+        <h2>Fill out the form below and click "Add item" to add</h2>
 
         <form class="body_form" action="item_add"
               onsubmit="return validateFormItem()" method="post">
@@ -34,17 +35,17 @@
                 <p><input type="number" name="parentId" min="0" max="1000000" placeholder="1"></p>
             </div>
             <div class="tableRow">
-                <p> Name </p>
+                <p> Name: </p>
                 <p><input type="text" name="name" placeholder="Distribution of orange"></p>
             </div>
             <div class="tableRow">
-                <p> Description </p>
+                <p> Description: </p>
                 <p><textarea name="desc"></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>
                 <p>
-                    <input id="buttonSave" type="submit" value="Save change">
+                    <input id="buttonSave" type="submit" value="Add item">
                     <input type="button" value="Back"
                            onclick="document.location.href='navigation?page=items'">
                 </p>

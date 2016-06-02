@@ -49,7 +49,7 @@ public class ItemEditServlet extends HttpServlet {
         Map<String, String> map = new HashMap<>();
         map.put("id", id != null ? id.trim() : "");
         map.put("parentId", parentId != null ? parentId.trim() : "");
-        map.put("user",  user != null ? user.trim() : "");
+        map.put("user", user != null ? user.trim() : "");
         map.put("name", name != null ? name.trim() : "");
         map.put("desc", desc != null ? desc.trim() : "");
         map.put("date", date != null ? date.trim() : "");
@@ -66,11 +66,9 @@ public class ItemEditServlet extends HttpServlet {
                 }
                 item.setName(map.get("name"));
                 item.setDesc(map.get("desc"));
-                //TODO
                 item.setData(map.get("date"));
 
                 ApplicationService.getInstance().setSessionAttribute(map, session);
-
                 ApplicationService.getInstance().setSessionAttribute("message", "The changes are saved.", session);
             } catch (NotFoundItem ex) {
                 //TODO add out to log

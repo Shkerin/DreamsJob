@@ -22,9 +22,9 @@
 
 <div id="all_content">
 
+    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
     <%@ include file="/WEB-INF/views/include/Head.jspf" %>
     <%@ include file="/WEB-INF/views/include/Links.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
 
     <div id="main">
 
@@ -37,19 +37,13 @@
                 <th class="center">Description</th>
                 <th class="center">User</th>
                 <th class="center">Date</th>
-                <%
-                    if (role.isRoleAdmin()) {
-                %>
                 <th class="center">Edit</th>
                 <th class="center">Delete</th>
-                <%
-                    }
-                %>
             </tr>
             <%
                 for (Item item : ItemService.getInstance().getAll()) {
-                    if (role.isRoleAdmin() ||
-                            item.getUser().getRole().isRoleUser()) {
+                    if (CURRENT_ROLE.isRoleAdmin() ||
+                            CURRENT_USER.equals(item.getUser())) {
             %>
             <tr>
                 <td class="center">
@@ -67,9 +61,6 @@
                 <td class="center">
                     <%= item.getDateStr() %>
                 </td>
-                <%
-                    if (role.isRoleAdmin()) {
-                %>
                 <td class="center">
                     <a id="imageLinkEdit" href="item_edit?id=<%= item.getId() %>">
                         <img src="img/edit_icon.png" width="20" height="20">
@@ -80,9 +71,6 @@
                         <img src="img/trash_icon.png" width="20" height="20">
                     </a>
                 </td>
-                <%
-                    }
-                %>
             </tr>
             <%
                     }
@@ -108,7 +96,7 @@
         <form method="post">
             <ul class="treeItem">
                 <li><input type="checkbox" name="tree" value="0">Root</li>
-                <%= ItemService.getInstance().getTreeItems(role, 0L) %>
+                <%= ItemService.getInstance().getTreeItems(CURRENT_USER, 0L) %>
             </ul>
 
             <p>
