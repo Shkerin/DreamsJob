@@ -30,6 +30,10 @@
         <form class="body_form" action="item_add"
               onsubmit="return validateFormItem()" method="post">
             <div class="tableRow">
+                <p> Parent id: </p>
+                <p><input type="number" name="parentId" min="0" max="1000000" placeholder="1"></p>
+            </div>
+            <div class="tableRow">
                 <p> Name </p>
                 <p><input type="text" name="name" placeholder="Distribution of orange"></p>
             </div>

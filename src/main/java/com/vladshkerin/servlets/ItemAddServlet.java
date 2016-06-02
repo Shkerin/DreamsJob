@@ -24,21 +24,25 @@ public class ItemAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> itemMap = new HashMap<>();
+        HttpSession session = req.getSession();
 
+        String parentId = req.getParameter("parentId");
         String name = req.getParameter("name");
         String desc = req.getParameter("desc");
-        itemMap.put("name", name != null ? name.trim() : "");
-        itemMap.put("desc", desc != null ? desc.trim() : "");
 
-        HttpSession session = req.getSession();
-        String errorValues = ItemService.getInstance().validateForm(itemMap);
+        Map<String, String> map = new HashMap<>();
+        map.put("parentId", parentId != null ? parentId.trim() : "");
+        map.put("name", name != null ? name.trim() : "");
+
+        String errorValues = ItemService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
-            Object obj = ApplicationService.getInstance().getSessionAttribute("user", session);
+
+            Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
             if (obj != null && obj instanceof User) {
                 Item item = new Item((User) obj);
-                item.setName(itemMap.get("name"));
-                item.setDesc(itemMap.get("desc"));
+                item.setParentId(Long.valueOf(map.get("parentId")));
+                item.setName(map.get("name"));
+                item.setDesc(desc != null ? desc.trim() : "");
                 ItemService.getInstance().add(item);
 
                 String str = "The item \"" + name + "\" is added.";
@@ -46,10 +50,12 @@ public class ItemAddServlet extends HttpServlet {
             } else {
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
+
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
             ApplicationService.getInstance().setSessionAttribute("message", message, session);
         }
+
         req.getRequestDispatcher("navigation?page=item_add").forward(req, resp);
     }
 }
