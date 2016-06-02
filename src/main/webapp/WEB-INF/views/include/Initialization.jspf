@@ -1,16 +1,16 @@
 <%@ page import="com.vladshkerin.models.Role" %>
 <%@ page import="com.vladshkerin.models.User" %>
 <%--
-  TODO: comment
+  The page initialized global variables
   
   @author vlad
   @since 31.05.2016
 --%>
 <%
-    //    obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-    obj = session.getAttribute("CURRENT_USER");
+    Object obj = session.getAttribute("CURRENT_USER");
     if (obj == null || !(obj instanceof User)) {
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
-    Role role = ((User) obj).getRole();
+    final User CURRENT_USER = ((User) obj);
+    final Role CURRENT_ROLE = CURRENT_USER.getRole();
 %>
