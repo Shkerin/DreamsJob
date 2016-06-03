@@ -40,11 +40,7 @@ body {
     background-color:   white;
     padding:            15px;
     margin:             10px;
-
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    border-radius:      5px;
 }
 
 #main #form_registration {
@@ -64,7 +60,6 @@ footer {
     padding:            5px;
     margin:             0px 10px 0px 10px;
     font-size:          90%;
-
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
@@ -97,11 +92,7 @@ a:visited {
 nav {
     background-color:   white;
     margin:             10px;
-
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    border-radius:      5px;
 }
 
 nav ul {
@@ -116,7 +107,6 @@ nav ul li {
 }
 
 nav ul li a:link, nav ul li a:visited {
-    /*color:              #954b4b;*/
     color:              rgb(25, 67, 97);
     border-bottom:      none;
     font-weight:        bold;

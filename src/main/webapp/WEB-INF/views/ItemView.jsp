@@ -46,7 +46,7 @@
                     if (FilterService.getInstance().validationItem(item)) {
             %>
             <tr>
-                <td class="center">
+                <td class="right">
                     <%= item.getUser().getName() %>
                 </td>
                 <td class="center">
@@ -55,7 +55,7 @@
                 <td class="center">
                 <%= item.getParentId() %>
                 </td>
-                <td class="right">
+                <td class="center">
                 <%= item.getName() %>
                 </td>
                 <td class="center">

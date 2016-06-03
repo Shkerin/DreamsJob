@@ -3,7 +3,6 @@ package com.vladshkerin.services;
 import com.vladshkerin.exception.NotFoundFilter;
 import com.vladshkerin.models.Filter;
 import com.vladshkerin.models.Item;
-import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
 import java.util.List;

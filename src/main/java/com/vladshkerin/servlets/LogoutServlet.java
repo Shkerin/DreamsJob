@@ -1,6 +1,5 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.models.Filter;
 import com.vladshkerin.services.FilterService;
 import com.vladshkerin.services.ItemService;
 import com.vladshkerin.services.UserService;

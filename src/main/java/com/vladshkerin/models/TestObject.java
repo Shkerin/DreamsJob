@@ -1,7 +1,6 @@
 package com.vladshkerin.models;
 
 import com.vladshkerin.enums.UserRole;
-import com.vladshkerin.exception.NotFoundUser;
 import com.vladshkerin.services.ItemService;
 import com.vladshkerin.services.UserService;
 

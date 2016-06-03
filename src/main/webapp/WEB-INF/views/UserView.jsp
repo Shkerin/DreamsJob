@@ -51,7 +51,7 @@
                 <td class="right">
                     <%= user.getName() %>
                 </td>
-                <td class="right">
+                <td class="center">
                     <%= user.getGrowth() %>
                 </td>
                 <td class="center">
