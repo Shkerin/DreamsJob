@@ -10,10 +10,10 @@ table {
     border:             thin solid black;
     caption-side:       inherit;
     border-collapse:    collapse;
+    font-size:          13px;
 }
 
 th {
-    /*background-color:   #675c47;*/
     background-color:   rgb(25, 67, 97);;
     color:              white;
 }
@@ -24,7 +24,6 @@ td, th {
 }
 
 tr:nth-child(2n+1) {
-    /*background-color:   #e1ceb8;*/
     background-color:   rgb(215, 225, 255);
 }
 
