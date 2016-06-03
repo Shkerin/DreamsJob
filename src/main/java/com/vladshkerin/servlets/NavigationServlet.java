@@ -54,6 +54,8 @@ public class NavigationServlet extends HttpServlet {
                         link = "/WEB-INF/views/UserEdit.jsp";
                         break;
                     default:
+                        String error_url = req.getRequestURL().toString() + "?page=" + page;
+                        req.getSession().setAttribute("error_url", error_url);
                         link = "error.jsp";
                 }
                 req.getRequestDispatcher(link).forward(req, resp);

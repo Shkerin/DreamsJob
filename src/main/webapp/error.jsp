@@ -13,7 +13,8 @@
 
 <div align="center">
     <h1>Error 404</h1>
-    <h3>Page does not exist!</h3>
+    <h3>Page does not exist:</h3>
+    <h3><%= session.getAttribute("error_url") %></h3>
     <br>
     <img src="img/dismissal.jpg" height="500" width="500">
 </div>
