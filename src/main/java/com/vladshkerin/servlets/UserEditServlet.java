@@ -60,6 +60,8 @@ public class UserEditServlet extends HttpServlet {
                 user.setEmail(map.get("email"));
                 user.setChildren(children != null ? children.trim() : "");
 
+                UserService.getInstance().saveFile();
+
                 ApplicationService.getInstance().setSessionAttribute(map, session);
                 ApplicationService.getInstance().setSessionAttribute("children", children, session);
                 ApplicationService.getInstance().setSessionAttribute("message", "The changes are saved.", session);

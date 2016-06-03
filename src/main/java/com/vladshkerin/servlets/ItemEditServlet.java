@@ -68,6 +68,8 @@ public class ItemEditServlet extends HttpServlet {
                 item.setDesc(map.get("desc"));
                 item.setData(map.get("date"));
 
+                ItemService.getInstance().saveFile();
+
                 ApplicationService.getInstance().setSessionAttribute(map, session);
                 ApplicationService.getInstance().setSessionAttribute("message", "The changes are saved.", session);
             } catch (NotFoundItem ex) {

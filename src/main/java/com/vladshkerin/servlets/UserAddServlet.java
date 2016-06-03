@@ -47,6 +47,8 @@ public class UserAddServlet extends HttpServlet {
             user.setChildren(children != null ? children.trim() : "");
             UserService.getInstance().add(user);
 
+            UserService.getInstance().saveFile();
+
             String str = "The user \"" + name + "\" is added.";
             ApplicationService.getInstance().setSessionAttribute("message", str, session);
 

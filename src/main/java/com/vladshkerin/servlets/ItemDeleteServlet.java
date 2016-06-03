@@ -21,6 +21,7 @@ public class ItemDeleteServlet extends HttpServlet {
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
             ItemService.getInstance().delete(Long.valueOf(id));
+            ItemService.getInstance().saveFile();
         }
         req.getRequestDispatcher("navigation?page=items").forward(req, resp);
     }

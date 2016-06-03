@@ -21,6 +21,7 @@ public class UserDeleteServlet extends HttpServlet {
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
             UserService.getInstance().delete(Long.valueOf(id));
+            UserService.getInstance().saveFile();
         }
         req.getRequestDispatcher("navigation?page=users").forward(req, resp);
     }

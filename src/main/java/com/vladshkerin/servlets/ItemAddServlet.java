@@ -45,6 +45,8 @@ public class ItemAddServlet extends HttpServlet {
                 item.setDesc(desc != null ? desc.trim() : "");
                 ItemService.getInstance().add(item);
 
+                ItemService.getInstance().saveFile();
+
                 String str = "The item \"" + name + "\" is added.";
                 ApplicationService.getInstance().setSessionAttribute("message", str, session);
             } else {
