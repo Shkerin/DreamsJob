@@ -1,6 +1,6 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.exceptions.NotFoundUser;
 import com.vladshkerin.models.Filter;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;

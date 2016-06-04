@@ -1,8 +1,9 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.exceptions.NotFoundUser;
 import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;
+import com.vladshkerin.services.FilterService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
@@ -25,16 +26,45 @@ public class UserEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
+        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+        if (obj == null || !(obj instanceof User)) {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        }
+
+        boolean isError = false;
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
-            setSessionAttributeUser(Long.valueOf(id), session);
+//            setSessionAttributeUser(Long.valueOf(id), session);
+            try {
+                User user = UserService.getInstance().get(Long.valueOf(id));
+                if (FilterService.getInstance().validationUser(user)) {
+                    ApplicationService.getInstance().setSessionAttribute("user", user, session);
+                } else {
+                    isError = true;
+                }
+            } catch (NotFoundUser ex) {
+                isError = true;
+            }
         }
-        req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
+
+        if (!isError) {
+            req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
+        } else {
+            String error_url = req.getRequestURL().toString() + "?id=" + id;
+            ApplicationService.getInstance().setSessionAttribute("error_url", error_url, session);
+            req.getRequestDispatcher("/WEB-INF/errors/error_404.jsp").forward(req, resp);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
+        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+        if (obj == null || !(obj instanceof User)) {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        }
 
         String id = req.getParameter("id");
         String name = req.getParameter("name");
@@ -52,22 +82,22 @@ public class UserEditServlet extends HttpServlet {
 
         String errorValues = UserService.getInstance().validateForm(map);
         if (errorValues.isEmpty()) {
+            map.put("children", children != null ? children.trim() : "");
             try {
                 User user = UserService.getInstance().get(Long.valueOf(map.get("id")));
                 user.setName(map.get("name"));
                 user.setGrowth(map.get("growth"));
                 user.setBirthDay(map.get("birthDay"));
                 user.setEmail(map.get("email"));
-                user.setChildren(children != null ? children.trim() : "");
+                user.setChildren(map.get("children"));
 
                 UserService.getInstance().saveFile();
 
-                ApplicationService.getInstance().setSessionAttribute(map, session);
-                ApplicationService.getInstance().setSessionAttribute("children", children, session);
+                ApplicationService.getInstance().setSessionAttribute("user", user, session);
                 ApplicationService.getInstance().setSessionAttribute("message", "The changes are saved.", session);
             } catch (NotFoundUser ex) {
-                //TODO add out to log
-                System.out.println(ex.getMessage());
+                String message = ex.getMessage();
+                ApplicationService.getInstance().setSessionAttribute("message", message, session);
             }
         } else {
             String message = "Incorrect input values: " + errorValues + " !";
@@ -75,26 +105,5 @@ public class UserEditServlet extends HttpServlet {
         }
 
         req.getRequestDispatcher("navigation?page=user_edit").forward(req, resp);
-    }
-
-    private void setSessionAttributeUser(long id, HttpSession session) {
-        try {
-            User user = UserService.getInstance().get(id);
-            setSessionAttributeUser(user, session);
-        } catch (NotFoundUser ex) {
-            //TODO add out to log
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void setSessionAttributeUser(User user, HttpSession session) {
-        synchronized (session) {
-            session.setAttribute("id", String.valueOf(user.getId()));
-            session.setAttribute("name", user.getName());
-            session.setAttribute("growth", user.getGrowthStr());
-            session.setAttribute("birthDay", user.getBirthDayStr("yyyy-MM-dd"));
-            session.setAttribute("email", user.getEmail());
-            session.setAttribute("children", user.getChildrenStr());
-        }
     }
 }

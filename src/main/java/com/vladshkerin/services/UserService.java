@@ -1,11 +1,12 @@
 package com.vladshkerin.services;
 
 import com.vladshkerin.enums.UserRole;
-import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.exceptions.NotFoundUser;
 import com.vladshkerin.models.Role;
 import com.vladshkerin.models.User;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,6 +49,16 @@ public class UserService {
         return users;
     }
 
+    public List<User> getAllValidation() {
+        List<User> list = new ArrayList<>();
+        for (User user : getAll()) {
+            if (FilterService.getInstance().validationUser(user)) {
+                list.add(user);
+            }
+        }
+        return list;
+    }
+
     public User get(long id) throws NotFoundUser {
         for (User user : users) {
             if (user.getId() == id) {
@@ -81,22 +92,18 @@ public class UserService {
         users.add(user);
     }
 
-    public void delete(long id) {
-        try {
-            users.remove(get(id));
-        } catch (NotFoundUser e) {
-            //TODO add out to log
-            System.out.println(e.getMessage());
-        }
+    public void delete(long id) throws NotFoundUser {
+        users.remove(get(id));
+        throw new NotFoundUser("User not fount by id: " + id);
     }
 
     public void clear() {
         users.clear();
     }
 
-    public String validateForm(Map<String, String> userPropertiesMap) {
+    public String validateForm(Map<String, String> userMap) {
         StringBuilder errorValues = new StringBuilder();
-        for (Map.Entry<String, String> user : userPropertiesMap.entrySet()) {
+        for (Map.Entry<String, String> user : userMap.entrySet()) {
 
             String key = user.getKey();
             key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());

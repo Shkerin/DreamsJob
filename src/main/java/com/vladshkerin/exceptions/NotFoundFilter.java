@@ -1,7 +1,7 @@
-package com.vladshkerin.exception;
+package com.vladshkerin.exceptions;
 
 /**
- * The exception class for lack of filter.
+ * The exceptions class for lack of filter.
  *
  * @author Vladimir Shkerin
  * @since 02.06.2016

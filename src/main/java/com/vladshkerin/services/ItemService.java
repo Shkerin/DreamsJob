@@ -1,9 +1,8 @@
 package com.vladshkerin.services;
 
-import com.vladshkerin.exception.NotFoundItem;
-import com.vladshkerin.exception.NotFoundUser;
+import com.vladshkerin.exceptions.NotFoundItem;
+import com.vladshkerin.exceptions.NotFoundUser;
 import com.vladshkerin.models.Item;
-import com.vladshkerin.models.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -49,6 +48,16 @@ public class ItemService {
         return items;
     }
 
+    public List<Item> getAllValidation() {
+        List<Item> list = new ArrayList<>();
+        for (Item item : getAll()) {
+            if (FilterService.getInstance().validationItem(item)) {
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
     public Item get(long id) throws NotFoundItem {
         for (Item item : items) {
             if (item.getId() == id) {
@@ -75,9 +84,9 @@ public class ItemService {
         items.clear();
     }
 
-    public String validateForm(Map<String, String> itemPropertiesMap) {
+    public String validateForm(Map<String, String> itemMap) {
         StringBuilder errorValues = new StringBuilder();
-        for (Map.Entry<String, String> item : itemPropertiesMap.entrySet()) {
+        for (Map.Entry<String, String> item : itemMap.entrySet()) {
 
             String key = item.getKey();
             key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
@@ -92,7 +101,7 @@ public class ItemService {
         return errorValues.toString();
     }
 
-    public String getTreeItems(User user, long id) {
+    public String getTreeItems(long id) {
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
 
@@ -101,13 +110,11 @@ public class ItemService {
                 flag = true;
                 sb.append("<ul>");
             }
-            if (FilterService.getInstance().validationItem(item)) {
-                sb.append("<li>");
-                sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
-                        item.getId(), item.getName(), item.getUser().getName()));
-                sb.append("</li>");
-                sb.append(getTreeItems(user, item.getId()));
-            }
+            sb.append("<li>");
+            sb.append(String.format("<input type=\"checkbox\" name=\"tree\" value=\"%d\">%s (%s)",
+                    item.getId(), item.getName(), item.getUser().getName()));
+            sb.append("</li>");
+            sb.append(getTreeItems(item.getId()));
         }
 
         if (flag)
@@ -117,8 +124,8 @@ public class ItemService {
     }
 
     private List<Item> getSheetsItem(long id) {
-        ArrayList<Item> items = new ArrayList<>();
-        for (Item item : getAll()) {
+        List<Item> items = new ArrayList<>();
+        for (Item item : getAllValidation()) {
             if (item.getParentId() == id) {
                 items.add(item);
             }
@@ -129,10 +136,10 @@ public class ItemService {
     public void saveFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/tmp/items.txt", false));
-            for (Item item : getAll()) {
+            for (Item item : getAllValidation()) {
                 String id = String.valueOf(item.getId());
                 String userId = String.valueOf(item.getUser().getId());
-                String data = item.getDateStr("yyyy-MM-dd-HH-mm");
+                String data = item.getDateStr();
                 String parentId = String.valueOf(item.getParentId());
                 String name = item.getName();
                 String desc = item.getDesc();

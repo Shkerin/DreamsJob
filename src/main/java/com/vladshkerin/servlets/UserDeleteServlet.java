@@ -1,11 +1,14 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.exceptions.NotFoundUser;
+import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -18,10 +21,17 @@ public class UserDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
-            UserService.getInstance().delete(Long.valueOf(id));
-            UserService.getInstance().saveFile();
+            try {
+                UserService.getInstance().delete(Long.valueOf(id));
+                UserService.getInstance().saveFile();
+            } catch (NotFoundUser ex) {
+                String message = ex.getMessage();
+                ApplicationService.getInstance().setSessionAttribute("message", message, session);
+            }
         }
         req.getRequestDispatcher("navigation?page=users").forward(req, resp);
     }

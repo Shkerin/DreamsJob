@@ -117,13 +117,11 @@ public class User {
     }
 
     public void setGrowth(String growth) {
-        if (growth != null) {
-            Float growthBuf = this.growth;
-            try {
-                this.growth = Float.parseFloat(growth);
-            } catch (Exception e) {
-                this.growth = growthBuf;
-            }
+        Float growthBuf = this.growth;
+        try {
+            this.growth = Float.parseFloat(growth);
+        } catch (Exception e) {
+            this.growth = growthBuf;
         }
     }
 
@@ -132,12 +130,12 @@ public class User {
     }
 
     public String getBirthDayStr() {
-        return getBirthDayStr("dd.MM.yyyy");
+        return getBirthDayStr("yyyy-MM-dd");
     }
 
     public String getBirthDayStr(String pattern) {
         if (pattern == null || pattern.isEmpty()) {
-            pattern = "dd.MM.yyyy";
+            pattern = "yyyy-MM-dd";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         if (birthDay.getTimeInMillis() > 0) {
@@ -159,15 +157,13 @@ public class User {
         if (pattern == null || pattern.isEmpty()) {
             pattern = "yyyy-MM-dd";
         }
-        if (birthDay != null) {
-            Calendar birthDayBuf = this.birthDay;
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(pattern);
-                Date date = format.parse(birthDay.trim());
-                this.birthDay.setTime(date);
-            } catch (ParseException e) {
-                this.birthDay = birthDayBuf;
-            }
+        Calendar birthDayBuf = this.birthDay;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            Date date = format.parse(birthDay.trim());
+            this.birthDay.setTime(date);
+        } catch (ParseException e) {
+            this.birthDay = birthDayBuf;
         }
     }
 
@@ -206,13 +202,11 @@ public class User {
     }
 
     public void setChildren(String children) {
-        if (children != null && !children.isEmpty()) {
-            String[] childrenBuf = this.children;
-            try {
-                this.children = parseStr(children);
-            } catch (PatternSyntaxException e) {
-                this.children = childrenBuf;
-            }
+        String[] childrenBuf = this.children;
+        try {
+            this.children = parseStr(children);
+        } catch (PatternSyntaxException e) {
+            this.children = childrenBuf;
         }
     }
 

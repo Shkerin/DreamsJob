@@ -1,7 +1,7 @@
-package com.vladshkerin.exception;
+package com.vladshkerin.exceptions;
 
 /**
- * The exception class for lack of item.
+ * The exceptions class for lack of item.
  *
  * @author Vladimir Shkerin
  * @since 24.05.2016

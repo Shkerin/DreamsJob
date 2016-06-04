@@ -1,7 +1,7 @@
-package com.vladshkerin.exception;
+package com.vladshkerin.exceptions;
 
 /**
- * The exception class for lack of user.
+ * The exceptions class for lack of user.
  *
  * @author Vladimir Shkerin
  * @since 13.03.2016

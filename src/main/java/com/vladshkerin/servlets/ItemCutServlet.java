@@ -1,5 +1,6 @@
 package com.vladshkerin.servlets;
 
+import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,13 @@ public class ItemCutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+        if (obj == null || !(obj instanceof User)) {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        }
+
         List<String> listItem = new ArrayList<>();
         for (Map.Entry<String, String[]> map : req.getParameterMap().entrySet()) {
             for (String s : map.getValue())
@@ -29,8 +37,7 @@ public class ItemCutServlet extends HttpServlet {
         }
 
         if (listItem.size() > 0) {
-            HttpSession session = req.getSession();
-            ApplicationService.getInstance().setSessionAttribute("tree", listItem, session);
+            ApplicationService.getInstance().setSessionAttribute("sheets_tree_items", listItem, session);
         }
 
         req.getRequestDispatcher("navigation?page=items").forward(req, resp);

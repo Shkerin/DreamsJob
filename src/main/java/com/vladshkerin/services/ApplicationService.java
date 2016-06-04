@@ -5,7 +5,6 @@ import com.vladshkerin.models.TaskPool;
 import com.vladshkerin.models.TaskWorker;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * The class for control application.
@@ -34,14 +33,6 @@ public class ApplicationService {
     public void setSessionAttribute(String name, Object value, HttpSession session) {
         synchronized (session) {
             session.setAttribute(name, value);
-        }
-    }
-
-    public void setSessionAttribute(Map<String, String> map, HttpSession session) {
-        synchronized (session) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                session.setAttribute(entry.getKey(), entry.getValue());
-            }
         }
     }
 

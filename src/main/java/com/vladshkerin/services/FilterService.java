@@ -1,6 +1,6 @@
 package com.vladshkerin.services;
 
-import com.vladshkerin.exception.NotFoundFilter;
+import com.vladshkerin.exceptions.NotFoundFilter;
 import com.vladshkerin.models.Filter;
 import com.vladshkerin.models.Item;
 import com.vladshkerin.models.User;
@@ -53,6 +53,16 @@ public class FilterService {
         for (Filter filter : filters) {
             if (filter.getUser().getRole().isRoleAdmin() ||
                     filter.getUser().equals(item.getUser())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validationUser(User user) {
+        for (Filter filter : filters) {
+            if (filter.getUser().getRole().isRoleAdmin() ||
+                    filter.getUser().equals(user)) {
                 return true;
             }
         }

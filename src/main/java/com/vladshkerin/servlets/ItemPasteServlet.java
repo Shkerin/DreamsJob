@@ -1,7 +1,8 @@
 package com.vladshkerin.servlets;
 
-import com.vladshkerin.exception.NotFoundItem;
+import com.vladshkerin.exceptions.NotFoundItem;
 import com.vladshkerin.models.Item;
+import com.vladshkerin.models.User;
 import com.vladshkerin.services.ApplicationService;
 import com.vladshkerin.services.ItemService;
 
@@ -24,12 +25,18 @@ public class ItemPasteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+        if (obj == null || !(obj instanceof User)) {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        }
+
         String parentId = req.getParameter("tree");
         if (parentId != null && !parentId.isEmpty()) {
 
-            HttpSession session = req.getSession();
-            Object obj = ApplicationService.getInstance().getSessionAttribute("tree", session);
-            ApplicationService.getInstance().removeSessionAttribute("tree", session);
+            obj = ApplicationService.getInstance().getSessionAttribute("sheets_tree_items", session);
+            ApplicationService.getInstance().removeSessionAttribute("sheets_tree_items", session);
 
             List<String> listItem = new ArrayList<>();
             if (obj != null && obj instanceof List) {
