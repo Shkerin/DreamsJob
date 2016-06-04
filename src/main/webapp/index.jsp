@@ -20,11 +20,11 @@
 
 <div id="all_content">
 
+    <%--TODO question 03.06.2016--%>
     <%--<c:import url="/WEB-INF/views/include/Head.jspf"/>--%>
-    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
-
+    <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
     <c:if test="${sessionScope.CURRENT_USER != null}">
-        <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
     </c:if>
 
     <div id="main">
@@ -62,10 +62,12 @@
             </c:otherwise>
         </c:choose>
     </div>
+    <%--main--%>
 
-    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Footer.jspf" %>
 
-</div>
+</div
+<%--all_content--%>
 
 </body>
 </html>

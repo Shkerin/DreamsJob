@@ -1,7 +1,4 @@
-<%@ page import="com.vladshkerin.models.Item" %>
 <%@ page import="com.vladshkerin.services.ItemService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.vladshkerin.services.FilterService" %>
 <%--
   The page to display items.
 
@@ -9,23 +6,26 @@
   @since 09.05.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%! String pageIndex = ""; %>
-<%! String pageItemView = "selected"; %>
-<%! String pageUserView = ""; %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="pageIndex" value=""/>
+<c:set var="pageItemView" value="selected"/>
+<c:set var="pageUserView" value=""/>
 
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="style/index.css">
-    <link type="text/css" rel="stylesheet" href="style/styletable.css">
+    <link type="text/css" rel="stylesheet" href="styles/index.css">
+    <link type="text/css" rel="stylesheet" href="styles/style_table.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
+    <c:if test="${sessionScope.CURRENT_USER != null}">
+        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
+    </c:if>
 
     <div id="main">
 
@@ -41,41 +41,35 @@
                 <th class="center">Edit</th>
                 <th class="center">Delete</th>
             </tr>
-            <%
-                for (Item item : ItemService.getInstance().getAll()) {
-                    if (FilterService.getInstance().validationItem(item)) {
-            %>
-            <tr>
-                <td class="right">
-                    <%= item.getUser().getName() %>
-                </td>
-                <td class="center">
-                    <%= item.getDateStr() %>
-                </td>
-                <td class="center">
-                <%= item.getParentId() %>
-                </td>
-                <td class="center">
-                <%= item.getName() %>
-                </td>
-                <td class="center">
-                <%= item.getDesc() %>
-                </td>
-                <td class="center">
-                    <a id="imageLinkEdit" href="item_edit?id=<%= item.getId() %>">
-                        <img src="img/edit_icon.png" width="20" height="20">
-                    </a>
-                </td>
-                <td class="center">
-                    <a id="imageLinkDelete" href="item_delete?id=<%= item.getId() %>">
-                        <img src="img/trash_icon.png" width="20" height="20">
-                    </a>
-                </td>
-            </tr>
-            <%
-                    }
-                }
-            %>
+            <c:forEach var="item" items="${sessionScope.items}">
+                <tr>
+                    <td class="right">
+                        <c:out value="${item.user.name}"/>
+                    </td>
+                    <td class="center">
+                        <c:out value="${item.getDateStr('dd.MM.yyyy HH:mm')}"/>
+                    </td>
+                    <td class="center">
+                        <c:out value="${item.parentId}"/>
+                    </td>
+                    <td class="center">
+                        <c:out value="${item.name}"/>
+                    </td>
+                    <td class="center">
+                        <c:out value="${item.desc}"/>
+                    </td>
+                    <td class="center">
+                        <a id="imageLinkEdit" href="item_edit?id=<c:out value="${item.id}"/>">
+                            <img src="img/edit_icon.png" width="20" height="20">
+                        </a>
+                    </td>
+                    <td class="center">
+                        <a id="imageLinkDelete" href="item_delete?id=<c:out value="${item.id}"/>">
+                            <img src="img/trash_icon.png" width="20" height="20">
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
         </table>
 
         <p>
@@ -91,12 +85,16 @@
 
         <hr>
 
+        <%--////////////////// Tree items ///////////////////////--%>
+
         <h1>Tree items:</h1>
 
         <form method="post">
             <ul class="treeItem">
                 <li><input type="checkbox" name="tree" value="0">Root</li>
-                <%= ItemService.getInstance().getTreeItems(CURRENT_USER, 0L) %>
+                <%--TODO question 03.06.2016--%>
+                <%--<c:out value="${tree_items}"/>--%>
+                <%= ItemService.getInstance().getTreeItems(0L) %>
             </ul>
 
             <p>
@@ -114,18 +112,9 @@
             <h2>Choice item</h2>
 
             <ul class="itemCut">
-                <%
-                    obj = session.getAttribute("tree");
-                    if (obj != null && obj instanceof List) {
-                        List<String> list = (List) obj;
-                        for (String str : list) {
-                %>
-                <li><%= str %>
-                </li>
-                <%
-                        }
-                    }
-                %>
+                <c:forEach var="sheet" items="${sessionScope.sheets_tree_items}">
+                    <li><c:out value="${sheet}"/></li>
+                </c:forEach>
             </ul>
 
             <p>
@@ -139,7 +128,7 @@
     </div>
     <%--main--%>
 
-    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Footer.jspf" %>
 
 </div>
 <%--all_content--%>

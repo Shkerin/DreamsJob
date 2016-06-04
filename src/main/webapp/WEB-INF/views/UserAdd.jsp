@@ -5,23 +5,26 @@
   @since 12.04.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%! String pageIndex = ""; %>
-<%! String pageItemView = ""; %>
-<%! String pageUserView = "selected"; %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="pageIndex" value=""/>
+<c:set var="pageItemView" value=""/>
+<c:set var="pageUserView" value="selected"/>
 
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="style/index.css">
-    <link type="text/css" rel="stylesheet" href="style/styleform.css">
+    <link type="text/css" rel="stylesheet" href="styles/index.css">
+    <link type="text/css" rel="stylesheet" href="styles/style_form.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
+    <c:if test="${sessionScope.CURRENT_USER != null}">
+        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
+    </c:if>
 
     <div id="main">
 
@@ -53,13 +56,9 @@
             <div class="tableRow">
                 <p></p>
                 <p>
-                    <%
-                        if (CURRENT_ROLE.isRoleAdmin()) {
-                    %>
-                    <input id="buttonSave" type="submit" value="Add user">
-                    <%
-                        }
-                    %>
+                    <c:if test="${sessionScope.CURRENT_USER.role.isRoleAdmin()}">
+                        <input id="buttonSave" type="submit" value="Add user">
+                    </c:if>
                     <input type="button" value="Back"
                            onclick="document.location.href='navigation?page=users'">
 
@@ -68,7 +67,7 @@
             <div class="tableRow">
                 <p></p>
                 <div id="message">
-                    <%@ include file="/WEB-INF/views/include/DisplayMessage.jspf" %>
+                    <c:out value="${sessionScope.message}"/>
                 </div>
             </div>
         </form>
@@ -76,12 +75,12 @@
     </div>
     <%--main--%>
 
-    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Footer.jspf" %>
 
 </div>
 <%--all_content--%>
 
-<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
+<script src="<c:out value="${pageContext.servletContext.contextPath}"/>/scripts/handlerButton.js"></script>
 
 </body>
 </html>

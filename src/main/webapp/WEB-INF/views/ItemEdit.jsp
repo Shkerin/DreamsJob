@@ -1,94 +1,71 @@
-<%@ page import="com.vladshkerin.exception.NotFoundItem" %>
-<%@ page import="com.vladshkerin.models.Item" %>
-<%@ page import="com.vladshkerin.services.ItemService" %><%--
+<%--
   The page for editing a item.
 
   @author Vladimir Shkerin
   @since 01.06.2016
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%! String pageIndex = ""; %>
-<%! String pageItemView = "selected"; %>
-<%! String pageUserView = ""; %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="pageIndex" value=""/>
+<c:set var="pageItemView" value="selected"/>
+<c:set var="pageUserView" value=""/>
 
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="style/index.css">
-    <link type="text/css" rel="stylesheet" href="style/styleform.css">
+    <link type="text/css" rel="stylesheet" href="styles/index.css">
+    <link type="text/css" rel="stylesheet" href="styles/style_form.css">
 </head>
 <body>
 
 <div id="all_content">
 
-    <%@ include file="/WEB-INF/views/include/Initialization.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Head.jspf" %>
-    <%@ include file="/WEB-INF/views/include/Links.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
+    <c:if test="${sessionScope.CURRENT_USER != null}">
+        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
+    </c:if>
 
     <div id="main">
 
         <h1>Edit item:</h1>
         <h2>Modify the form below and click "Save change" to save</h2>
 
-        <%
-            obj = session.getAttribute("id");
-            String id = obj != null ? (String) obj : "";
-            obj = session.getAttribute("parentId");
-            String parentId = obj != null ? (String) obj : "";
-            obj = session.getAttribute("user");
-            String user = obj != null ? (String) obj : "";
-            obj = session.getAttribute("name");
-            String name = obj != null ? (String) obj : "";
-            obj = session.getAttribute("desc");
-            String desc = obj != null ? (String) obj : "";
-            obj = session.getAttribute("date");
-            String date = obj != null ? (String) obj : "";
-        %>
-
         <form class="body_form" action="item_edit"
               onsubmit="return validateFormItem();" method="post">
-            <input type="hidden" name="id" value="<%= id %>">
+            <input type="hidden" name="id" value="<c:out value="${sessionScope.item.id}"/>">
             <div class="tableRow">
                 <p> User: </p>
-                <p><input type="text" name="user" <% if (CURRENT_ROLE.isRoleUser()) out.print("readonly"); %>
-                          value="<%= user %>"></p>
+                <p><input type="text" name="user"
+                <c:out value="${sessionScope.readonly}"/>
+                          value="<c:out value="${sessionScope.item.user.name}"/>">
+                </p>
             </div>
             <div class="tableRow">
                 <p> Date: </p>
-                <p><input type="datetime" name="date" <% if (CURRENT_ROLE.isRoleUser()) out.print("readonly"); %>
-                          value="<%= date %>"></p>
+                <p><input type="datetime" name="date"
+                <c:out value="${sessionScope.readonly}"/>
+                          value="<c:out value="${sessionScope.item.getDateStr('dd.MM.yyyy HH:mm')}"/>">
+                </p>
             </div>
             <div class="tableRow">
                 <p> Parent id: </p>
-                <p><input type="number" name="parentId" min="0" max="1000000"
-                          value="<%= parentId %>" placeholder="5"></p>
+                <p><input type="number" name="parentId" min="0"
+                          value="<c:out value="${sessionScope.item.parentId}"/>" placeholder="5"></p>
             </div>
             <div class="tableRow">
                 <p> Name: </p>
                 <p><input type="text" name="name"
-                          value="<%= name %>" placeholder="name item"></p>
+                          value="<c:out value="${sessionScope.item.name}"/>" placeholder="name item"></p>
             </div>
             <div class="tableRow">
                 <p> Description: </p>
-                <p><textarea name="desc"><%= desc %></textarea></p>
+                <p><textarea name="desc"><c:out value="${sessionScope.item.desc}"/></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>
                 <p>
-                    <%
-                        try {
-                            Item item = ItemService.getInstance().get(Long.valueOf(id));
-                            if (CURRENT_ROLE.isRoleAdmin() ||
-                                    CURRENT_USER.equals(item.getUser())) {
-                    %>
                     <input id="buttonSave" type="submit" value="Save change">
-                    <%
-                            }
-                        } catch (NotFoundItem ex) {
-                            //TODO out to log
-                            ex.printStackTrace();
-                        }
-                    %>
                     <input type="button" value="Back"
                            onclick="document.location.href='navigation?page=items'">
                 </p>
@@ -96,7 +73,7 @@
             <div class="tableRow">
                 <p></p>
                 <div id="message">
-                    <%@ include file="/WEB-INF/views/include/DisplayMessage.jspf" %>
+                    <c:out value="${sessionScope.message}"/>
                 </div>
             </div>
         </form>
@@ -104,12 +81,12 @@
     </div>
     <%--main--%>
 
-    <%@ include file="/WEB-INF/views/include/Footer.jspf" %>
+    <%@ include file="/WEB-INF/views/includes/Footer.jspf" %>
 
 </div>
 <%--all_content--%>
 
-<script src="<%=request.getContextPath()%>/scripts/handlerButton.js"></script>
+<script src="<c:out value="${pageContext.servletContext.contextPath}"/>/scripts/handlerButton.js"></script>
 
 </body>
 </html>
