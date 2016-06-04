@@ -1,0 +1,24 @@
+<%--
+  The page displays header.
+  
+  @author Vladimir Shkerin
+  @since 17.05.2016
+--%>
+
+<header class="top">
+    <div id="top_logo">
+        <a href="index.jsp"><img src="img/DreamsJob_logo.png" alt="Dreams Job logo image"></a>
+    </div>
+
+    <div id="top_registration">
+        <c:choose>
+            <c:when test="${sessionScope.CURRENT_USER == null}">
+                Unregistered user!
+            </c:when>
+            <c:otherwise>
+                Welcome back! (user:"${sessionScope.CURRENT_USER.name}" role:"${sessionScope.CURRENT_USER.role.name}")
+                <a href="logout">logout</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</header>
