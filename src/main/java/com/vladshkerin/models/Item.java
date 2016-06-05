@@ -96,13 +96,11 @@ public class Item {
     }
 
     public String getDateStr() {
-//        return getDateStr("dd.MM.yyyy HH:mm");
         return getDateStr("yyyy-MM-dd-HH-mm");
     }
 
     public String getDateStr(String pattern) {
         if (pattern == null || pattern.isEmpty()) {
-//            pattern = "dd.MM.yyyy HH:mm";
             pattern = "yyyy-MM-dd-HH-mm";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
@@ -152,4 +150,5 @@ public class Item {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }

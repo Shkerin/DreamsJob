@@ -29,7 +29,7 @@ public class TestObject {
 
     public static void testRole() {
         TestObject testObj = new TestObject();
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList<>();
         LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
 
         System.out.println("***************************************");
@@ -82,7 +82,7 @@ public class TestObject {
 
     public static void testUser() {
         TestObject testObj = new TestObject();
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList<>();
         LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
 
         Role roleAdmin = new Role(UserRole.ADMIN);
@@ -142,7 +142,7 @@ public class TestObject {
 
     public static void testItem() {
         TestObject testObj = new TestObject();
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList<>();
         LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
 
         User user1 = new User("user1");

@@ -14,7 +14,7 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link rel="stylesheet" type="text/css" href="style/index.css">
+    <link rel="stylesheet" type="text/css" href="styles/index.css">
 </head>
 <body>
 
