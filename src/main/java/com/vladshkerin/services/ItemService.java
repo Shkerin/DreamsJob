@@ -51,7 +51,7 @@ public class ItemService {
     public List<Item> getAllValidation() {
         List<Item> list = new ArrayList<>();
         for (Item item : getAll()) {
-            if (FilterService.getInstance().validationItem(item)) {
+            if (FilterService.getInstance().validation(item)) {
                 list.add(item);
             }
         }

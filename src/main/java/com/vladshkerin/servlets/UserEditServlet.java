@@ -27,18 +27,12 @@ public class UserEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         boolean isError = false;
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
-//            setSessionAttributeUser(Long.valueOf(id), session);
             try {
                 User user = UserService.getInstance().get(Long.valueOf(id));
-                if (FilterService.getInstance().validationUser(user)) {
+                if (FilterService.getInstance().validatior(user)) {
                     ApplicationService.getInstance().setSessionAttribute("user", user, session);
                 } else {
                     isError = true;
@@ -53,18 +47,13 @@ public class UserEditServlet extends HttpServlet {
         } else {
             String error_url = req.getRequestURL().toString() + "?id=" + id;
             ApplicationService.getInstance().setSessionAttribute("error_url", error_url, session);
-            req.getRequestDispatcher("/WEB-INF/errors/error_404.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/errors/error_404.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
 
         String id = req.getParameter("id");
         String name = req.getParameter("name");

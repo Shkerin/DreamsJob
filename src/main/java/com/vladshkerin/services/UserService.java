@@ -52,7 +52,7 @@ public class UserService {
     public List<User> getAllValidation() {
         List<User> list = new ArrayList<>();
         for (User user : getAll()) {
-            if (FilterService.getInstance().validationUser(user)) {
+            if (FilterService.getInstance().validatior(user)) {
                 list.add(user);
             }
         }

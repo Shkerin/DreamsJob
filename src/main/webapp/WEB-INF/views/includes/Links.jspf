@@ -7,7 +7,7 @@
 
 <nav>
     <ul>
-        <li class="<c:out value="${pageIndex}"/>"><a href="index.jsp">HOME</a></li>
+        <li class="<c:out value="${pageIndex}"/>"><a href="navigation?page=main">HOME</a></li>
         <li class="<c:out value="${pageItemView}"/>"><a href="navigation?page=items">ITEMS</a></li>
         <li class="<c:out value="${pageUserView}"/>"><a href="navigation?page=users">USERS</a></li>
     </ul>

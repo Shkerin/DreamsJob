@@ -21,13 +21,6 @@ public class ItemDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
             ItemService.getInstance().delete(Long.valueOf(id));

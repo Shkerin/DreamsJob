@@ -25,15 +25,11 @@ public class ItemCutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         List<String> listItem = new ArrayList<>();
         for (Map.Entry<String, String[]> map : req.getParameterMap().entrySet()) {
-            for (String s : map.getValue())
+            for (String s : map.getValue()) {
                 listItem.add(s);
+            }
         }
 
         if (listItem.size() > 0) {

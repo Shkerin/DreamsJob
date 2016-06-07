@@ -26,15 +26,13 @@ public class NavigationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
+        User current_user = null;
         Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        if (obj != null && (obj instanceof User)) {
+            current_user = (User) obj;
+            String str = current_user.getRole().isRoleUser() ? "readonly" : "";
+            ApplicationService.getInstance().setSessionAttribute("readonly", str, session);
         }
-
-        User current_user = (User) obj;
-
-        String str = current_user.getRole().isRoleUser() ? "readonly" : "";
-        ApplicationService.getInstance().setSessionAttribute("readonly", str, session);
 
         obj = req.getParameter("page");
         if (obj != null) {
@@ -42,9 +40,16 @@ public class NavigationServlet extends HttpServlet {
             String link;
             String page = (String) obj;
             switch (page) {
+                case "main":
+                    link = "WEB-INF/views/Main.jsp";
+                    break;
+                case "login":
+                    link = "WEB-INF/views/Login.jsp";
+                    break;
                 case "items":
                     List<Item> items = ItemService.getInstance().getAllValidation();
                     ApplicationService.getInstance().setSessionAttribute("items", items, session);
+                    //TODO question 03.06.2016
 //                        req.setAttribute("tree_items", ItemService.getInstance().getTreeItems(0L));
                     link = "/WEB-INF/views/ItemView.jsp";
                     break;
@@ -69,7 +74,7 @@ public class NavigationServlet extends HttpServlet {
                 default:
                     String error_url = req.getRequestURL().toString() + "?page=" + page;
                     ApplicationService.getInstance().setSessionAttribute("error_url", error_url, session);
-                    link = "/WEB-INF/errors/error_404.jsp";
+                    link = "/WEB-INF/view/errors/error_404.jsp";
             }
             req.getRequestDispatcher(link).forward(req, resp);
         }

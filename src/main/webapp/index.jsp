@@ -23,9 +23,7 @@
     <%--TODO question 03.06.2016--%>
     <%--<c:import url="/WEB-INF/views/include/Head.jspf"/>--%>
     <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
-    <c:if test="${sessionScope.CURRENT_USER != null}">
-        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
-    </c:if>
+    <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
 
     <div id="main">
         <c:choose>

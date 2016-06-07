@@ -22,9 +22,7 @@
 <div id="all_content">
 
     <%@ include file="/WEB-INF/views/includes/Head.jspf" %>
-    <c:if test="${sessionScope.CURRENT_USER != null}">
-        <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
-    </c:if>
+    <%@ include file="/WEB-INF/views/includes/Links.jspf" %>
 
     <div id="main">
 

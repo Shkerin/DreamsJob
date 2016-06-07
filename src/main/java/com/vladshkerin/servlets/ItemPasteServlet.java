@@ -27,15 +27,10 @@ public class ItemPasteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         String parentId = req.getParameter("tree");
         if (parentId != null && !parentId.isEmpty()) {
 
-            obj = ApplicationService.getInstance().getSessionAttribute("sheets_tree_items", session);
+            Object obj = ApplicationService.getInstance().getSessionAttribute("sheets_tree_items", session);
             ApplicationService.getInstance().removeSessionAttribute("sheets_tree_items", session);
 
             List<String> listItem = new ArrayList<>();

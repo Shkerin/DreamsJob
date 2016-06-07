@@ -21,12 +21,6 @@ public class ItemCancelCutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         ApplicationService.getInstance().removeSessionAttribute("sheets_tree_items", session);
 
         req.getRequestDispatcher("navigation?page=items").forward(req, resp);

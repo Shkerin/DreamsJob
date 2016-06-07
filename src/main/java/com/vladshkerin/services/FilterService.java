@@ -49,7 +49,7 @@ public class FilterService {
         filters.clear();
     }
 
-    public boolean validationItem(Item item) {
+    public boolean validation(Item item) {
         for (Filter filter : filters) {
             if (filter.getUser().getRole().isRoleAdmin() ||
                     filter.getUser().equals(item.getUser())) {
@@ -59,7 +59,7 @@ public class FilterService {
         return false;
     }
 
-    public boolean validationUser(User user) {
+    public boolean validatior(User user) {
         for (Filter filter : filters) {
             if (filter.getUser().getRole().isRoleAdmin() ||
                     filter.getUser().equals(user)) {

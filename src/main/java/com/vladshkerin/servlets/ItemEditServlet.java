@@ -30,17 +30,12 @@ public class ItemEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         boolean isError = false;
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
             try {
                 Item item = ItemService.getInstance().get(Long.valueOf(id));
-                if (FilterService.getInstance().validationItem(item)) {
+                if (FilterService.getInstance().validation(item)) {
                     ApplicationService.getInstance().setSessionAttribute("item", item, session);
                 } else {
                     isError = true;
@@ -55,18 +50,13 @@ public class ItemEditServlet extends HttpServlet {
         } else {
             String error_url = req.getRequestURL().toString() + "?id=" + id;
             ApplicationService.getInstance().setSessionAttribute("error_url", error_url, session);
-            req.getRequestDispatcher("/WEB-INF/errors/error_404.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/errors/error_404.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
 
         String id = req.getParameter("id");
         String parentId = req.getParameter("parentId");
@@ -89,7 +79,9 @@ public class ItemEditServlet extends HttpServlet {
                     String user = req.getParameter("user");
                     item.setUser(UserService.getInstance().get(user));
                 } catch (NotFoundUser notFoundUser) {
-                    item.setUser((User) obj);
+                    Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+                    if (obj != null && obj instanceof User)
+                        item.setUser((User) obj);
                 }
                 item.setParentId(Long.valueOf(map.get("parentId")));
                 item.setName(map.get("name"));

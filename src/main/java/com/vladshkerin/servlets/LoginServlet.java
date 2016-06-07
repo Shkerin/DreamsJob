@@ -28,9 +28,9 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         ApplicationService.getInstance().initializationSession(session);
 
+        String message = "";
         String login = "";
         String password = "";
-        String message = "";
 
         Object obj = req.getParameter("login");
         if (obj != null)
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         if (obj != null)
             password = (String) obj;
 
-        String url = "index.jsp";
+        String url = "navigation?page=login";
         if (!login.isEmpty()) {
             loadData();
             try {

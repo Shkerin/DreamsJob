@@ -28,11 +28,6 @@ public class ItemAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
-        if (obj == null || !(obj instanceof User)) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
-
         String parentId = req.getParameter("parentId");
         String name = req.getParameter("name");
         String desc = req.getParameter("desc");
@@ -49,7 +44,11 @@ public class ItemAddServlet extends HttpServlet {
                 String user = req.getParameter("user");
                 item = new Item(UserService.getInstance().get(user));
             } catch (NotFoundUser notFoundUser) {
-                item = new Item((User) obj);
+                Object obj = ApplicationService.getInstance().getSessionAttribute("CURRENT_USER", session);
+                if (obj != null && obj instanceof User)
+                    item = new Item((User) obj);
+                else
+                    item = new Item();
             }
             item.setParentId(Long.valueOf(map.get("parentId")));
             item.setName(map.get("name"));

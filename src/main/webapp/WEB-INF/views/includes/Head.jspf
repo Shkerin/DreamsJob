@@ -7,7 +7,9 @@
 
 <header class="top">
     <div id="top_logo">
-        <a href="index.jsp"><img src="img/DreamsJob_logo.png" alt="Dreams Job logo image"></a>
+        <a href="navigation?page=main">
+            <img src="img/DreamsJob_logo.png" alt="Dreams Job logo image">
+        </a>
     </div>
 
     <div id="top_registration">
