@@ -38,7 +38,7 @@ public class Role {
     public String toString() {
         return getClass().getName() +
                 "{userRole=" + userRole +
-                '}';
+                "}";
     }
 
     @Override
