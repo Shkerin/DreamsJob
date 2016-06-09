@@ -15,8 +15,8 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="styles/index.css">
-    <link type="text/css" rel="stylesheet" href="styles/style_table.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/style_table.css">
 </head>
 <body>
 
@@ -58,12 +58,14 @@
                     </td>
                     <td class="center">
                         <a id="imageLinkEdit" href="item_edit?id=<c:out value="${item.id}"/>">
-                            <img src="img/edit_icon.png" width="20" height="20">
+                            <img src="${pageContext.servletContext.contextPath}/img/edit_icon.png"
+                                 width="20" height="20">
                         </a>
                     </td>
                     <td class="center">
                         <a id="imageLinkDelete" href="item_delete?id=<c:out value="${item.id}"/>">
-                            <img src="img/trash_icon.png" width="20" height="20">
+                            <img src="${pageContext.servletContext.contextPath}/img/trash_icon.png"
+                                 width="20" height="20">
                         </a>
                     </td>
                 </tr>
@@ -79,7 +81,6 @@
                 <input type="submit" value="Back">
             </form>
         </div>
-        </p>
 
         <hr>
 
@@ -89,7 +90,7 @@
 
         <form method="post">
             <ul class="treeItem">
-                <li><input type="checkbox" name="tree" value="0">Root</li>
+                <li><input type="checkbox" name="tree" value="0" title="Root tree">Root</li>
                 <%--TODO question 03.06.2016--%>
                 <%--<c:out value="${tree_items}"/>--%>
                 <%= ItemService.getInstance().getTreeItems(0L) %>
@@ -102,7 +103,6 @@
                 <input type="submit" value="Paste"
                        formaction="item_paste">
             </div>
-            </p>
 
         </form>
 
@@ -120,7 +120,6 @@
                 <input type="submit" value="Cancel"
                        formaction="item_cancel_cut">
             </div>
-            </p>
         </form>
 
     </div>

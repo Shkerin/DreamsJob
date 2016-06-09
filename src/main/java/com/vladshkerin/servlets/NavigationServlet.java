@@ -44,7 +44,7 @@ public class NavigationServlet extends HttpServlet {
                     link = "WEB-INF/views/Main.jsp";
                     break;
                 case "login":
-                    link = "WEB-INF/views/Login.jsp";
+                    link = "WEB-INF/views/Login1.jsp";
                     break;
                 case "items":
                     List<Item> items = ItemService.getInstance().getAllValidation();

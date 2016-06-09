@@ -14,8 +14,8 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="styles/index.css">
-    <link type="text/css" rel="stylesheet" href="styles/style_form.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/style_form.css">
 </head>
 <body>
 
@@ -41,7 +41,7 @@
             </div>
             <div class="tableRow">
                 <p> Birth date: </p>
-                <p><input type="date" name="birthDay" value="date"></p>
+                <p><input type="date" name="birthDay" value="date" title="Birth date"></p>
             </div>
             <div class="tableRow">
                 <p> Email: </p>
@@ -49,7 +49,7 @@
             </div>
             <div class="tableRow">
                 <p> Children: </p>
-                <p><textarea name="children"></textarea></p>
+                <p><textarea name="children" title="Children"></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>

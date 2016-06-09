@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link rel="stylesheet" type="text/css" href="styles/index.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/main.css">
 </head>
 <body>
 
@@ -30,11 +30,11 @@
                 <table>
                     <tr>
                         <td>login :</td>
-                        <td><input type="text" name="login"></td>
+                        <td><input type="text" name="login" title="Login"></td>
                     </tr>
                     <tr>
                         <td>password :</td>
-                        <td><input type="password" name="password"></td>
+                        <td><input type="password" name="password" title="Password"></td>
                     </tr>
                     <tr>
                         <td></td>

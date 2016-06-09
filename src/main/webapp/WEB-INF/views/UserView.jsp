@@ -14,8 +14,8 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="styles/index.css">
-    <link type="text/css" rel="stylesheet" href="styles/style_table.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/style_table.css">
 </head>
 <body>
 
@@ -57,12 +57,14 @@
                     </td>
                     <td class="center">
                         <a id="imageLinkEdit" href="user_edit?id=<c:out value="${user.id}"/>">
-                            <img src="img/edit_icon.png" width="20" height="20">
+                            <img src="${pageContext.servletContext.contextPath}/img/edit_icon.png"
+                                 width="20" height="20">
                         </a>
                     </td>
                     <td class="center">
                         <a id="imageLinkDelete" href="user_delete?id=<c:out value="${user.id}"/>">
-                            <img src="img/trash_icon.png" width="20" height="20">
+                            <img src="${pageContext.servletContext.contextPath}/img/trash_icon.png"
+                                 width="20" height="20">
                         </a>
                     </td>
                 </tr>
@@ -80,7 +82,6 @@
                 <input type="submit" value="Back">
             </form>
         </div>
-        </p>
 
     </div>
     <%--main--%>

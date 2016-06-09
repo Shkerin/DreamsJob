@@ -14,8 +14,8 @@
 <html>
 <head>
     <title>Dreams Job</title>
-    <link type="text/css" rel="stylesheet" href="styles/index.css">
-    <link type="text/css" rel="stylesheet" href="styles/style_form.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/style_form.css">
 </head>
 <body>
 
@@ -36,14 +36,14 @@
                 <p> User: </p>
                 <p><input type="text" name="user"
                 <c:out value="${sessionScope.readonly}"/>
-                          value="<c:out value="${sessionScope.item.user.name}"/>">
+                          value="<c:out value="${sessionScope.item.user.name}"/>" title="User">
                 </p>
             </div>
             <div class="tableRow">
                 <p> Date: </p>
                 <p><input type="datetime" name="date"
                 <c:out value="${sessionScope.readonly}"/>
-                          value="<c:out value="${sessionScope.item.getDateStr('dd.MM.yyyy HH:mm')}"/>">
+                          value="<c:out value="${sessionScope.item.getDateStr('dd.MM.yyyy HH:mm')}"/>" title="Date">
                 </p>
             </div>
             <div class="tableRow">
@@ -58,7 +58,7 @@
             </div>
             <div class="tableRow">
                 <p> Description: </p>
-                <p><textarea name="desc"><c:out value="${sessionScope.item.desc}"/></textarea></p>
+                <p><textarea name="desc" title="Description"><c:out value="${sessionScope.item.desc}"/></textarea></p>
             </div>
             <div class="tableRow">
                 <p></p>
