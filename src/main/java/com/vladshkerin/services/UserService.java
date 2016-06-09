@@ -129,26 +129,25 @@ public class UserService {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/tmp/users.txt", false));
             for (User user : getAll()) {
-                if (user.getName().isEmpty()) {
-                    continue;
-                }
-                String id = String.valueOf(user.getId());
-                String name = user.getName();
-                String password = user.getPassword();
-                String role = String.valueOf(user.getRole().getUserRole());
-                String growth = user.getGrowthStr();
-                String birthDay = user.getBirthDayStr("yyyy-MM-dd");
-                String email = user.getEmail();
-                String children = user.getChildrenStr();
+                if (!user.getName().isEmpty()) {
+                    String id = String.valueOf(user.getId());
+                    String name = user.getName();
+                    String password = user.getPassword();
+                    String role = String.valueOf(user.getRole().getUserRole());
+                    String growth = user.getGrowthStr();
+                    String birthDay = user.getBirthDayStr("yyyy-MM-dd");
+                    String email = user.getEmail();
+                    String children = user.getChildrenStr();
 
-                writer.write(id + "/");
-                writer.write(name + "/");
-                writer.write(password.isEmpty() ? " /" : password + "/");
-                writer.write(role.isEmpty() ? " /" : role + "/");
-                writer.write(growth.isEmpty() ? " /" : growth + "/");
-                writer.write(birthDay.isEmpty() ? " /" : birthDay + "/");
-                writer.write(email.isEmpty() ? " /" : email + "/");
-                writer.write(children.isEmpty() ? " \n" : children + "\n");
+                    writer.write(id + "/");
+                    writer.write(name + "/");
+                    writer.write(password.isEmpty() ? " /" : password + "/");
+                    writer.write(role.isEmpty() ? " /" : role + "/");
+                    writer.write(growth.isEmpty() ? " /" : growth + "/");
+                    writer.write(birthDay.isEmpty() ? " /" : birthDay + "/");
+                    writer.write(email.isEmpty() ? " /" : email + "/");
+                    writer.write(children.isEmpty() ? " \n" : children + "\n");
+                }
             }
             writer.close();
         } catch (IOException ex) {

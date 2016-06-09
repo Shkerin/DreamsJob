@@ -136,7 +136,7 @@ public class ItemService {
     public void saveFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/tmp/items.txt", false));
-            for (Item item : getAllValidation()) {
+            for (Item item : getAll()) {
                 String id = String.valueOf(item.getId());
                 String userId = String.valueOf(item.getUser().getId());
                 String data = item.getDateStr();
